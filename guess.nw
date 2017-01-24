@@ -1,0 +1,144 @@
+% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
+\documentclass{tufte-handout}
+\usepackage{noweb}
+
+\usepackage{color}
+% https://commons.wikimedia.org/wiki/File:Erlang_logo.svg
+\definecolor{ErlangRed}{HTML}{A90533}
+
+\usepackage{hyperref}
+\hypersetup{
+  bookmarks=true,
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={The Guess-My-Number Game},
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 2},
+  pdfkeywords={Lisp, game, simple, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage[outputdir=src/lol]{minted}
+
+% NOTE: Use Tufte instead of noweb page style.
+% \pagestyle{noweb}
+% NOTE: Use shift option for wide code.
+\noweboptions{smallcode,shortxref,webnumbering,english}
+
+\title{
+  The Guess-My-Number Game
+  \thanks{
+    From Chapter 2 of \href{http://landoflisp.com}{\sl Land of Lisp}.
+  }
+}
+
+\author{Eric Bailey}
+
+% \date{January 14, 2017}
+
+\newcommand{\stylehook}{\marginpar{\raggedright\sl Style hook}}
+
+\newmintinline[lsp]{lisp}{}
+
+\begin{document}
+\maketitle
+@
+
+\begin{abstract}
+  In this game, you pick a number from $1$ to $100$, and the computer has to
+  guess it.
+\end{abstract}
+
+% \tableofcontents
+% \newpage
+
+\section{Outline}
+<<guess>>=
+<<(Re)set the global state>>
+
+<<Define the guess-my-number function>>
+
+<<Define the smaller function>>
+
+<<Define the bigger function>>
+
+<<Define the start-over function>>
+@
+
+\section{Defining the Small and Big Variables}
+\label{sec:top-level-defs}
+
+<<(Re)set the global state>>=
+(defparameter *small* 1)
+(defparameter *big* 100)
+@
+
+\section{Defining the Guess-My-Number Function}
+\label{sec:guess-my-number}
+
+<<Define the guess-my-number function>>=
+(defun guess-my-number ()
+  <<Halve the sum of the limits and shorten the result>>)
+@
+
+<<Halve the sum of the limits and shorten the result>>=
+(ash (+ *small* *big*) -1)
+@
+
+<<Have the computer guess a number>>=
+(guess-my-number)
+@
+
+\section{Defining the Smaller and Bigger Functions}
+
+<<Define the smaller function>>=
+(defun smaller ()
+  <<Set *big* to one less than the last guess>>
+  <<Have the computer guess a number>>)
+@
+
+<<Set *big* to one less than the last guess>>=
+(setf *big* <<Subtract one from the most recent guess>>)
+@
+
+<<Subtract one from the most recent guess>>=
+(1- <<Have the computer guess a number>>)
+@
+
+<<Define the bigger function>>=
+(defun bigger ()
+  <<Set *small* to one greater than the last guess>>
+  <<Have the computer guess a number>>)
+@
+
+<<Set *small* to one greater than the last guess>>=
+(setq *small* <<Add one to the most recent guess>>)
+@
+
+<<Add one to the most recent guess>>=
+(1+ <<Have the computer guess a number>>)
+@
+
+\section{Defining the Start-Over Function}
+
+<<Define the start-over function>>=
+(defun start-over ()
+  <<(Re)set the global state>
+  <<Have the computer guess a number>>)
+@
+
+\section{Chunks}
+\nowebchunks
+
+\section{Index}
+\nowebindex
+
+\bibliography{fav1}
+\bibliographystyle{plainnat}
+
+\end{document}
