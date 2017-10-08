@@ -1,6 +1,24 @@
 % -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-% ===> this file was generated automatically by noweave --- better not edit it
-\documentclass[nobib]{tufte-handout}
+\documentclass{tufte-handout}
+
+\usepackage{fontspec}
+\setmonofont{Iosevka}
+
+% HACK: https://tex.stackexchange.com/a/200725/45537
+\usepackage{ifxetex}
+\ifxetex
+  \newcommand{\textls}[2][5]{%
+    \begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup
+  }
+  \renewcommand{\allcapsspacing}[1]{\textls[15]{#1}}
+  \renewcommand{\smallcapsspacing}[1]{\textls[10]{#1}}
+  \renewcommand{\allcaps}[1]{\textls[15]{\MakeTextUppercase{#1}}}
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
+\fi
+
 \usepackage{noweb}
+\noweboptions{nomargintag,smallcode,longxref,webnumbering,longchunks,english}
 
 \usepackage{color}
 % https://commons.wikimedia.org/wiki/File:Erlang_logo.svg
@@ -22,22 +40,31 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+\usepackage{mathtools}
+\mathtoolsset{centercolon}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\usepackage{dirtytalk}
+
+\usepackage[english]{fancyref}
+
 \usepackage[outputdir=src]{minted}
 
-\noweboptions{nomargintag,smallcode,longxref,webnumbering,noidentxref,longchunks,english}
 
 \title{%
-  The Guess-My-Number Game
-  \thanks{%
-    From Chapter 2 of \href{http://landoflisp.com}{\sl Land of Lisp}.
-  }
+  The Guess-My-Number Game%
+  \thanks{\cite{barski2010land-ch2}}
 }
 
 \author{Eric Bailey}
 
-\date{January 14, 2017\thanks{Last updated \today}.}
+\date{%
+  January 14, 2017
+  \thanks{Last updated \today}
+}
 
 \newmintinline[lsp]{lisp}{}
+\newmintinline[cee]{c}{}
 
 \begin{document}
 \maketitle
@@ -53,130 +80,211 @@
 
 \section{Outline}
 
+\marginnote{%
+  As the name suggests, this chunk gets tangled into
+  \href{https://github.com/yurrriq/land-of-lisp/blob/master/src/guess.lisp}{{\Tt{}src/guess.lisp\nwendquote}}.
+}
+
 \nwenddocs{}\nwbegincode{2}\sublabel{NW3pAW7b-1LAszg-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-1LAszg-1}}}\moddef{src/guess.lisp~{\nwtagstyle{}\subpageref{NW3pAW7b-1LAszg-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
-\LA{}(Re)set the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-355GfG-1}}\RA{}
+\LA{}reset the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-23Nold-1}}\RA{}
 
-\LA{}Define the \code{}guess-my-number\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3Xj5Zm-1}}\RA{}
 
-\LA{}Define the \code{}smaller\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3sUKLt-1}}\RA{}
+\LA{}define the \code{}guess-my-number\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-1qZadw-1}}\RA{}
 
-\LA{}Define the \code{}bigger\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-5quDz-1}}\RA{}
 
-\LA{}Define the \code{}start-over\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-2Okte7-1}}\RA{}
+\LA{}define the \code{}smaller\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3ZMSnf-1}}\RA{}
+
+
+\LA{}define the \code{}bigger\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3lVgmB-1}}\RA{}
+
+
+\LA{}define the \code{}start-over\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-2jBlyk-1}}\RA{}
 \nwnotused{src/guess.lisp}\nwendcode{}\nwbegindocs{3}\nwdocspar
+
+\section{Example Session}
+
+After loading {\Tt{}\LA{}src/guess.lisp~{\nwtagstyle{}\subpageref{NW3pAW7b-1LAszg-1}}\RA{}\nwendquote}, you might have {\Tt{}\LA{}a session~{\nwtagstyle{}\subpageref{NW3pAW7b-2aJKj5-1}}\RA{}\nwendquote} like this:
+
+\begin{marginfigure}
+\begin{minted}{shell-session}
+$ rlwrap sbcl --load src/guess.lisp
+\end{minted}
+\end{marginfigure}
+
+% \begin{minted}{lisp}
+\nwenddocs{}\nwbegincode{4}\sublabel{NW3pAW7b-2aJKj5-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-2aJKj5-1}}}\moddef{a session~{\nwtagstyle{}\subpageref{NW3pAW7b-2aJKj5-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+> (\nwlinkedidentc{start-over}{NW3pAW7b-2jBlyk-1})
+50
+> (\nwlinkedidentc{smaller}{NW3pAW7b-3ZMSnf-1})
+25
+> (\nwlinkedidentc{bigger}{NW3pAW7b-3lVgmB-1})
+37
+> (\nwlinkedidentc{bigger}{NW3pAW7b-3lVgmB-1})
+43
+> (\nwlinkedidentc{smaller}{NW3pAW7b-3ZMSnf-1})
+40
+> (\nwlinkedidentc{bigger}{NW3pAW7b-3lVgmB-1})
+41
+> (\nwlinkedidentc{bigger}{NW3pAW7b-3lVgmB-1})
+42
+\nwnotused{a session}\nwidentuses{\\{{\nwixident{bigger}}{bigger}}\\{{\nwixident{smaller}}{smaller}}\\{{\nwixident{start-over}}{start-over}}}\nwindexuse{\nwixident{bigger}}{bigger}{NW3pAW7b-2aJKj5-1}\nwindexuse{\nwixident{smaller}}{smaller}{NW3pAW7b-2aJKj5-1}\nwindexuse{\nwixident{start-over}}{start-over}{NW3pAW7b-2aJKj5-1}\nwendcode{}\nwbegindocs{5}\nwdocspar
+% \end{minted}
+
 
 \section{Defining the Small and Big Variables}
 \label{sec:top-level-defs}
 
-\marginnote{Use earmuffs.}
+To give the computer a range of numbers in which to guess, we define the lower
+and upper limits, {\Tt{}\nwlinkedidentq{*small*}{NW3pAW7b-23Nold-1}\nwendquote} and {\Tt{}\nwlinkedidentq{*big*}{NW3pAW7b-23Nold-1}\nwendquote}, respectively. We'll need to
+{\Tt{}\LA{}reset the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-23Nold-1}}\RA{}\nwendquote} as such whenever we want to restart the game,
 
-\nwenddocs{}\nwbegincode{4}\sublabel{NW3pAW7b-355GfG-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-355GfG-1}}}\moddef{(Re)set the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-355GfG-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}\\{NW3pAW7b-2Okte7-1}}\nwenddeflinemarkup
-(defparameter \nwlinkedidentc{*small*}{NW3pAW7b-355GfG-1} 1)\nwindexdefn{\nwixident{*small*}}{*small*}{NW3pAW7b-355GfG-1}
-(defparameter \nwlinkedidentc{*big*}{NW3pAW7b-355GfG-1} 100)\nwindexdefn{\nwixident{*big*}}{*big*}{NW3pAW7b-355GfG-1}
-\nwused{\\{NW3pAW7b-1LAszg-1}\\{NW3pAW7b-2Okte7-1}}\nwidentdefs{\\{{\nwixident{*big*}}{*big*}}\\{{\nwixident{*small*}}{*small*}}}\nwendcode{}\nwbegindocs{5}\nwdocspar
+\marginnote[1.5\baselineskip]{%
+  \say{Global variable names should start and end with asterisks (also known in
+    this context as earmuffs)} \citep{google-style-guide}.
+}
+
+\nwenddocs{}\nwbegincode{6}\sublabel{NW3pAW7b-23Nold-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-23Nold-1}}}\moddef{reset the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-23Nold-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}\\{NW3pAW7b-2jBlyk-1}}\nwenddeflinemarkup
+(defparameter \nwlinkedidentc{*small*}{NW3pAW7b-23Nold-1} 1)\nwindexdefn{\nwixident{*small*}}{*small*}{NW3pAW7b-23Nold-1}
+(defparameter \nwlinkedidentc{*big*}{NW3pAW7b-23Nold-1} 100)\nwindexdefn{\nwixident{*big*}}{*big*}{NW3pAW7b-23Nold-1}
+\nwused{\\{NW3pAW7b-1LAszg-1}\\{NW3pAW7b-2jBlyk-1}}\nwidentdefs{\\{{\nwixident{*big*}}{*big*}}\\{{\nwixident{*small*}}{*small*}}}\nwendcode{}\nwbegindocs{7}\nwdocspar
 
 \section{Defining the Guess-My-Number Function}
 \label{sec:guess-my-number}
 
-\nwenddocs{}\nwbegincode{6}\sublabel{NW3pAW7b-3Xj5Zm-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-3Xj5Zm-1}}}\moddef{Define the \code{}guess-my-number\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3Xj5Zm-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}}\nwenddeflinemarkup
-(defun \nwlinkedidentc{guess-my-number}{NW3pAW7b-3Xj5Zm-1} ()\nwindexdefn{\nwixident{guess-my-number}}{guess-my-number}{NW3pAW7b-3Xj5Zm-1}
-  \LA{}Halve the sum of the limits and shorten the result~{\nwtagstyle{}\subpageref{NW3pAW7b-3A9QGg-1}}\RA{})
-\nwused{\\{NW3pAW7b-1LAszg-1}}\nwidentdefs{\\{{\nwixident{guess-my-number}}{guess-my-number}}}\nwendcode{}\nwbegindocs{7}\nwdocspar
+With {\Tt{}\nwlinkedidentq{*small*}{NW3pAW7b-23Nold-1}\nwendquote} and {\Tt{}\nwlinkedidentq{*big*}{NW3pAW7b-23Nold-1}\nwendquote} defined, we can tell the computer how to guess a
+number ({\Tt{}\nwlinkedidentq{guess-my-number}{NW3pAW7b-1qZadw-1}\nwendquote}) within those limits.
 
-\nwenddocs{}\nwbegincode{8}\sublabel{NW3pAW7b-3A9QGg-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-3A9QGg-1}}}\moddef{Halve the sum of the limits and shorten the result~{\nwtagstyle{}\subpageref{NW3pAW7b-3A9QGg-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-3Xj5Zm-1}}\nwenddeflinemarkup
-(ash (+ \nwlinkedidentc{*small*}{NW3pAW7b-355GfG-1} \nwlinkedidentc{*big*}{NW3pAW7b-355GfG-1}) -1)
-\nwused{\\{NW3pAW7b-3Xj5Zm-1}}\nwidentuses{\\{{\nwixident{*big*}}{*big*}}\\{{\nwixident{*small*}}{*small*}}}\nwindexuse{\nwixident{*big*}}{*big*}{NW3pAW7b-3A9QGg-1}\nwindexuse{\nwixident{*small*}}{*small*}{NW3pAW7b-3A9QGg-1}\nwendcode{}\nwbegindocs{9}\nwdocspar
+The basic algorithm is to
+{\Tt{}\LA{}halve the sum of the limits and shorten the result~{\nwtagstyle{}\subpageref{NW3pAW7b-2ma7VI-1}}\RA{}\nwendquote}.
+To achieve that, we use Common Lisp's
+\href{http://www.lispworks.com/documentation/HyperSpec/Body/f_ash.htm}{\lsp{ash}}
+function to perform an {\sl arithmetic right shift} by $1$, i.e.
+$\floor{\cee{sum} \times 2^{-1}}$.
 
-\nwenddocs{}\nwbegincode{10}\sublabel{NW3pAW7b-2K5nJA-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-2K5nJA-1}}}\moddef{Have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-2K5nJA-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-3sUKLt-1}\\{NW3pAW7b-5JtNW-1}\\{NW3pAW7b-5quDz-1}\\{NW3pAW7b-1uzkcU-1}\\{NW3pAW7b-2Okte7-1}}\nwenddeflinemarkup
-(\nwlinkedidentc{guess-my-number}{NW3pAW7b-3Xj5Zm-1})
-\nwused{\\{NW3pAW7b-3sUKLt-1}\\{NW3pAW7b-5JtNW-1}\\{NW3pAW7b-5quDz-1}\\{NW3pAW7b-1uzkcU-1}\\{NW3pAW7b-2Okte7-1}}\nwidentuses{\\{{\nwixident{guess-my-number}}{guess-my-number}}}\nwindexuse{\nwixident{guess-my-number}}{guess-my-number}{NW3pAW7b-2K5nJA-1}\nwendcode{}\nwbegindocs{11}\nwdocspar
+\begin{marginfigure}%
+  \vskip -3\baselineskip
+  \caption{The guessing algorithm}
+  \begin{minted}{c}
+sum <- small + big
+right shift sum by 1
+return sum
+  \end{minted}
+  \label{fig:guessing-algorithm}
+\end{marginfigure}
+
+To {\Tt{}\LA{}define the \code{}guess-my-number\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-1qZadw-1}}\RA{}\nwendquote}, we simply implement the
+algorithm described in pseudocode in \Fref{fig:guessing-algorithm}.
+
+\nwenddocs{}\nwbegincode{8}\sublabel{NW3pAW7b-2ma7VI-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-2ma7VI-1}}}\moddef{halve the sum of the limits and shorten the result~{\nwtagstyle{}\subpageref{NW3pAW7b-2ma7VI-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1qZadw-1}}\nwenddeflinemarkup
+(ash (+ \nwlinkedidentc{*small*}{NW3pAW7b-23Nold-1} \nwlinkedidentc{*big*}{NW3pAW7b-23Nold-1}) -1)
+\nwused{\\{NW3pAW7b-1qZadw-1}}\nwidentuses{\\{{\nwixident{*big*}}{*big*}}\\{{\nwixident{*small*}}{*small*}}}\nwindexuse{\nwixident{*big*}}{*big*}{NW3pAW7b-2ma7VI-1}\nwindexuse{\nwixident{*small*}}{*small*}{NW3pAW7b-2ma7VI-1}\nwendcode{}\nwbegindocs{9}\nwdocspar
+
+\nwenddocs{}\nwbegincode{10}\sublabel{NW3pAW7b-1qZadw-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-1qZadw-1}}}\moddef{define the \code{}guess-my-number\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-1qZadw-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}}\nwenddeflinemarkup
+(defun \nwlinkedidentc{guess-my-number}{NW3pAW7b-1qZadw-1} ()\nwindexdefn{\nwixident{guess-my-number}}{guess-my-number}{NW3pAW7b-1qZadw-1}
+  \LA{}halve the sum of the limits and shorten the result~{\nwtagstyle{}\subpageref{NW3pAW7b-2ma7VI-1}}\RA{})
+\nwused{\\{NW3pAW7b-1LAszg-1}}\nwidentdefs{\\{{\nwixident{guess-my-number}}{guess-my-number}}}\nwendcode{}\nwbegindocs{11}\nwdocspar
+
+Now, when we want to {\Tt{}\LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{}\nwendquote}, we simply call
+{\Tt{}\nwlinkedidentq{guess-my-number}{NW3pAW7b-1qZadw-1}\nwendquote} as follows.
+\nwenddocs{}\nwbegincode{12}\sublabel{NW3pAW7b-KaMxC-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}}\moddef{have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-2xfHu8-1}\\{NW3pAW7b-3ZMSnf-1}\\{NW3pAW7b-4Yu8C-1}\\{NW3pAW7b-3lVgmB-1}\\{NW3pAW7b-2jBlyk-1}}\nwenddeflinemarkup
+(\nwlinkedidentc{guess-my-number}{NW3pAW7b-1qZadw-1})
+\nwused{\\{NW3pAW7b-2xfHu8-1}\\{NW3pAW7b-3ZMSnf-1}\\{NW3pAW7b-4Yu8C-1}\\{NW3pAW7b-3lVgmB-1}\\{NW3pAW7b-2jBlyk-1}}\nwidentuses{\\{{\nwixident{guess-my-number}}{guess-my-number}}}\nwindexuse{\nwixident{guess-my-number}}{guess-my-number}{NW3pAW7b-KaMxC-1}\nwendcode{}\nwbegindocs{13}\nwdocspar
 
 \section{Defining the Smaller and Bigger Functions}
 
-\nwenddocs{}\nwbegincode{12}\sublabel{NW3pAW7b-3sUKLt-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-3sUKLt-1}}}\moddef{Define the \code{}smaller\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3sUKLt-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}}\nwenddeflinemarkup
-(defun \nwlinkedidentc{smaller}{NW3pAW7b-3sUKLt-1} ()\nwindexdefn{\nwixident{smaller}}{smaller}{NW3pAW7b-3sUKLt-1}
-  \LA{}Set *big* to one less than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-1mRqYq-1}}\RA{}
-  \LA{}Have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-2K5nJA-1}}\RA{})
-\nwused{\\{NW3pAW7b-1LAszg-1}}\nwidentdefs{\\{{\nwixident{smaller}}{smaller}}}\nwendcode{}\nwbegindocs{13}\nwdocspar
+\marginnote{%
+  To appropriately adjust {\Tt{}\nwlinkedidentq{*big*}{NW3pAW7b-23Nold-1}\nwendquote},
+  {\Tt{}\LA{}subtract one from the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-2xfHu8-1}}\RA{}\nwendquote}.
+}
 
-\nwenddocs{}\nwbegincode{14}\sublabel{NW3pAW7b-1mRqYq-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-1mRqYq-1}}}\moddef{Set *big* to one less than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-1mRqYq-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-3sUKLt-1}}\nwenddeflinemarkup
-(setf \nwlinkedidentc{*big*}{NW3pAW7b-355GfG-1} \LA{}Subtract one from the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-5JtNW-1}}\RA{})
-\nwused{\\{NW3pAW7b-3sUKLt-1}}\nwidentuses{\\{{\nwixident{*big*}}{*big*}}}\nwindexuse{\nwixident{*big*}}{*big*}{NW3pAW7b-1mRqYq-1}\nwendcode{}\nwbegindocs{15}\nwdocspar
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{14}\sublabel{NW3pAW7b-2xfHu8-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-2xfHu8-1}}}\moddef{subtract one from the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-2xfHu8-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-2BE8xK-1}}\nwenddeflinemarkup
+(1- \LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{})
+\nwused{\\{NW3pAW7b-2BE8xK-1}}\nwendcode{}\nwbegindocs{15}\nwdocspar
+\end{marginfigure}
 
-\nwenddocs{}\nwbegincode{16}\sublabel{NW3pAW7b-5JtNW-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-5JtNW-1}}}\moddef{Subtract one from the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-5JtNW-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1mRqYq-1}}\nwenddeflinemarkup
-(1- \LA{}Have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-2K5nJA-1}}\RA{})
-\nwused{\\{NW3pAW7b-1mRqYq-1}}\nwendcode{}\nwbegindocs{17}\nwdocspar
+To {\Tt{}\LA{}define the \code{}smaller\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3ZMSnf-1}}\RA{}\nwendquote}, we need to update the global state
+such that the next guess is {\em smaller} than the last, i.e.
+{\Tt{}\LA{}set \code{}*big*\edoc{} to one less than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-2BE8xK-1}}\RA{}\nwendquote} then
+{\Tt{}\LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{}\nwendquote}.
 
-\nwenddocs{}\nwbegincode{18}\sublabel{NW3pAW7b-5quDz-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-5quDz-1}}}\moddef{Define the \code{}bigger\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-5quDz-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}}\nwenddeflinemarkup
-(defun \nwlinkedidentc{bigger}{NW3pAW7b-5quDz-1} ()\nwindexdefn{\nwixident{bigger}}{bigger}{NW3pAW7b-5quDz-1}
-  \LA{}Set *small* to one greater than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-2isJE2-1}}\RA{}
-  \LA{}Have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-2K5nJA-1}}\RA{})
-\nwused{\\{NW3pAW7b-1LAszg-1}}\nwidentdefs{\\{{\nwixident{bigger}}{bigger}}}\nwendcode{}\nwbegindocs{19}\nwdocspar
+\nwenddocs{}\nwbegincode{16}\sublabel{NW3pAW7b-2BE8xK-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-2BE8xK-1}}}\moddef{set \code{}*big*\edoc{} to one less than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-2BE8xK-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-3ZMSnf-1}}\nwenddeflinemarkup
+(setf \nwlinkedidentc{*big*}{NW3pAW7b-23Nold-1} \LA{}subtract one from the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-2xfHu8-1}}\RA{})
+\nwused{\\{NW3pAW7b-3ZMSnf-1}}\nwidentuses{\\{{\nwixident{*big*}}{*big*}}}\nwindexuse{\nwixident{*big*}}{*big*}{NW3pAW7b-2BE8xK-1}\nwendcode{}\nwbegindocs{17}\nwdocspar
 
-\nwenddocs{}\nwbegincode{20}\sublabel{NW3pAW7b-2isJE2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-2isJE2-1}}}\moddef{Set *small* to one greater than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-2isJE2-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-5quDz-1}}\nwenddeflinemarkup
-(setq \nwlinkedidentc{*small*}{NW3pAW7b-355GfG-1} \LA{}Add one to the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-1uzkcU-1}}\RA{})
-\nwused{\\{NW3pAW7b-5quDz-1}}\nwidentuses{\\{{\nwixident{*small*}}{*small*}}}\nwindexuse{\nwixident{*small*}}{*small*}{NW3pAW7b-2isJE2-1}\nwendcode{}\nwbegindocs{21}\nwdocspar
+\nwenddocs{}\nwbegincode{18}\sublabel{NW3pAW7b-3ZMSnf-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-3ZMSnf-1}}}\moddef{define the \code{}smaller\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3ZMSnf-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}}\nwenddeflinemarkup
+(defun \nwlinkedidentc{smaller}{NW3pAW7b-3ZMSnf-1} ()\nwindexdefn{\nwixident{smaller}}{smaller}{NW3pAW7b-3ZMSnf-1}
+  \LA{}set \code{}*big*\edoc{} to one less than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-2BE8xK-1}}\RA{}
+  \LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{})
+\nwused{\\{NW3pAW7b-1LAszg-1}}\nwidentdefs{\\{{\nwixident{smaller}}{smaller}}}\nwendcode{}\nwbegindocs{19}\nwdocspar
 
-\nwenddocs{}\nwbegincode{22}\sublabel{NW3pAW7b-1uzkcU-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-1uzkcU-1}}}\moddef{Add one to the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-1uzkcU-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-2isJE2-1}}\nwenddeflinemarkup
-(1+ \LA{}Have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-2K5nJA-1}}\RA{})
-\nwused{\\{NW3pAW7b-2isJE2-1}}\nwendcode{}\nwbegindocs{23}\nwdocspar
+\marginnote{%
+  To appropriately adjust {\Tt{}\nwlinkedidentq{*small*}{NW3pAW7b-23Nold-1}\nwendquote},
+  {\Tt{}\LA{}add one to the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-4Yu8C-1}}\RA{}\nwendquote}.
+}
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{20}\sublabel{NW3pAW7b-4Yu8C-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-4Yu8C-1}}}\moddef{add one to the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-4Yu8C-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-3Xjyma-1}}\nwenddeflinemarkup
+(1+ \LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{})
+\nwused{\\{NW3pAW7b-3Xjyma-1}}\nwendcode{}\nwbegindocs{21}\nwdocspar
+\end{marginfigure}
+
+To {\Tt{}\LA{}define the \code{}bigger\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3lVgmB-1}}\RA{}\nwendquote}, we need to update the global state
+such that the next guess is {\em bigger} than the last, i.e.
+{\Tt{}\LA{}set \code{}*small*\edoc{} to one greater than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-3Xjyma-1}}\RA{}\nwendquote} then
+{\Tt{}\LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{}\nwendquote}.
+
+\nwenddocs{}\nwbegincode{22}\sublabel{NW3pAW7b-3Xjyma-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-3Xjyma-1}}}\moddef{set \code{}*small*\edoc{} to one greater than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-3Xjyma-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-3lVgmB-1}}\nwenddeflinemarkup
+(setq \nwlinkedidentc{*small*}{NW3pAW7b-23Nold-1} \LA{}add one to the most recent guess~{\nwtagstyle{}\subpageref{NW3pAW7b-4Yu8C-1}}\RA{})
+\nwused{\\{NW3pAW7b-3lVgmB-1}}\nwidentuses{\\{{\nwixident{*small*}}{*small*}}}\nwindexuse{\nwixident{*small*}}{*small*}{NW3pAW7b-3Xjyma-1}\nwendcode{}\nwbegindocs{23}\nwdocspar
+
+\nwenddocs{}\nwbegincode{24}\sublabel{NW3pAW7b-3lVgmB-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-3lVgmB-1}}}\moddef{define the \code{}bigger\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-3lVgmB-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}}\nwenddeflinemarkup
+(defun \nwlinkedidentc{bigger}{NW3pAW7b-3lVgmB-1} ()\nwindexdefn{\nwixident{bigger}}{bigger}{NW3pAW7b-3lVgmB-1}
+  \LA{}set \code{}*small*\edoc{} to one greater than the last guess~{\nwtagstyle{}\subpageref{NW3pAW7b-3Xjyma-1}}\RA{}
+  \LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{})
+\nwused{\\{NW3pAW7b-1LAszg-1}}\nwidentdefs{\\{{\nwixident{bigger}}{bigger}}}\nwendcode{}\nwbegindocs{25}\nwdocspar
 
 \section{Defining the Start-Over Function}
 
-\nwenddocs{}\nwbegincode{24}\sublabel{NW3pAW7b-2Okte7-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-2Okte7-1}}}\moddef{Define the \code{}start-over\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-2Okte7-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}}\nwenddeflinemarkup
-(defun \nwlinkedidentc{start-over}{NW3pAW7b-2Okte7-1} ()\nwindexdefn{\nwixident{start-over}}{start-over}{NW3pAW7b-2Okte7-1}
-  \LA{}(Re)set the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-355GfG-1}}\RA{}
-  \LA{}Have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-2K5nJA-1}}\RA{})
+At this point, to {\Tt{}\LA{}define the \code{}start-over\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-2jBlyk-1}}\RA{}\nwendquote} is trivial:
+we simply {\Tt{}\LA{}reset the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-23Nold-1}}\RA{}\nwendquote} then
+{\Tt{}\LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{}\nwendquote}.
+
+\nwenddocs{}\nwbegincode{26}\sublabel{NW3pAW7b-2jBlyk-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-2jBlyk-1}}}\moddef{define the \code{}start-over\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-2jBlyk-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-1LAszg-1}}\nwenddeflinemarkup
+(defun \nwlinkedidentc{start-over}{NW3pAW7b-2jBlyk-1} ()\nwindexdefn{\nwixident{start-over}}{start-over}{NW3pAW7b-2jBlyk-1}
+  \LA{}reset the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-23Nold-1}}\RA{}
+  \LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{})
 \nwused{\\{NW3pAW7b-1LAszg-1}}\nwidentdefs{\\{{\nwixident{start-over}}{start-over}}}\nwendcode{}
 
-\nwixlogsorted{c}{{(Re)set the global state}{NW3pAW7b-355GfG-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-355GfG-1}\nwixu{NW3pAW7b-2Okte7-1}}}%
-\nwixlogsorted{c}{{Add one to the most recent guess}{NW3pAW7b-1uzkcU-1}{\nwixu{NW3pAW7b-2isJE2-1}\nwixd{NW3pAW7b-1uzkcU-1}}}%
-\nwixlogsorted{c}{{Define the \code{}bigger\edoc{} function}{NW3pAW7b-5quDz-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-5quDz-1}}}%
-\nwixlogsorted{c}{{Define the \code{}guess-my-number\edoc{} function}{NW3pAW7b-3Xj5Zm-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-3Xj5Zm-1}}}%
-\nwixlogsorted{c}{{Define the \code{}smaller\edoc{} function}{NW3pAW7b-3sUKLt-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-3sUKLt-1}}}%
-\nwixlogsorted{c}{{Define the \code{}start-over\edoc{} function}{NW3pAW7b-2Okte7-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-2Okte7-1}}}%
-\nwixlogsorted{c}{{Halve the sum of the limits and shorten the result}{NW3pAW7b-3A9QGg-1}{\nwixu{NW3pAW7b-3Xj5Zm-1}\nwixd{NW3pAW7b-3A9QGg-1}}}%
-\nwixlogsorted{c}{{Have the computer guess a number}{NW3pAW7b-2K5nJA-1}{\nwixd{NW3pAW7b-2K5nJA-1}\nwixu{NW3pAW7b-3sUKLt-1}\nwixu{NW3pAW7b-5JtNW-1}\nwixu{NW3pAW7b-5quDz-1}\nwixu{NW3pAW7b-1uzkcU-1}\nwixu{NW3pAW7b-2Okte7-1}}}%
-\nwixlogsorted{c}{{Set *big* to one less than the last guess}{NW3pAW7b-1mRqYq-1}{\nwixu{NW3pAW7b-3sUKLt-1}\nwixd{NW3pAW7b-1mRqYq-1}}}%
-\nwixlogsorted{c}{{Set *small* to one greater than the last guess}{NW3pAW7b-2isJE2-1}{\nwixu{NW3pAW7b-5quDz-1}\nwixd{NW3pAW7b-2isJE2-1}}}%
+\nwixlogsorted{c}{{a session}{NW3pAW7b-2aJKj5-1}{\nwixd{NW3pAW7b-2aJKj5-1}}}%
+\nwixlogsorted{c}{{add one to the most recent guess}{NW3pAW7b-4Yu8C-1}{\nwixd{NW3pAW7b-4Yu8C-1}\nwixu{NW3pAW7b-3Xjyma-1}}}%
+\nwixlogsorted{c}{{define the \code{}bigger\edoc{} function}{NW3pAW7b-3lVgmB-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-3lVgmB-1}}}%
+\nwixlogsorted{c}{{define the \code{}guess-my-number\edoc{} function}{NW3pAW7b-1qZadw-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-1qZadw-1}}}%
+\nwixlogsorted{c}{{define the \code{}smaller\edoc{} function}{NW3pAW7b-3ZMSnf-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-3ZMSnf-1}}}%
+\nwixlogsorted{c}{{define the \code{}start-over\edoc{} function}{NW3pAW7b-2jBlyk-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-2jBlyk-1}}}%
+\nwixlogsorted{c}{{halve the sum of the limits and shorten the result}{NW3pAW7b-2ma7VI-1}{\nwixd{NW3pAW7b-2ma7VI-1}\nwixu{NW3pAW7b-1qZadw-1}}}%
+\nwixlogsorted{c}{{have the computer guess a number}{NW3pAW7b-KaMxC-1}{\nwixd{NW3pAW7b-KaMxC-1}\nwixu{NW3pAW7b-2xfHu8-1}\nwixu{NW3pAW7b-3ZMSnf-1}\nwixu{NW3pAW7b-4Yu8C-1}\nwixu{NW3pAW7b-3lVgmB-1}\nwixu{NW3pAW7b-2jBlyk-1}}}%
+\nwixlogsorted{c}{{reset the global state}{NW3pAW7b-23Nold-1}{\nwixu{NW3pAW7b-1LAszg-1}\nwixd{NW3pAW7b-23Nold-1}\nwixu{NW3pAW7b-2jBlyk-1}}}%
+\nwixlogsorted{c}{{set \code{}*big*\edoc{} to one less than the last guess}{NW3pAW7b-2BE8xK-1}{\nwixd{NW3pAW7b-2BE8xK-1}\nwixu{NW3pAW7b-3ZMSnf-1}}}%
+\nwixlogsorted{c}{{set \code{}*small*\edoc{} to one greater than the last guess}{NW3pAW7b-3Xjyma-1}{\nwixd{NW3pAW7b-3Xjyma-1}\nwixu{NW3pAW7b-3lVgmB-1}}}%
 \nwixlogsorted{c}{{src/guess.lisp}{NW3pAW7b-1LAszg-1}{\nwixd{NW3pAW7b-1LAszg-1}}}%
-\nwixlogsorted{c}{{Subtract one from the most recent guess}{NW3pAW7b-5JtNW-1}{\nwixu{NW3pAW7b-1mRqYq-1}\nwixd{NW3pAW7b-5JtNW-1}}}%
+\nwixlogsorted{c}{{subtract one from the most recent guess}{NW3pAW7b-2xfHu8-1}{\nwixd{NW3pAW7b-2xfHu8-1}\nwixu{NW3pAW7b-2BE8xK-1}}}%
 \nwixlogsorted{i}{{\nwixident{*big*}}{*big*}}%
 \nwixlogsorted{i}{{\nwixident{*small*}}{*small*}}%
 \nwixlogsorted{i}{{\nwixident{bigger}}{bigger}}%
 \nwixlogsorted{i}{{\nwixident{guess-my-number}}{guess-my-number}}%
 \nwixlogsorted{i}{{\nwixident{smaller}}{smaller}}%
 \nwixlogsorted{i}{{\nwixident{start-over}}{start-over}}%
-\nwbegindocs{25}\nwdocspar
-
-\section{Example Session}
-
-\begin{minted}{shell-session}
-$ rlwrap sbcl --load src/guess.lisp
-\end{minted}
-
-\begin{minted}{lisp}
-> (start-over)
-50
-> (smaller)
-25
-> (bigger)
-37
-> (bigger)
-43
-> (smaller)
-40
-> (bigger)
-41
-> (bigger)
-42
-\end{minted}
+\nwbegindocs{27}\nwdocspar
 
 \section{Chunks}
 \nowebchunks
 
 \section{Index}
 \nowebindex
+
+\bibliography{guess}
+\bibliographystyle{plainnat}
 
 \end{document}
 \nwenddocs{}

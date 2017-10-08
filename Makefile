@@ -14,7 +14,7 @@ cpif   ?= | cpif
 .nw.lisp: ; notangle -R'$@' $< ${cpif} $@
 .nw.tex:    export FINDUSES_LISP=1
 .nw.tex:  ; noweave -autodefs lisp -n -delay -index $< ${cpif} $@
-.tex.pdf: ; latexmk -shell-escape -nobibtex -pdf -outdir=$(call dirname,$<) $<
+.tex.pdf: ; latexmk -pdf -outdir=$(call dirname,$<) $<
 
 
 .PHONY: all docs
@@ -28,7 +28,7 @@ docs/%.pdf: src/%.pdf
 
 
 .PHONY: clean clean-docs clobber
-clean_keep_regex := '.*.[lisp|nw|tex]'
+clean_keep_regex := '.*.[bib|lisp|nw|tex]'
 
 clean:
 	@ find src -type f \! -regex ${clean_keep_regex} -delete
@@ -38,7 +38,7 @@ clean-docs:
 	@ rm -fr docs
 
 
-clobber_keep_regex := '.*.[nw]'
+clobber_keep_regex := '.*.[bib|nw]'
 
 clobber:
 	@ find src -type f \! -regex ${clobber_keep_reges} -delete

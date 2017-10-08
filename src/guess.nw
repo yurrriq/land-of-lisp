@@ -1,6 +1,24 @@
 % -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
-\documentclass[nobib]{tufte-handout}
+\documentclass{tufte-handout}
+
+\usepackage{fontspec}
+\setmonofont{Iosevka}
+
+% HACK: https://tex.stackexchange.com/a/200725/45537
+\usepackage{ifxetex}
+\ifxetex
+  \newcommand{\textls}[2][5]{%
+    \begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup
+  }
+  \renewcommand{\allcapsspacing}[1]{\textls[15]{#1}}
+  \renewcommand{\smallcapsspacing}[1]{\textls[10]{#1}}
+  \renewcommand{\allcaps}[1]{\textls[15]{\MakeTextUppercase{#1}}}
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
+\fi
+
 \usepackage{noweb}
+\noweboptions{nomargintag,smallcode,longxref,webnumbering,longchunks,english}
 
 \usepackage{color}
 % https://commons.wikimedia.org/wiki/File:Erlang_logo.svg
@@ -22,22 +40,31 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+\usepackage{mathtools}
+\mathtoolsset{centercolon}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\usepackage{dirtytalk}
+
+\usepackage[english]{fancyref}
+
 \usepackage[outputdir=src]{minted}
 
-\noweboptions{nomargintag,smallcode,longxref,webnumbering,noidentxref,longchunks,english}
 
 \title{%
-  The Guess-My-Number Game
-  \thanks{%
-    From Chapter 2 of \href{http://landoflisp.com}{\sl Land of Lisp}.
-  }
+  The Guess-My-Number Game%
+  \thanks{\cite{barski2010land-ch2}}
 }
 
 \author{Eric Bailey}
 
-\date{January 14, 2017\thanks{Last updated \today}.}
+\date{%
+  January 14, 2017
+  \thanks{Last updated \today}
+}
 
 \newmintinline[lsp]{lisp}{}
+\newmintinline[cee]{c}{}
 
 \begin{document}
 \maketitle
@@ -53,89 +80,39 @@
 
 \section{Outline}
 
+\marginnote{%
+  As the name suggests, this chunk gets tangled into
+  \href{https://github.com/yurrriq/land-of-lisp/blob/master/src/guess.lisp}{[[src/guess.lisp]]}.
+}
+
 <<src/guess.lisp>>=
-<<(Re)set the global state>>
+<<reset the global state>>
 
-<<Define the [[guess-my-number]] function>>
 
-<<Define the [[smaller]] function>>
+<<define the [[guess-my-number]] function>>
 
-<<Define the [[bigger]] function>>
 
-<<Define the [[start-over]] function>>
-@
+<<define the [[smaller]] function>>
 
-\section{Defining the Small and Big Variables}
-\label{sec:top-level-defs}
 
-\marginnote{Use earmuffs.}
+<<define the [[bigger]] function>>
 
-<<(Re)set the global state>>=
-(defparameter *small* 1)
-(defparameter *big* 100)
-@
 
-\section{Defining the Guess-My-Number Function}
-\label{sec:guess-my-number}
-
-<<Define the [[guess-my-number]] function>>=
-(defun guess-my-number ()
-  <<Halve the sum of the limits and shorten the result>>)
-@
-
-<<Halve the sum of the limits and shorten the result>>=
-(ash (+ *small* *big*) -1)
-@
-
-<<Have the computer guess a number>>=
-(guess-my-number)
-@
-
-\section{Defining the Smaller and Bigger Functions}
-
-<<Define the [[smaller]] function>>=
-(defun smaller ()
-  <<Set *big* to one less than the last guess>>
-  <<Have the computer guess a number>>)
-@
-
-<<Set *big* to one less than the last guess>>=
-(setf *big* <<Subtract one from the most recent guess>>)
-@
-
-<<Subtract one from the most recent guess>>=
-(1- <<Have the computer guess a number>>)
-@
-
-<<Define the [[bigger]] function>>=
-(defun bigger ()
-  <<Set *small* to one greater than the last guess>>
-  <<Have the computer guess a number>>)
-@
-
-<<Set *small* to one greater than the last guess>>=
-(setq *small* <<Add one to the most recent guess>>)
-@
-
-<<Add one to the most recent guess>>=
-(1+ <<Have the computer guess a number>>)
-@
-
-\section{Defining the Start-Over Function}
-
-<<Define the [[start-over]] function>>=
-(defun start-over ()
-  <<(Re)set the global state>>
-  <<Have the computer guess a number>>)
+<<define the [[start-over]] function>>
 @
 
 \section{Example Session}
 
+After loading [[<<src/guess.lisp>>]], you might have [[<<a session>>]] like this:
+
+\begin{marginfigure}
 \begin{minted}{shell-session}
 $ rlwrap sbcl --load src/guess.lisp
 \end{minted}
+\end{marginfigure}
 
-\begin{minted}{lisp}
+% \begin{minted}{lisp}
+<<a session>>=
 > (start-over)
 50
 > (smaller)
@@ -150,12 +127,142 @@ $ rlwrap sbcl --load src/guess.lisp
 41
 > (bigger)
 42
-\end{minted}
+@
+% \end{minted}
+
+
+\section{Defining the Small and Big Variables}
+\label{sec:top-level-defs}
+
+To give the computer a range of numbers in which to guess, we define the lower
+and upper limits, [[*small*]] and [[*big*]], respectively. We'll need to
+[[<<reset the global state>>]] as such whenever we want to restart the game,
+
+\marginnote[1.5\baselineskip]{%
+  \say{Global variable names should start and end with asterisks (also known in
+    this context as earmuffs)} \citep{google-style-guide}.
+}
+
+<<reset the global state>>=
+(defparameter *small* 1)
+(defparameter *big* 100)
+@
+
+\section{Defining the Guess-My-Number Function}
+\label{sec:guess-my-number}
+
+With [[*small*]] and [[*big*]] defined, we can tell the computer how to guess a
+number ([[guess-my-number]]) within those limits.
+
+The basic algorithm is to
+[[<<halve the sum of the limits and shorten the result>>]].
+To achieve that, we use Common Lisp's
+\href{http://www.lispworks.com/documentation/HyperSpec/Body/f_ash.htm}{\lsp{ash}}
+function to perform an {\sl arithmetic right shift} by $1$, i.e.
+$\floor{\cee{sum} \times 2^{-1}}$.
+
+\begin{marginfigure}%
+  \vskip -3\baselineskip
+  \caption{The guessing algorithm}
+  \begin{minted}{c}
+sum <- small + big
+right shift sum by 1
+return sum
+  \end{minted}
+  \label{fig:guessing-algorithm}
+\end{marginfigure}
+
+To [[<<define the [[guess-my-number]] function>>]], we simply implement the
+algorithm described in pseudocode in \Fref{fig:guessing-algorithm}.
+
+<<halve the sum of the limits and shorten the result>>=
+(ash (+ *small* *big*) -1)
+@
+
+<<define the [[guess-my-number]] function>>=
+(defun guess-my-number ()
+  <<halve the sum of the limits and shorten the result>>)
+@
+
+Now, when we want to [[<<have the computer guess a number>>]], we simply call
+[[guess-my-number]] as follows.
+<<have the computer guess a number>>=
+(guess-my-number)
+@
+
+\section{Defining the Smaller and Bigger Functions}
+
+\marginnote{%
+  To appropriately adjust [[*big*]],
+  [[<<subtract one from the most recent guess>>]].
+}
+
+\begin{marginfigure}
+<<subtract one from the most recent guess>>=
+(1- <<have the computer guess a number>>)
+@
+\end{marginfigure}
+
+To [[<<define the [[smaller]] function>>]], we need to update the global state
+such that the next guess is {\em smaller} than the last, i.e.
+[[<<set [[*big*]] to one less than the last guess>>]] then
+[[<<have the computer guess a number>>]].
+
+<<set [[*big*]] to one less than the last guess>>=
+(setf *big* <<subtract one from the most recent guess>>)
+@
+
+<<define the [[smaller]] function>>=
+(defun smaller ()
+  <<set [[*big*]] to one less than the last guess>>
+  <<have the computer guess a number>>)
+@
+
+\marginnote{%
+  To appropriately adjust [[*small*]],
+  [[<<add one to the most recent guess>>]].
+}
+
+\begin{marginfigure}
+<<add one to the most recent guess>>=
+(1+ <<have the computer guess a number>>)
+@
+\end{marginfigure}
+
+To [[<<define the [[bigger]] function>>]], we need to update the global state
+such that the next guess is {\em bigger} than the last, i.e.
+[[<<set [[*small*]] to one greater than the last guess>>]] then
+[[<<have the computer guess a number>>]].
+
+<<set [[*small*]] to one greater than the last guess>>=
+(setq *small* <<add one to the most recent guess>>)
+@
+
+<<define the [[bigger]] function>>=
+(defun bigger ()
+  <<set [[*small*]] to one greater than the last guess>>
+  <<have the computer guess a number>>)
+@
+
+\section{Defining the Start-Over Function}
+
+At this point, to [[<<define the [[start-over]] function>>]] is trivial:
+we simply [[<<reset the global state>>]] then
+[[<<have the computer guess a number>>]].
+
+<<define the [[start-over]] function>>=
+(defun start-over ()
+  <<reset the global state>>
+  <<have the computer guess a number>>)
+@
 
 \section{Chunks}
 \nowebchunks
 
 \section{Index}
 \nowebindex
+
+\bibliography{guess}
+\bibliographystyle{plainnat}
 
 \end{document}
