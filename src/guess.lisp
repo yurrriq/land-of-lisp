@@ -13,5 +13,6 @@
   (guess-my-number))
 
 (defun start-over ()
-  <<(Re)set the global state>
+  (defparameter *small* 1)
+  (defparameter *big* 100)
   (guess-my-number))
