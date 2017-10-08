@@ -41,4 +41,4 @@ clean-docs:
 clobber_keep_regex := '.*.[bib|nw]'
 
 clobber:
-	@ find src -type f \! -regex ${clobber_keep_reges} -delete
+	@ find src -type f \! -regex ${clobber_keep_regex} -delete
