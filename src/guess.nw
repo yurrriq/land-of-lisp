@@ -256,11 +256,17 @@ we simply [[<<reset the global state>>]] then
   <<have the computer guess a number>>)
 @
 
-\section{Chunks}
-\nowebchunks
+\section{Full Listing}
+
+[[<<src/guess.lisp>>]]:
+\inputminted{lisp}{src/guess.lisp}
 
 \section{Index}
 \nowebindex
+\newpage
+
+\section{Chunks}
+\nowebchunks
 
 \bibliography{guess}
 \bibliographystyle{plainnat}
