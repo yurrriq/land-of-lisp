@@ -3,6 +3,8 @@
 
 \input{preamble.tex}
 
+\noweboptions{nomargintag,smallcode,longxref,webnumbering,longchunks,english}
+
 \usepackage{hyperref}
 \hypersetup{
   pdffitwindow=true,
@@ -94,7 +96,6 @@ $ rlwrap sbcl --load src/guess.lisp
 
 
 \section{Defining the Small and Big Variables}
-\label{sec:top-level-defs}
 
 To give the computer a range of numbers in which to guess, we define the lower
 and upper limits, {\Tt{}\nwlinkedidentq{*small*}{NW3pAW7b-23Nold-1}\nwendquote} and {\Tt{}\nwlinkedidentq{*big*}{NW3pAW7b-23Nold-1}\nwendquote}, respectively. We'll need to
@@ -112,7 +113,6 @@ and upper limits, {\Tt{}\nwlinkedidentq{*small*}{NW3pAW7b-23Nold-1}\nwendquote} 
 
 
 \section{Defining the Guess-My-Number Function}
-\label{sec:guess-my-number}
 
 With {\Tt{}\nwlinkedidentq{*small*}{NW3pAW7b-23Nold-1}\nwendquote} and {\Tt{}\nwlinkedidentq{*big*}{NW3pAW7b-23Nold-1}\nwendquote} defined, we can tell the computer how to guess a
 number ({\Tt{}\nwlinkedidentq{guess-my-number}{NW3pAW7b-1qZadw-1}\nwendquote}) within those limits.

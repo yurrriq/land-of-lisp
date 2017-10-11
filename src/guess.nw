@@ -96,7 +96,6 @@ $ rlwrap sbcl --load src/guess.lisp
 
 
 \section{Defining the Small and Big Variables}
-\label{sec:top-level-defs}
 
 To give the computer a range of numbers in which to guess, we define the lower
 and upper limits, [[*small*]] and [[*big*]], respectively. We'll need to
@@ -114,7 +113,6 @@ and upper limits, [[*small*]] and [[*big*]], respectively. We'll need to
 
 
 \section{Defining the Guess-My-Number Function}
-\label{sec:guess-my-number}
 
 With [[*small*]] and [[*big*]] defined, we can tell the computer how to guess a
 number ([[guess-my-number]]) within those limits.
