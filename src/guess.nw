@@ -3,8 +3,6 @@
 
 \input{preamble.tex}
 
-\noweboptions{nomargintag,smallcode,longxref,webnumbering,longchunks,english}
-
 \usepackage{hyperref}
 \hypersetup{
   pdffitwindow=true,
