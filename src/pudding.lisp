@@ -1,4 +1,6 @@
 (defvar *arch-enemy* nil)
+
+
 (defun pudding-eater (person)
   (case person
         ((henry)   (setf *arch-enemy* 'stupid-lisp-alien)

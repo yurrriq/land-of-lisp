@@ -52,6 +52,8 @@ is, set the initial value to \lsp{nil}.
 
 <<src/pudding.lisp>>=
 (defvar *arch-enemy* nil)
+
+
 @
 
 
