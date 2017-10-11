@@ -1,31 +1,9 @@
 % -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
 \documentclass{tufte-handout}
 
-\usepackage{fontspec}
-% https://tex.stackexchange.com/a/43628/45537
-\setmainfont[Mapping=tex-text,Numbers=OldStyle]{Palatino}
-\setsansfont[Mapping=tex-text,Numbers=OldStyle,Scale=MatchLowercase]{Gill Sans}
-\setmonofont[Mapping=tex-text,Scale=MatchLowercase]{Iosevka}
+\input{preamble.tex}
 
-% HACK: https://tex.stackexchange.com/a/200725/45537
-\usepackage{ifxetex}
-\ifxetex
-  \newcommand{\textls}[2][5]{%
-    \begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup
-  }
-  \renewcommand{\allcapsspacing}[1]{\textls[15]{#1}}
-  \renewcommand{\smallcapsspacing}[1]{\textls[10]{#1}}
-  \renewcommand{\allcaps}[1]{\textls[15]{\MakeTextUppercase{#1}}}
-  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
-  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
-\fi
-
-\usepackage{noweb}
 \noweboptions{nomargintag,smallcode,longxref,webnumbering,longchunks,english}
-
-\usepackage{color}
-% https://commons.wikimedia.org/wiki/File:Erlang_logo.svg
-\definecolor{ErlangRed}{HTML}{A90533}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -40,34 +18,15 @@
   urlcolor=ErlangRed
 }
 
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-\usepackage{mathtools}
-\mathtoolsset{centercolon}
-\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
-
-\usepackage{dirtytalk}
-
-\usepackage[english]{fancyref}
-
-\usepackage[outputdir=src]{minted}
-
-
 \title{%
   The Guess-My-Number Game%
   \thanks{\cite{barski2010land-ch2}}
 }
 
-\author{Eric Bailey}
-
 \date{%
   January 14, 2017
   \thanks{Last updated \today}
 }
-
-\newmintinline[lsp]{lisp}{}
-\newmintinline[cee]{c}{}
 
 \begin{document}
 \maketitle
@@ -80,6 +39,7 @@
 
 % \tableofcontents
 % \newpage
+
 
 \section{Outline}
 
@@ -103,6 +63,7 @@
 
 <<define the [[start-over]] function>>
 @
+
 
 \section{Example Session}
 
@@ -151,6 +112,7 @@ and upper limits, [[*small*]] and [[*big*]], respectively. We'll need to
 (defparameter *big* 100)
 @
 
+
 \section{Defining the Guess-My-Number Function}
 \label{sec:guess-my-number}
 
@@ -192,6 +154,7 @@ Now, when we want to [[<<have the computer guess a number>>]], we simply call
 <<have the computer guess a number>>=
 (guess-my-number)
 @
+
 
 \section{Defining the Smaller and Bigger Functions}
 
@@ -247,6 +210,7 @@ such that the next guess is {\em bigger} than the last, i.e.
   <<have the computer guess a number>>)
 @
 
+
 \section{Defining the Start-Over Function}
 
 At this point, to [[<<define the [[start-over]] function>>]] is trivial:
@@ -259,17 +223,21 @@ we simply [[<<reset the global state>>]] then
   <<have the computer guess a number>>)
 @
 
+
 \section{Full Listing}
 
 [[<<src/guess.lisp>>]]:
 \inputminted{lisp}{src/guess.lisp}
 
+
 \section{Index}
 \nowebindex
 \newpage
 
+
 \section{Chunks}
 \nowebchunks
+
 
 \bibliography{guess}
 \bibliographystyle{plainnat}

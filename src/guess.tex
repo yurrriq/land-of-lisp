@@ -1,31 +1,7 @@
 % -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-% ===> this file was generated automatically by noweave --- better not edit it
 \documentclass{tufte-handout}
 
-\usepackage{fontspec}
-% https://tex.stackexchange.com/a/43628/45537
-\setmainfont[Mapping=tex-text,Numbers=OldStyle]{Palatino}
-\setsansfont[Mapping=tex-text,Numbers=OldStyle,Scale=MatchLowercase]{Gill Sans}
-\setmonofont[Mapping=tex-text,Scale=MatchLowercase]{Iosevka}
-
-% HACK: https://tex.stackexchange.com/a/200725/45537
-\usepackage{ifxetex}
-\ifxetex
-  \newcommand{\textls}[2][5]{%
-    \begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup
-  }
-  \renewcommand{\allcapsspacing}[1]{\textls[15]{#1}}
-  \renewcommand{\smallcapsspacing}[1]{\textls[10]{#1}}
-  \renewcommand{\allcaps}[1]{\textls[15]{\MakeTextUppercase{#1}}}
-  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
-  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
-\fi
-
-\usepackage{noweb}
-\noweboptions{nomargintag,smallcode,longxref,webnumbering,longchunks,english}
-
-\usepackage{color}
-% https://commons.wikimedia.org/wiki/File:Erlang_logo.svg
-\definecolor{ErlangRed}{HTML}{A90533}
+\input{preamble.tex}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -40,34 +16,15 @@
   urlcolor=ErlangRed
 }
 
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-\usepackage{mathtools}
-\mathtoolsset{centercolon}
-\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
-
-\usepackage{dirtytalk}
-
-\usepackage[english]{fancyref}
-
-\usepackage[outputdir=src]{minted}
-
-
 \title{%
   The Guess-My-Number Game%
   \thanks{\cite{barski2010land-ch2}}
 }
 
-\author{Eric Bailey}
-
 \date{%
   January 14, 2017
   \thanks{Last updated \today}
 }
-
-\newmintinline[lsp]{lisp}{}
-\newmintinline[cee]{c}{}
 
 \begin{document}
 \maketitle
@@ -80,6 +37,7 @@
 
 % \tableofcontents
 % \newpage
+
 
 \section{Outline}
 
@@ -103,6 +61,7 @@
 
 \LA{}define the \code{}start-over\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-2jBlyk-1}}\RA{}
 \nwnotused{src/guess.lisp}\nwendcode{}\nwbegindocs{3}\nwdocspar
+
 
 \section{Example Session}
 
@@ -151,6 +110,7 @@ and upper limits, {\Tt{}\nwlinkedidentq{*small*}{NW3pAW7b-23Nold-1}\nwendquote} 
 (defparameter \nwlinkedidentc{*big*}{NW3pAW7b-23Nold-1} 100)\nwindexdefn{\nwixident{*big*}}{*big*}{NW3pAW7b-23Nold-1}
 \nwused{\\{NW3pAW7b-1LAszg-1}\\{NW3pAW7b-2jBlyk-1}}\nwidentdefs{\\{{\nwixident{*big*}}{*big*}}\\{{\nwixident{*small*}}{*small*}}}\nwendcode{}\nwbegindocs{7}\nwdocspar
 
+
 \section{Defining the Guess-My-Number Function}
 \label{sec:guess-my-number}
 
@@ -192,6 +152,7 @@ Now, when we want to {\Tt{}\LA{}have the computer guess a number~{\nwtagstyle{}\
 \nwenddocs{}\nwbegincode{12}\sublabel{NW3pAW7b-KaMxC-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}}\moddef{have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW3pAW7b-2xfHu8-1}\\{NW3pAW7b-3ZMSnf-1}\\{NW3pAW7b-4Yu8C-1}\\{NW3pAW7b-3lVgmB-1}\\{NW3pAW7b-2jBlyk-1}}\nwenddeflinemarkup
 (\nwlinkedidentc{guess-my-number}{NW3pAW7b-1qZadw-1})
 \nwused{\\{NW3pAW7b-2xfHu8-1}\\{NW3pAW7b-3ZMSnf-1}\\{NW3pAW7b-4Yu8C-1}\\{NW3pAW7b-3lVgmB-1}\\{NW3pAW7b-2jBlyk-1}}\nwidentuses{\\{{\nwixident{guess-my-number}}{guess-my-number}}}\nwindexuse{\nwixident{guess-my-number}}{guess-my-number}{NW3pAW7b-KaMxC-1}\nwendcode{}\nwbegindocs{13}\nwdocspar
+
 
 \section{Defining the Smaller and Bigger Functions}
 
@@ -247,6 +208,7 @@ such that the next guess is {\em bigger} than the last, i.e.
   \LA{}have the computer guess a number~{\nwtagstyle{}\subpageref{NW3pAW7b-KaMxC-1}}\RA{})
 \nwused{\\{NW3pAW7b-1LAszg-1}}\nwidentdefs{\\{{\nwixident{bigger}}{bigger}}}\nwendcode{}\nwbegindocs{25}\nwdocspar
 
+
 \section{Defining the Start-Over Function}
 
 At this point, to {\Tt{}\LA{}define the \code{}start-over\edoc{} function~{\nwtagstyle{}\subpageref{NW3pAW7b-2jBlyk-1}}\RA{}\nwendquote} is trivial:
@@ -280,17 +242,21 @@ we simply {\Tt{}\LA{}reset the global state~{\nwtagstyle{}\subpageref{NW3pAW7b-2
 \nwixlogsorted{i}{{\nwixident{start-over}}{start-over}}%
 \nwbegindocs{27}\nwdocspar
 
+
 \section{Full Listing}
 
 {\Tt{}\LA{}src/guess.lisp~{\nwtagstyle{}\subpageref{NW3pAW7b-1LAszg-1}}\RA{}\nwendquote}:
 \inputminted{lisp}{src/guess.lisp}
 
+
 \section{Index}
 \nowebindex
 \newpage
 
+
 \section{Chunks}
 \nowebchunks
+
 
 \bibliography{guess}
 \bibliographystyle{plainnat}
