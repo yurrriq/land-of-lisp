@@ -1,1 +1,3 @@
-src/*.tex linguist-generated
+src/guess.tex linguist-generated
+src/pudding.tex linguist-generated
+docs/index.html linguist-generated
