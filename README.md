@@ -3,13 +3,13 @@
 *Working through examples from [Land of Lisp][book]*
 
 - Chapter 2: The Guess-My-Number Game
-  - [Source][guess.nw]
-  - [Code][guess.lisp]
-  - [PDF][guess.pdf]
+    - [Source][guess.nw]
+    - [Code][guess.lisp]
+    - [PDF][guess.pdf]
 - Chapter 4: Pudding Eater
-  - [Source][pudding.nw]
-  - [Code][pudding.lisp]
-  - [PDF][pudding.pdf]
+    - [Source][pudding.nw]
+    - [Code][pudding.lisp]
+    - [PDF][pudding.pdf]
 
 <!-- Named Links -->
 [book]: http://landoflisp.com

@@ -3,7 +3,7 @@ LSP_SRCS  := ${NW_SRCS:.nw=.lisp}
 TEX_SRCS  := ${NW_SRCS:.nw=.tex}
 PDF_SRCS  := ${NW_SRCS:.nw=.pdf}
 SRCS      := ${LSP_SRCS} ${TEX_SRCS} ${PDF_SRCS}
-DOCS_SRCS := $(patsubst src/%,docs/%,${PDF_SRCS})
+DOCS_SRCS := $(patsubst src/%,docs/%,${PDF_SRCS}) docs/index.html
 
 
 # http://stackoverflow.com/a/17807510
@@ -20,6 +20,10 @@ cpif   ?= | cpif
 .PHONY: all docs
 all: ${SRCS} docs
 docs: ${DOCS_SRCS}
+
+
+docs/index.html: README.md
+	pandoc -f markdown_github -t html -s $< -o $@
 
 
 docs/%.pdf: src/%.lisp src/%.pdf
