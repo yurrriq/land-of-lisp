@@ -22,9 +22,9 @@ all: ${SRCS} docs
 docs: ${DOCS_SRCS}
 
 
-docs/%.pdf: src/%.pdf
+docs/%.pdf: src/%.lisp src/%.pdf
 	@ mkdir -p $(dir $@)
-	@ mv $< $@
+	@ mv src/$*.pdf $@
 
 
 .PHONY: clean clean-docs clobber
