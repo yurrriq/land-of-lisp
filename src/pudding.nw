@@ -1,0 +1,166 @@
+% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
+\documentclass{tufte-handout}
+
+\input{preamble.tex}
+
+\noweboptions{smallcode,longxref,webnumbering,longchunks,english}
+
+\usepackage{hyperref}
+\hypersetup{
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={Pudding Eater},
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 4},
+  pdfkeywords={Lisp, silly, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\title{%
+  Pudding Eater
+  \thanks{\cite{barski2010land-ch4}}
+}
+
+\date{%
+  October 10, 2017
+  \thanks{Last updated \today}
+}
+
+\begin{document}
+\maketitle
+@
+
+% \begin{abstract}
+%   Who ate my pudding?
+% \end{abstract}
+
+% \tableofcontents
+% \newpage
+
+
+\section{Defining the Arch-Enemy Variable}
+
+Since at first we don't know who the pudding eater (a.k.a. our [[*arch-enemy*]])
+is, set the initial value to \lsp{nil}.
+
+\marginnote[1.5\baselineskip]{%
+  \say{Global variable names should start and end with asterisks (also known in
+    this context as earmuffs)} \citep{google-style-guide}.
+}
+
+<<src/pudding.lisp>>=
+(defvar *arch-enemy* nil)
+@
+
+
+\section{Defining the Pudding-Eater Function}
+
+This chapter introduces \lsp{cond}, an extremely versatile function that's
+\say{been around sine the Lisp Stone Age.} The basic form is as follows.
+
+\begin{minted}{lisp}
+(cond (test-form form*)
+      ...)
+\end{minted}
+
+\begin{marginfigure}
+  \includegraphics[width=\textwidth]{lisplogo_alien.eps}
+  \caption{Henry, the Lisp Alien}
+  \label{fig:lisp-alien}
+\end{marginfigure}
+
+Since \lsp{test-form}s are evaluated for truthiness, we can branch on which
+\lsp{person} ate our pudding.
+
+\begin{marginfigure}
+<<it was Henry>>=
+(eq person 'henry)
+@
+
+<<blame Henry>>=
+(setf *arch-enemy* 'stupid-lisp-alien)
+'(curse you lisp alien - you ate my pudding)
+@
+\end{marginfigure}
+
+If [[<<it was Henry>>]], the Lisp alien, [[<<blame Henry>>]];
+
+\begin{marginfigure}
+<<it was Johnny>>=
+(eq person 'johnny)
+@
+
+<<blame Johnny>>=
+(setf *arch-enemy* 'useless-old-johnny)
+'(i hope you chocked on my pudding johnny)
+@
+\end{marginfigure}
+
+If [[<<it was Johnny>>]], [[<<blame Johnny>>]].
+
+\begin{marginfigure}
+<<ask them why>>=
+'(why you eat my pudding stranger ?)
+@
+\end{marginfigure}
+
+If it was someone else, [[<<ask them why>>]].
+
+The \lsp{cond} version of [[pudding-eater]] then, would look like this:
+
+<<[[cond]]-flavoured [[pudding-eater]]>>=
+(λ (person)
+  (cond (<<it was Johnny>> <<blame Johnny>>)
+        (<<it was Henry>>  <<blame Henry>>)
+        (t                <<ask them why>>)))
+@
+
+More succinctly, with \lsp{case}, we can define the [[pudding-eater]] function.
+
+<<src/pudding.lisp>>=
+(defun pudding-eater (person)
+  (case person
+        ((henry)   <<blame Henry>>)
+        ((johnny)  <<blame Johnny>>)
+        (otherwise <<ask them why>>)))
+@
+
+
+\section{Full Listing}
+
+[[<<src/pudding.lisp>>]]:
+\inputminted{lisp}{src/pudding.lisp}
+
+\section{Example Session}
+
+After loading [[<<src/pudding.lisp>>]], you might have a session like this:
+
+\begin{marginfigure}
+\begin{minted}{shell-session}
+$ rlwrap sbcl --load src/pudding.lisp
+\end{minted}
+\end{marginfigure}
+
+\begin{minted}{lisp}
+> (pudding-eater 'johnny)
+(I HOPE YOU CHOKED ON MY PUDDING JOHNNY)
+> *arch-enemy*
+USELESS-OLD-JOHNNY
+> (pudding-eater 'george-clooney)
+(WHY YOU EAT MY PUDDING STRANGER ?)
+\end{minted}
+
+
+% \section{Index}
+% \nowebindex
+% \newpage
+
+% \section{Chunks}
+% \nowebchunks
+
+\bibliography{pudding}
+\bibliographystyle{plainnat}
+
+\end{document}
