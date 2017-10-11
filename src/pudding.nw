@@ -47,7 +47,7 @@ is, set the initial value to \lsp{nil}.
     this context as earmuffs)} \citep{google-style-guide}.
 }
 
-<<src/pudding.lisp>>=
+<<*>>=
 (defvar *arch-enemy* nil)
 
 
@@ -118,7 +118,7 @@ The \lsp{cond} version of [[pudding-eater]] then, would look like this:
 
 More succinctly, with \lsp{case}, we can define the [[pudding-eater]] function.
 
-<<src/pudding.lisp>>=
+<<*>>=
 (defun pudding-eater (person)
   (case person
         ((henry)   <<blame Henry>>)
@@ -129,12 +129,13 @@ More succinctly, with \lsp{case}, we can define the [[pudding-eater]] function.
 
 \section{Full Listing}
 
-[[<<src/pudding.lisp>>]]:
 \inputminted{lisp}{src/pudding.lisp}
+
 
 \section{Example Session}
 
-After loading [[<<src/pudding.lisp>>]], you might have a session like this:
+After loading \srclink{src/pudding.lisp},
+you might have [[<<a session>>]] like this:
 
 \begin{marginfigure}
 \begin{minted}{shell-session}
@@ -142,14 +143,14 @@ $ rlwrap sbcl --load src/pudding.lisp
 \end{minted}
 \end{marginfigure}
 
-\begin{minted}{lisp}
+<<a session>>=
 > (pudding-eater 'johnny)
 (I HOPE YOU CHOKED ON MY PUDDING JOHNNY)
 > *arch-enemy*
 USELESS-OLD-JOHNNY
 > (pudding-eater 'george-clooney)
 (WHY YOU EAT MY PUDDING STRANGER ?)
-\end{minted}
+@
 
 
 % \section{Index}

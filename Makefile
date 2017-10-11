@@ -11,7 +11,7 @@ dirname = $(patsubst %/,%,$(dir $1))
 cpif   ?= | cpif
 
 .SUFFIXES: .nw .lisp .pdf .tex
-.nw.lisp: ; notangle -R'$@' $< ${cpif} $@
+.nw.lisp: ; notangle $< ${cpif} $@
 .nw.tex:    export FINDUSES_LISP=1
 .nw.tex:  ; noweave -autodefs lisp -n -delay -index $< ${cpif} $@
 .tex.pdf: ; latexmk -pdf -outdir=$(call dirname,$<) $<
