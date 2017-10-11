@@ -28,7 +28,7 @@ docs/index.html: README.md
 
 docs/%.pdf: src/%.lisp src/%.pdf
 	@ mkdir -p $(dir $@)
-	@ mv src/$*.pdf $@
+	@ cp src/$*.pdf $@
 
 
 .PHONY: clean clean-docs clobber
