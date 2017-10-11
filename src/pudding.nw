@@ -3,7 +3,6 @@
 
 \input{preamble.tex}
 
-\usepackage{hyperref}
 \hypersetup{
   pdffitwindow=true,
   pdfstartview={FitH},

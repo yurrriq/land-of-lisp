@@ -39,4 +39,11 @@
 \newmintinline[lsp]{lisp}{}
 \newmintinline[cee]{c}{}
 
+\usepackage{hyperref}
+\newcommand{\srclink}[1]{%
+  \href{https://github.com/yurrriq/land-of-lisp/blob/master/#1}{%
+    \mintinline{text}{#1}%
+  }%
+}
+
 \author{Eric Bailey}
