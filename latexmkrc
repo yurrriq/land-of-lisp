@@ -1,1 +1,1 @@
-$pdflatex   = q/xelatex %O --shell-escape %S/;
+$pdflatex = q/xelatex %O -shell-escape -interaction=nonstopmode %S/;

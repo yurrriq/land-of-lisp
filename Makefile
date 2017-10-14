@@ -14,7 +14,7 @@ cpif   ?= | cpif
 .nw.lisp: ; notangle $< ${cpif} $@
 .nw.tex:    export FINDUSES_LISP=1
 .nw.tex:  ; noweave -autodefs lisp -n -delay -index $< ${cpif} $@
-.tex.pdf: ; latexmk -pdf -outdir=$(call dirname,$<) $<
+.tex.pdf: ; latexmk -outdir=$(call dirname,$<) -pdf $<
 
 
 .PHONY: all docs
