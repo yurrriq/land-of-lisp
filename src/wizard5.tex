@@ -1,0 +1,482 @@
+% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-% ===> this file was generated automatically by noweave --- better not edit it
+\documentclass{tufte-handout}
+
+\input{preamble.tex}
+
+\hypersetup{
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={The Wizard's Adventure Game},
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 5},
+  pdfkeywords={Lisp, game, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\title{%
+  The Wizard's Adventure Game
+  \thanks{\cite{barski2010land-ch5}}
+}
+
+\date{%
+  October 14, 2017
+  \thanks{Last updated \today}
+}
+
+\begin{document}
+\maketitle
+\nwfilename{src/wizard5.nw}\nwbegindocs{1}\nwdocspar
+
+\section{Setting the Scene}
+
+This world consists of only three locations:
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{2}\sublabel{NWNVxch-1p0Y9w-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\endmoddef\nwstartdeflinemarkup\nwprevnextdefs{\relax}{NWNVxch-1p0Y9w-2}\nwenddeflinemarkup
+\LA{}define the global variables~{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-1}}\RA{}
+\nwalsodefined{\\{NWNVxch-1p0Y9w-2}\\{NWNVxch-1p0Y9w-3}\\{NWNVxch-1p0Y9w-4}\\{NWNVxch-1p0Y9w-5}\\{NWNVxch-1p0Y9w-6}\\{NWNVxch-1p0Y9w-7}\\{NWNVxch-1p0Y9w-8}\\{NWNVxch-1p0Y9w-9}\\{NWNVxch-1p0Y9w-A}}\nwnotused{*}\nwendcode{}\nwbegindocs{3}\nwdocspar
+
+\nwenddocs{}\nwbegincode{4}\sublabel{NWNVxch-ozR14-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-ozR14-1}}}\moddef{living-room description~{\nwtagstyle{}\subpageref{NWNVxch-ozR14-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-1}}\nwenddeflinemarkup
+a wizard is snoring loudly on the couch.
+\nwused{\\{NWNVxch-tHqk1-1}}\nwendcode{}\nwbegindocs{5}\nwdocspar
+
+\nwenddocs{}\nwbegincode{6}\sublabel{NWNVxch-4E8Y49-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-4E8Y49-1}}}\moddef{garden description~{\nwtagstyle{}\subpageref{NWNVxch-4E8Y49-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-1}}\nwenddeflinemarkup
+there is a well in front of you.
+\nwused{\\{NWNVxch-tHqk1-1}}\nwendcode{}\nwbegindocs{7}\nwdocspar
+
+\nwenddocs{}\nwbegincode{8}\sublabel{NWNVxch-2w0KS8-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2w0KS8-1}}}\moddef{attic description~{\nwtagstyle{}\subpageref{NWNVxch-2w0KS8-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-1}}\nwenddeflinemarkup
+there is a giant welding torch in the corner.
+\nwused{\\{NWNVxch-tHqk1-1}}\nwendcode{}\nwbegindocs{9}\nwdocspar
+\end{marginfigure}
+
+\begin{itemize}
+  \item the living room
+  \item a beautiful garden
+  \item the attic
+\end{itemize}
+
+
+\nwenddocs{}\nwbegincode{10}\sublabel{NWNVxch-tHqk1-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-1}}}\moddef{define the global variables~{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-1}}\nwprevnextdefs{\relax}{NWNVxch-tHqk1-2}\nwenddeflinemarkup
+(defparameter \nwlinkedidentc{*nodes*}{NWNVxch-tHqk1-1}
+  '((living-room (you are in the living room.
+                  \LA{}living-room description~{\nwtagstyle{}\subpageref{NWNVxch-ozR14-1}}\RA{}))
+    (garden      (you are in a beautiful garden.
+                  \LA{}garden description~{\nwtagstyle{}\subpageref{NWNVxch-4E8Y49-1}}\RA{}))
+    (attic       (you are in the attic.
+                  \LA{}attic description~{\nwtagstyle{}\subpageref{NWNVxch-2w0KS8-1}}\RA{}))))
+
+\nwindexdefn{\nwixident{*nodes*}}{*nodes*}{NWNVxch-tHqk1-1}\eatline
+\nwalsodefined{\\{NWNVxch-tHqk1-2}\\{NWNVxch-tHqk1-3}\\{NWNVxch-tHqk1-4}}\nwused{\\{NWNVxch-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{*nodes*}}{*nodes*}}}\nwendcode{}\nwbegindocs{11}\nwdocspar
+
+\section{Describing the Location}
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{12}\sublabel{NWNVxch-3T3roy-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-3T3roy-1}}}\moddef{look up a location~{\nwtagstyle{}\subpageref{NWNVxch-3T3roy-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-2}}\nwenddeflinemarkup
+(assoc location nodes)
+\nwused{\\{NWNVxch-1p0Y9w-2}}\nwendcode{}\nwbegindocs{13}\nwdocspar
+
+\nwenddocs{}\nwbegincode{14}\sublabel{NWNVxch-127rHL-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\moddef{session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\endmoddef\nwstartdeflinemarkup\nwprevnextdefs{\relax}{NWNVxch-127rHL-2}\nwenddeflinemarkup
+> (\nwlinkedidentc{describe-location}{NWNVxch-1p0Y9w-2} 'living-room \nwlinkedidentc{*nodes*}{NWNVxch-tHqk1-1})
+(YOU ARE IN THE LIVING-ROOM.
+ A WIZARD IS SNORING LOUDLY ON THE COUCH.)
+\nwalsodefined{\\{NWNVxch-127rHL-2}\\{NWNVxch-127rHL-3}\\{NWNVxch-127rHL-4}\\{NWNVxch-127rHL-5}\\{NWNVxch-127rHL-6}\\{NWNVxch-127rHL-7}\\{NWNVxch-127rHL-8}}\nwnotused{session}\nwidentuses{\\{{\nwixident{*nodes*}}{*nodes*}}\\{{\nwixident{describe-location}}{describe-location}}}\nwindexuse{\nwixident{*nodes*}}{*nodes*}{NWNVxch-127rHL-1}\nwindexuse{\nwixident{describe-location}}{describe-location}{NWNVxch-127rHL-1}\nwendcode{}\nwbegindocs{15}\nwdocspar
+\end{marginfigure}
+
+To find the description, {\Tt{}\LA{}look up a location~{\nwtagstyle{}\subpageref{NWNVxch-3T3roy-1}}\RA{}\nwendquote} and take the \lsp{cadr}.
+Preferring the {\sl functional programming} style, pass \lsp{nodes} as an
+argument, instead of referencing {\Tt{}\nwlinkedidentq{*nodes*}{NWNVxch-tHqk1-1}\nwendquote} directly.
+
+\nwenddocs{}\nwbegincode{16}\sublabel{NWNVxch-1p0Y9w-2}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-2}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-1}{NWNVxch-1p0Y9w-3}\nwenddeflinemarkup
+(defun \nwlinkedidentc{describe-location}{NWNVxch-1p0Y9w-2} (location nodes)\nwindexdefn{\nwixident{describe-location}}{describe-location}{NWNVxch-1p0Y9w-2}
+  (cadr \LA{}look up a location~{\nwtagstyle{}\subpageref{NWNVxch-3T3roy-1}}\RA{}))
+
+
+\nwidentdefs{\\{{\nwixident{describe-location}}{describe-location}}}\nwendcode{}\nwbegindocs{17}\nwdocspar
+
+
+\section{Describing the Paths}
+
+\begin{marginfigure}
+  \vskip 15em
+\nwenddocs{}\nwbegincode{18}\sublabel{NWNVxch-2xf4OR-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2xf4OR-1}}}\moddef{living-room paths~{\nwtagstyle{}\subpageref{NWNVxch-2xf4OR-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-2}}\nwenddeflinemarkup
+(garden west door)
+(attic upstairs ladder)
+\nwused{\\{NWNVxch-tHqk1-2}}\nwendcode{}\nwbegindocs{19}\nwdocspar
+
+\nwenddocs{}\nwbegincode{20}\sublabel{NWNVxch-1acezE-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1acezE-1}}}\moddef{garden path~{\nwtagstyle{}\subpageref{NWNVxch-1acezE-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-2}}\nwenddeflinemarkup
+(living-room east door)
+\nwused{\\{NWNVxch-tHqk1-2}}\nwendcode{}\nwbegindocs{21}\nwdocspar
+
+\nwenddocs{}\nwbegincode{22}\sublabel{NWNVxch-2ZorP9-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2ZorP9-1}}}\moddef{attic path~{\nwtagstyle{}\subpageref{NWNVxch-2ZorP9-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-2}}\nwenddeflinemarkup
+(living-room downstairs ladder)
+\nwused{\\{NWNVxch-tHqk1-2}}\nwendcode{}\nwbegindocs{23}\nwdocspar
+
+\nwenddocs{}\nwbegincode{24}\sublabel{NWNVxch-127rHL-2}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-127rHL-2}}}\moddef{session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-127rHL-1}{NWNVxch-127rHL-3}\nwenddeflinemarkup
+> (\nwlinkedidentc{describe-path}{NWNVxch-1p0Y9w-3} '(garden west door))
+(THERE IS A DOOR GOING WEST FROM HERE.)
+\nwidentuses{\\{{\nwixident{describe-path}}{describe-path}}}\nwindexuse{\nwixident{describe-path}}{describe-path}{NWNVxch-127rHL-2}\nwendcode{}\nwbegindocs{25}\nwdocspar
+\end{marginfigure}
+
+From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
+through the \lsp{door}, or to the \lsp{attic} by going \lsp{upstairs} via the
+\lsp{ladder}.
+
+From the \lsp{garden}, you can move to the \lsp{living-room} by going \lsp{east}
+through the \lsp{door}.
+
+From the \lsp{attic}, you can move to the \lsp{living-room} by going
+\lsp{downstairs} via the \lsp{ladder}.
+
+\nwenddocs{}\nwbegincode{26}\sublabel{NWNVxch-tHqk1-2}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-2}}}\moddef{define the global variables~{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-1}}\nwprevnextdefs{NWNVxch-tHqk1-1}{NWNVxch-tHqk1-3}\nwenddeflinemarkup
+(defparameter \nwlinkedidentc{*edges*}{NWNVxch-tHqk1-2}
+  '((living-room \LA{}living-room paths~{\nwtagstyle{}\subpageref{NWNVxch-2xf4OR-1}}\RA{})
+    (garden      \LA{}garden path~{\nwtagstyle{}\subpageref{NWNVxch-1acezE-1}}\RA{})
+    (attic       \LA{}attic path~{\nwtagstyle{}\subpageref{NWNVxch-2ZorP9-1}}\RA{})))
+
+\nwindexdefn{\nwixident{*edges*}}{*edges*}{NWNVxch-tHqk1-2}\eatline
+\nwused{\\{NWNVxch-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{*edges*}}{*edges*}}}\nwendcode{}\nwbegindocs{27}\nwdocspar
+
+To describe a path, take the means (\lsp{caddr}) and direction (\lsp{cadr}) and
+return a descriptive list.
+
+\nwenddocs{}\nwbegincode{28}\sublabel{NWNVxch-1p0Y9w-3}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-3}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-2}{NWNVxch-1p0Y9w-4}\nwenddeflinemarkup
+(defun \nwlinkedidentc{describe-path}{NWNVxch-1p0Y9w-3} (edge)\nwindexdefn{\nwixident{describe-path}}{describe-path}{NWNVxch-1p0Y9w-3}
+  `(there is a ,(caddr edge) going ,(cadr edge) from here.))
+
+
+\nwidentdefs{\\{{\nwixident{describe-path}}{describe-path}}}\nwendcode{}\nwbegindocs{29}\nwdocspar
+
+
+\section{Describing Multiple Paths at Once}
+
+To describe multiple paths:
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{30}\sublabel{NWNVxch-2uLI1w-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2uLI1w-1}}}\moddef{Find the relevant edges.~{\nwtagstyle{}\subpageref{NWNVxch-2uLI1w-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-4}}\nwenddeflinemarkup
+(cdr (assoc location edges))
+\nwused{\\{NWNVxch-1p0Y9w-4}}\nwendcode{}\nwbegindocs{31}\nwdocspar
+
+\nwenddocs{}\nwbegincode{32}\sublabel{NWNVxch-3UGKyl-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-3UGKyl-1}}}\moddef{Convert the edges to descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-3UGKyl-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-4}}\nwenddeflinemarkup
+mapcar #'\nwlinkedidentc{describe-path}{NWNVxch-1p0Y9w-3}
+\nwused{\\{NWNVxch-1p0Y9w-4}}\nwidentuses{\\{{\nwixident{describe-path}}{describe-path}}}\nwindexuse{\nwixident{describe-path}}{describe-path}{NWNVxch-3UGKyl-1}\nwendcode{}\nwbegindocs{33}\nwdocspar
+
+\nwenddocs{}\nwbegincode{34}\sublabel{NWNVxch-2I51ok-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2I51ok-1}}}\moddef{Join the descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-2I51ok-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-4}\\{NWNVxch-1p0Y9w-6}}\nwenddeflinemarkup
+apply #'append
+\nwused{\\{NWNVxch-1p0Y9w-4}\\{NWNVxch-1p0Y9w-6}}\nwendcode{}\nwbegindocs{35}\nwdocspar
+
+\nwenddocs{}\nwbegincode{36}\sublabel{NWNVxch-127rHL-3}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-127rHL-3}}}\moddef{session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-127rHL-2}{NWNVxch-127rHL-4}\nwenddeflinemarkup
+> (\nwlinkedidentc{describe-paths}{NWNVxch-1p0Y9w-4} 'living-room \nwlinkedidentc{*edges*}{NWNVxch-tHqk1-2})
+(THERE IS A DOOR GOING WEST FROM HERE.
+ THERE IS A LADDER GOING UPSTAIRS FROM HERE.)
+\nwidentuses{\\{{\nwixident{*edges*}}{*edges*}}\\{{\nwixident{describe-paths}}{describe-paths}}}\nwindexuse{\nwixident{*edges*}}{*edges*}{NWNVxch-127rHL-3}\nwindexuse{\nwixident{describe-paths}}{describe-paths}{NWNVxch-127rHL-3}\nwendcode{}\nwbegindocs{37}\nwdocspar
+\end{marginfigure}
+
+\begin{enumerate}
+
+  \item {\Tt{}\LA{}Find the relevant edges.~{\nwtagstyle{}\subpageref{NWNVxch-2uLI1w-1}}\RA{}\nwendquote}
+  \item {\Tt{}\LA{}Convert the edges to descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-3UGKyl-1}}\RA{}\nwendquote}
+  \item {\Tt{}\LA{}Join the descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-2I51ok-1}}\RA{}\nwendquote}
+\end{enumerate}
+
+\nwenddocs{}\nwbegincode{38}\sublabel{NWNVxch-1p0Y9w-4}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-4}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-3}{NWNVxch-1p0Y9w-5}\nwenddeflinemarkup
+(defun \nwlinkedidentc{describe-paths}{NWNVxch-1p0Y9w-4} (location edges)\nwindexdefn{\nwixident{describe-paths}}{describe-paths}{NWNVxch-1p0Y9w-4}
+  (\LA{}Join the descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-2I51ok-1}}\RA{} (\LA{}Convert the edges to descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-3UGKyl-1}}\RA{} \LA{}Find the relevant edges.~{\nwtagstyle{}\subpageref{NWNVxch-2uLI1w-1}}\RA{})))
+
+
+\nwidentdefs{\\{{\nwixident{describe-paths}}{describe-paths}}}\nwendcode{}\nwbegindocs{39}\nwdocspar
+
+
+\section{Describing Objects at a Specific Location}
+
+\nwenddocs{}\nwbegincode{40}\sublabel{NWNVxch-tHqk1-3}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-3}}}\moddef{define the global variables~{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-1}}\nwprevnextdefs{NWNVxch-tHqk1-2}{NWNVxch-tHqk1-4}\nwenddeflinemarkup
+(defparameter \nwlinkedidentc{*objects*}{NWNVxch-tHqk1-3} '(whiskey bucket frog chain))\nwindexdefn{\nwixident{*objects*}}{*objects*}{NWNVxch-tHqk1-3}
+
+(defparameter \nwlinkedidentc{*object-locations*}{NWNVxch-tHqk1-3}
+  '((whiskey living-room)
+    (bucket living-room)
+    (chain garden)
+    (frog garden)))
+
+\nwindexdefn{\nwixident{*object-locations*}}{*object-locations*}{NWNVxch-tHqk1-3}\eatline
+\nwused{\\{NWNVxch-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{*object-locations*}}{*object-locations*}}\\{{\nwixident{*objects*}}{*objects*}}}\nwendcode{}\nwbegindocs{41}\nwdocspar
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{42}\sublabel{NWNVxch-4AIHSa-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-4AIHSa-1}}}\moddef{at-loc-p~{\nwtagstyle{}\subpageref{NWNVxch-4AIHSa-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-5}}\nwenddeflinemarkup
+(at-loc-p (obj)
+  (eq (cadr (assoc obj obj-locs)) loc))
+\nwused{\\{NWNVxch-1p0Y9w-5}}\nwendcode{}\nwbegindocs{43}\nwdocspar
+\end{marginfigure}
+
+\nwenddocs{}\nwbegincode{44}\sublabel{NWNVxch-1p0Y9w-5}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-5}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-4}{NWNVxch-1p0Y9w-6}\nwenddeflinemarkup
+(defun \nwlinkedidentc{objects-at}{NWNVxch-1p0Y9w-5} (loc objs obj-locs)\nwindexdefn{\nwixident{objects-at}}{objects-at}{NWNVxch-1p0Y9w-5}
+  (labels (\LA{}at-loc-p~{\nwtagstyle{}\subpageref{NWNVxch-4AIHSa-1}}\RA{})
+    (remove-if-not #'at-loc-p objs)))
+
+
+\nwidentdefs{\\{{\nwixident{objects-at}}{objects-at}}}\nwendcode{}\nwbegindocs{45}\nwdocspar
+
+\nwenddocs{}\nwbegincode{46}\sublabel{NWNVxch-127rHL-4}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-127rHL-4}}}\moddef{session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-127rHL-3}{NWNVxch-127rHL-5}\nwenddeflinemarkup
+> (\nwlinkedidentc{objects-at}{NWNVxch-1p0Y9w-5} 'living-room \nwlinkedidentc{*objects*}{NWNVxch-tHqk1-3} \nwlinkedidentc{*object-locations*}{NWNVxch-tHqk1-3})
+(WHISKEY BUCKET)
+\nwidentuses{\\{{\nwixident{*object-locations*}}{*object-locations*}}\\{{\nwixident{*objects*}}{*objects*}}\\{{\nwixident{objects-at}}{objects-at}}}\nwindexuse{\nwixident{*object-locations*}}{*object-locations*}{NWNVxch-127rHL-4}\nwindexuse{\nwixident{*objects*}}{*objects*}{NWNVxch-127rHL-4}\nwindexuse{\nwixident{objects-at}}{objects-at}{NWNVxch-127rHL-4}\nwendcode{}\nwbegindocs{47}\nwdocspar
+
+
+\section{Describing Visible Objects}
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{48}\sublabel{NWNVxch-1Udfoj-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1Udfoj-1}}}\moddef{describe-obj~{\nwtagstyle{}\subpageref{NWNVxch-1Udfoj-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-6}}\nwenddeflinemarkup
+(describe-obj (obj)
+  `(you see a ,obj on the floor.))
+\nwused{\\{NWNVxch-1p0Y9w-6}}\nwendcode{}\nwbegindocs{49}\nwdocspar
+
+\nwenddocs{}\nwbegincode{50}\sublabel{NWNVxch-4HI7rZ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-4HI7rZ-1}}}\moddef{Find the objects at the current location~{\nwtagstyle{}\subpageref{NWNVxch-4HI7rZ-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-6}}\nwenddeflinemarkup
+(\nwlinkedidentc{objects-at}{NWNVxch-1p0Y9w-5} loc objs obj-loc)
+\nwused{\\{NWNVxch-1p0Y9w-6}}\nwidentuses{\\{{\nwixident{objects-at}}{objects-at}}}\nwindexuse{\nwixident{objects-at}}{objects-at}{NWNVxch-4HI7rZ-1}\nwendcode{}\nwbegindocs{51}\nwdocspar
+
+\nwenddocs{}\nwbegincode{52}\sublabel{NWNVxch-2wzutV-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2wzutV-1}}}\moddef{Convert the objects to descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-2wzutV-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-6}}\nwenddeflinemarkup
+mapcar #'describe-obj
+\nwused{\\{NWNVxch-1p0Y9w-6}}\nwendcode{}\nwbegindocs{53}\nwdocspar
+\end{marginfigure}
+
+\nwenddocs{}\nwbegincode{54}\sublabel{NWNVxch-1p0Y9w-6}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-6}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-5}{NWNVxch-1p0Y9w-7}\nwenddeflinemarkup
+(defun \nwlinkedidentc{describe-objects}{NWNVxch-1p0Y9w-6} (loc objs obj-loc)\nwindexdefn{\nwixident{describe-objects}}{describe-objects}{NWNVxch-1p0Y9w-6}
+  (labels (\LA{}describe-obj~{\nwtagstyle{}\subpageref{NWNVxch-1Udfoj-1}}\RA{})
+    (\LA{}Join the descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-2I51ok-1}}\RA{}
+           (\LA{}Convert the objects to descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-2wzutV-1}}\RA{}
+                   \LA{}Find the objects at the current location~{\nwtagstyle{}\subpageref{NWNVxch-4HI7rZ-1}}\RA{}))))
+
+
+\nwidentdefs{\\{{\nwixident{describe-objects}}{describe-objects}}}\nwendcode{}\nwbegindocs{55}\nwdocspar
+
+\nwenddocs{}\nwbegincode{56}\sublabel{NWNVxch-127rHL-5}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-127rHL-5}}}\moddef{session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-127rHL-4}{NWNVxch-127rHL-6}\nwenddeflinemarkup
+> (\nwlinkedidentc{describe-objects}{NWNVxch-1p0Y9w-6} 'living-room \nwlinkedidentc{*objects*}{NWNVxch-tHqk1-3} \nwlinkedidentc{*object-locations*}{NWNVxch-tHqk1-3})
+(YOU SEE A WHISKEY ON THE FLOOR.
+ YOU SEE A BUCKET ON THE FLOOR)
+\nwidentuses{\\{{\nwixident{*object-locations*}}{*object-locations*}}\\{{\nwixident{*objects*}}{*objects*}}\\{{\nwixident{describe-objects}}{describe-objects}}}\nwindexuse{\nwixident{*object-locations*}}{*object-locations*}{NWNVxch-127rHL-5}\nwindexuse{\nwixident{*objects*}}{*objects*}{NWNVxch-127rHL-5}\nwindexuse{\nwixident{describe-objects}}{describe-objects}{NWNVxch-127rHL-5}\nwendcode{}\nwbegindocs{57}\nwdocspar
+
+
+\section{Describing It All}
+
+\nwenddocs{}\nwbegincode{58}\sublabel{NWNVxch-tHqk1-4}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-4}}}\moddef{define the global variables~{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-1}}\nwprevnextdefs{NWNVxch-tHqk1-3}{\relax}\nwenddeflinemarkup
+(defparameter \nwlinkedidentc{*location*}{NWNVxch-tHqk1-4} 'living-room)\nwindexdefn{\nwixident{*location*}}{*location*}{NWNVxch-tHqk1-4}
+
+
+\nwused{\\{NWNVxch-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{*location*}}{*location*}}}\nwendcode{}\nwbegindocs{59}\nwdocspar
+
+\marginnote{%
+  N.B. The {\Tt{}\nwlinkedidentq{look}{NWNVxch-1p0Y9w-7}\nwendquote} function is {\bf not} functional, since it reads global
+  variables.
+}
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{60}\sublabel{NWNVxch-127rHL-6}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-127rHL-6}}}\moddef{session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-127rHL-5}{NWNVxch-127rHL-7}\nwenddeflinemarkup
+> (\nwlinkedidentc{look}{NWNVxch-1p0Y9w-7})
+(YOU ARE IN THE LIVING ROOM.
+ A WIZARD IS SNORING LOUDLY ON THE COUCH.
+ THERE IS A DOOR GOING WEST FROM HERE.
+ THERE IS A LADDER GOING UPSTAIRS FROM HERE.
+ YOU SEE A WHISKEY ON THE FLOOR.
+ YOU SEE A BUCKET ON THE FLOOR.)
+\nwidentuses{\\{{\nwixident{look}}{look}}}\nwindexuse{\nwixident{look}}{look}{NWNVxch-127rHL-6}\nwendcode{}\nwbegindocs{61}\nwdocspar
+\end{marginfigure}
+
+\nwenddocs{}\nwbegincode{62}\sublabel{NWNVxch-1p0Y9w-7}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-7}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-6}{NWNVxch-1p0Y9w-8}\nwenddeflinemarkup
+(defun \nwlinkedidentc{look}{NWNVxch-1p0Y9w-7} ()\nwindexdefn{\nwixident{look}}{look}{NWNVxch-1p0Y9w-7}
+  (append (\nwlinkedidentc{describe-location}{NWNVxch-1p0Y9w-2} \nwlinkedidentc{*location*}{NWNVxch-tHqk1-4} \nwlinkedidentc{*nodes*}{NWNVxch-tHqk1-1})
+          (\nwlinkedidentc{describe-paths}{NWNVxch-1p0Y9w-4} \nwlinkedidentc{*location*}{NWNVxch-tHqk1-4} \nwlinkedidentc{*edges*}{NWNVxch-tHqk1-2})
+          (\nwlinkedidentc{describe-objects}{NWNVxch-1p0Y9w-6} \nwlinkedidentc{*location*}{NWNVxch-tHqk1-4} \nwlinkedidentc{*objects*}{NWNVxch-tHqk1-3} \nwlinkedidentc{*object-locations*}{NWNVxch-tHqk1-3})))
+
+
+\nwidentdefs{\\{{\nwixident{look}}{look}}}\nwidentuses{\\{{\nwixident{*edges*}}{*edges*}}\\{{\nwixident{*location*}}{*location*}}\\{{\nwixident{*nodes*}}{*nodes*}}\\{{\nwixident{*object-locations*}}{*object-locations*}}\\{{\nwixident{*objects*}}{*objects*}}\\{{\nwixident{describe-location}}{describe-location}}\\{{\nwixident{describe-objects}}{describe-objects}}\\{{\nwixident{describe-paths}}{describe-paths}}}\nwindexuse{\nwixident{*edges*}}{*edges*}{NWNVxch-1p0Y9w-7}\nwindexuse{\nwixident{*location*}}{*location*}{NWNVxch-1p0Y9w-7}\nwindexuse{\nwixident{*nodes*}}{*nodes*}{NWNVxch-1p0Y9w-7}\nwindexuse{\nwixident{*object-locations*}}{*object-locations*}{NWNVxch-1p0Y9w-7}\nwindexuse{\nwixident{*objects*}}{*objects*}{NWNVxch-1p0Y9w-7}\nwindexuse{\nwixident{describe-location}}{describe-location}{NWNVxch-1p0Y9w-7}\nwindexuse{\nwixident{describe-objects}}{describe-objects}{NWNVxch-1p0Y9w-7}\nwindexuse{\nwixident{describe-paths}}{describe-paths}{NWNVxch-1p0Y9w-7}\nwendcode{}\nwbegindocs{63}\nwdocspar
+
+
+\section{Walking Around in Our World}
+
+Given a \lsp{direction},
+{\Tt{}\LA{}locate the path marked with the appropriate direction~{\nwtagstyle{}\subpageref{NWNVxch-2l56no-1}}\RA{}\nwendquote} and
+{\Tt{}\LA{}try to go in that direction~{\nwtagstyle{}\subpageref{NWNVxch-1WD8QL-1}}\RA{}\nwendquote}. Since the \lsp{direction} will be there,
+{\Tt{}\LA{}match against the \code{}cadr\edoc{} of each path~{\nwtagstyle{}\subpageref{NWNVxch-3GxTYM-1}}\RA{}\nwendquote}.
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{64}\sublabel{NWNVxch-11Xqmc-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-11Xqmc-1}}}\moddef{look up the available walkings paths~{\nwtagstyle{}\subpageref{NWNVxch-11Xqmc-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-2l56no-1}}\nwenddeflinemarkup
+(cdr (assoc \nwlinkedidentc{*location*}{NWNVxch-tHqk1-4} \nwlinkedidentc{*edges*}{NWNVxch-tHqk1-2}))
+\nwused{\\{NWNVxch-2l56no-1}}\nwidentuses{\\{{\nwixident{*edges*}}{*edges*}}\\{{\nwixident{*location*}}{*location*}}}\nwindexuse{\nwixident{*edges*}}{*edges*}{NWNVxch-11Xqmc-1}\nwindexuse{\nwixident{*location*}}{*location*}{NWNVxch-11Xqmc-1}\nwendcode{}\nwbegindocs{65}\nwdocspar
+
+\nwenddocs{}\nwbegincode{66}\sublabel{NWNVxch-3GxTYM-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-3GxTYM-1}}}\moddef{match against the \code{}cadr\edoc{} of each path~{\nwtagstyle{}\subpageref{NWNVxch-3GxTYM-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-2l56no-1}}\nwenddeflinemarkup
+:key #'cadr
+\nwused{\\{NWNVxch-2l56no-1}}\nwendcode{}\nwbegindocs{67}\nwdocspar
+\end{marginfigure}
+
+\nwenddocs{}\nwbegincode{68}\sublabel{NWNVxch-2l56no-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2l56no-1}}}\moddef{locate the path marked with the appropriate direction~{\nwtagstyle{}\subpageref{NWNVxch-2l56no-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-8}}\nwenddeflinemarkup
+(find direction
+      \LA{}look up the available walkings paths~{\nwtagstyle{}\subpageref{NWNVxch-11Xqmc-1}}\RA{}
+      \LA{}match against the \code{}cadr\edoc{} of each path~{\nwtagstyle{}\subpageref{NWNVxch-3GxTYM-1}}\RA{})
+\nwused{\\{NWNVxch-1p0Y9w-8}}\nwendcode{}\nwbegindocs{69}\nwdocspar
+
+If such a path is found, {\Tt{}\LA{}adjust the player's position~{\nwtagstyle{}\subpageref{NWNVxch-33W0lF-1}}\RA{}\nwendquote},
+otherwise {\Tt{}\LA{}admonish the player~{\nwtagstyle{}\subpageref{NWNVxch-13z0z-1}}\RA{}\nwendquote}.
+
+\nwenddocs{}\nwbegincode{70}\sublabel{NWNVxch-1WD8QL-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1WD8QL-1}}}\moddef{try to go in that direction~{\nwtagstyle{}\subpageref{NWNVxch-1WD8QL-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-8}}\nwenddeflinemarkup
+(if next
+    (progn \LA{}adjust the player's position~{\nwtagstyle{}\subpageref{NWNVxch-33W0lF-1}}\RA{}
+           (\nwlinkedidentc{look}{NWNVxch-1p0Y9w-7}))
+    \LA{}admonish the player~{\nwtagstyle{}\subpageref{NWNVxch-13z0z-1}}\RA{})
+\nwused{\\{NWNVxch-1p0Y9w-8}}\nwidentuses{\\{{\nwixident{look}}{look}}}\nwindexuse{\nwixident{look}}{look}{NWNVxch-1WD8QL-1}\nwendcode{}\nwbegindocs{71}\nwdocspar
+
+\begin{marginfigure}
+  \vspace{-9em}
+\nwenddocs{}\nwbegincode{72}\sublabel{NWNVxch-33W0lF-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-33W0lF-1}}}\moddef{adjust the player's position~{\nwtagstyle{}\subpageref{NWNVxch-33W0lF-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1WD8QL-1}}\nwenddeflinemarkup
+(setf \nwlinkedidentc{*location*}{NWNVxch-tHqk1-4} (car next))
+\nwused{\\{NWNVxch-1WD8QL-1}}\nwidentuses{\\{{\nwixident{*location*}}{*location*}}}\nwindexuse{\nwixident{*location*}}{*location*}{NWNVxch-33W0lF-1}\nwendcode{}\nwbegindocs{73}\nwdocspar
+
+\nwenddocs{}\nwbegincode{74}\sublabel{NWNVxch-13z0z-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-13z0z-1}}}\moddef{admonish the player~{\nwtagstyle{}\subpageref{NWNVxch-13z0z-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1WD8QL-1}}\nwenddeflinemarkup
+'(you cannot go that way.)
+\nwused{\\{NWNVxch-1WD8QL-1}}\nwendcode{}\nwbegindocs{75}\nwdocspar
+\end{marginfigure}
+
+\nwenddocs{}\nwbegincode{76}\sublabel{NWNVxch-1p0Y9w-8}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-8}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-7}{NWNVxch-1p0Y9w-9}\nwenddeflinemarkup
+(defun \nwlinkedidentc{walk}{NWNVxch-1p0Y9w-8} (direction)\nwindexdefn{\nwixident{walk}}{walk}{NWNVxch-1p0Y9w-8}
+  (let ((next \LA{}locate the path marked with the appropriate direction~{\nwtagstyle{}\subpageref{NWNVxch-2l56no-1}}\RA{}))
+    \LA{}try to go in that direction~{\nwtagstyle{}\subpageref{NWNVxch-1WD8QL-1}}\RA{}))
+
+
+\nwidentdefs{\\{{\nwixident{walk}}{walk}}}\nwendcode{}\nwbegindocs{77}\nwdocspar
+
+
+\section{Picking Up Objects}
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{78}\sublabel{NWNVxch-ZgAXP-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-ZgAXP-1}}}\moddef{the object is on the floor~{\nwtagstyle{}\subpageref{NWNVxch-ZgAXP-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-9}}\nwenddeflinemarkup
+(member object \LA{}get the list of objects here~{\nwtagstyle{}\subpageref{NWNVxch-23VgYu-1}}\RA{})
+\nwused{\\{NWNVxch-1p0Y9w-9}}\nwendcode{}\nwbegindocs{79}\nwdocspar
+
+\nwenddocs{}\nwbegincode{80}\sublabel{NWNVxch-4LBe3S-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-4LBe3S-1}}}\moddef{pick it up~{\nwtagstyle{}\subpageref{NWNVxch-4LBe3S-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-9}}\nwenddeflinemarkup
+(push (list object 'body) \nwlinkedidentc{*object-locations*}{NWNVxch-tHqk1-3})
+`(you are now carrying the ,object)
+\nwused{\\{NWNVxch-1p0Y9w-9}}\nwidentuses{\\{{\nwixident{*object-locations*}}{*object-locations*}}}\nwindexuse{\nwixident{*object-locations*}}{*object-locations*}{NWNVxch-4LBe3S-1}\nwendcode{}\nwbegindocs{81}\nwdocspar
+\end{marginfigure}
+
+If {\Tt{}\LA{}the object is on the floor~{\nwtagstyle{}\subpageref{NWNVxch-ZgAXP-1}}\RA{}\nwendquote}, {\Tt{}\LA{}pick it up~{\nwtagstyle{}\subpageref{NWNVxch-4LBe3S-1}}\RA{}\nwendquote}.
+
+\nwenddocs{}\nwbegincode{82}\sublabel{NWNVxch-23VgYu-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-23VgYu-1}}}\moddef{get the list of objects here~{\nwtagstyle{}\subpageref{NWNVxch-23VgYu-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-ZgAXP-1}}\nwenddeflinemarkup
+(\nwlinkedidentc{objects-at}{NWNVxch-1p0Y9w-5} \nwlinkedidentc{*location*}{NWNVxch-tHqk1-4} \nwlinkedidentc{*objects*}{NWNVxch-tHqk1-3} \nwlinkedidentc{*object-locations*}{NWNVxch-tHqk1-3})
+\nwused{\\{NWNVxch-ZgAXP-1}}\nwidentuses{\\{{\nwixident{*location*}}{*location*}}\\{{\nwixident{*object-locations*}}{*object-locations*}}\\{{\nwixident{*objects*}}{*objects*}}\\{{\nwixident{objects-at}}{objects-at}}}\nwindexuse{\nwixident{*location*}}{*location*}{NWNVxch-23VgYu-1}\nwindexuse{\nwixident{*object-locations*}}{*object-locations*}{NWNVxch-23VgYu-1}\nwindexuse{\nwixident{*objects*}}{*objects*}{NWNVxch-23VgYu-1}\nwindexuse{\nwixident{objects-at}}{objects-at}{NWNVxch-23VgYu-1}\nwendcode{}\nwbegindocs{83}\nwdocspar
+
+\nwenddocs{}\nwbegincode{84}\sublabel{NWNVxch-1p0Y9w-9}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-9}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-8}{NWNVxch-1p0Y9w-A}\nwenddeflinemarkup
+(defun \nwlinkedidentc{pickup}{NWNVxch-1p0Y9w-9} (object)\nwindexdefn{\nwixident{pickup}}{pickup}{NWNVxch-1p0Y9w-9}
+  (if \LA{}the object is on the floor~{\nwtagstyle{}\subpageref{NWNVxch-ZgAXP-1}}\RA{}
+      (progn \LA{}pick it up~{\nwtagstyle{}\subpageref{NWNVxch-4LBe3S-1}}\RA{})
+      '(you cannot get that)))
+
+
+\nwidentdefs{\\{{\nwixident{pickup}}{pickup}}}\nwendcode{}\nwbegindocs{85}\nwdocspar
+
+\nwenddocs{}\nwbegincode{86}\sublabel{NWNVxch-127rHL-7}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-127rHL-7}}}\moddef{session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-127rHL-6}{NWNVxch-127rHL-8}\nwenddeflinemarkup
+> (\nwlinkedidentc{pickup}{NWNVxch-1p0Y9w-9} 'whiskey)
+(YOU ARE NOW CARRYING THE WHISKEY)
+\nwidentuses{\\{{\nwixident{pickup}}{pickup}}}\nwindexuse{\nwixident{pickup}}{pickup}{NWNVxch-127rHL-7}\nwendcode{}\nwbegindocs{87}\nwdocspar
+
+
+\section{Checking Our Inventory}
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{88}\sublabel{NWNVxch-2OUSai-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2OUSai-1}}}\moddef{retrieve the list of carried objects~{\nwtagstyle{}\subpageref{NWNVxch-2OUSai-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-A}}\nwenddeflinemarkup
+(\nwlinkedidentc{objects-at}{NWNVxch-1p0Y9w-5} 'body \nwlinkedidentc{*objects*}{NWNVxch-tHqk1-3} \nwlinkedidentc{*object-locations*}{NWNVxch-tHqk1-3})
+\nwused{\\{NWNVxch-1p0Y9w-A}}\nwidentuses{\\{{\nwixident{*object-locations*}}{*object-locations*}}\\{{\nwixident{*objects*}}{*objects*}}\\{{\nwixident{objects-at}}{objects-at}}}\nwindexuse{\nwixident{*object-locations*}}{*object-locations*}{NWNVxch-2OUSai-1}\nwindexuse{\nwixident{*objects*}}{*objects*}{NWNVxch-2OUSai-1}\nwindexuse{\nwixident{objects-at}}{objects-at}{NWNVxch-2OUSai-1}\nwendcode{}\nwbegindocs{89}\nwdocspar
+
+\nwenddocs{}\nwbegincode{90}\sublabel{NWNVxch-127rHL-8}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-127rHL-8}}}\moddef{session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-127rHL-7}{\relax}\nwenddeflinemarkup
+> (\nwlinkedidentc{inventory}{NWNVxch-1p0Y9w-A})
+(ITEMS- WHISKEY)
+\nwidentuses{\\{{\nwixident{inventory}}{inventory}}}\nwindexuse{\nwixident{inventory}}{inventory}{NWNVxch-127rHL-8}\nwendcode{}\nwbegindocs{91}\nwdocspar
+\end{marginfigure}
+
+\nwenddocs{}\nwbegincode{92}\sublabel{NWNVxch-1p0Y9w-A}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-A}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-9}{\relax}\nwenddeflinemarkup
+(defun \nwlinkedidentc{inventory}{NWNVxch-1p0Y9w-A} ()\nwindexdefn{\nwixident{inventory}}{inventory}{NWNVxch-1p0Y9w-A}
+  (cons 'items- \LA{}retrieve the list of carried objects~{\nwtagstyle{}\subpageref{NWNVxch-2OUSai-1}}\RA{}))
+\nwidentdefs{\\{{\nwixident{inventory}}{inventory}}}\nwendcode{}
+
+\nwixlogsorted{c}{{*}{NWNVxch-1p0Y9w-1}{\nwixd{NWNVxch-1p0Y9w-1}\nwixd{NWNVxch-1p0Y9w-2}\nwixd{NWNVxch-1p0Y9w-3}\nwixd{NWNVxch-1p0Y9w-4}\nwixd{NWNVxch-1p0Y9w-5}\nwixd{NWNVxch-1p0Y9w-6}\nwixd{NWNVxch-1p0Y9w-7}\nwixd{NWNVxch-1p0Y9w-8}\nwixd{NWNVxch-1p0Y9w-9}\nwixd{NWNVxch-1p0Y9w-A}}}%
+\nwixlogsorted{c}{{adjust the player's position}{NWNVxch-33W0lF-1}{\nwixu{NWNVxch-1WD8QL-1}\nwixd{NWNVxch-33W0lF-1}}}%
+\nwixlogsorted{c}{{admonish the player}{NWNVxch-13z0z-1}{\nwixu{NWNVxch-1WD8QL-1}\nwixd{NWNVxch-13z0z-1}}}%
+\nwixlogsorted{c}{{at-loc-p}{NWNVxch-4AIHSa-1}{\nwixd{NWNVxch-4AIHSa-1}\nwixu{NWNVxch-1p0Y9w-5}}}%
+\nwixlogsorted{c}{{attic description}{NWNVxch-2w0KS8-1}{\nwixd{NWNVxch-2w0KS8-1}\nwixu{NWNVxch-tHqk1-1}}}%
+\nwixlogsorted{c}{{attic path}{NWNVxch-2ZorP9-1}{\nwixd{NWNVxch-2ZorP9-1}\nwixu{NWNVxch-tHqk1-2}}}%
+\nwixlogsorted{c}{{Convert the edges to descriptions.}{NWNVxch-3UGKyl-1}{\nwixd{NWNVxch-3UGKyl-1}\nwixu{NWNVxch-1p0Y9w-4}}}%
+\nwixlogsorted{c}{{Convert the objects to descriptions.}{NWNVxch-2wzutV-1}{\nwixd{NWNVxch-2wzutV-1}\nwixu{NWNVxch-1p0Y9w-6}}}%
+\nwixlogsorted{c}{{define the global variables}{NWNVxch-tHqk1-1}{\nwixu{NWNVxch-1p0Y9w-1}\nwixd{NWNVxch-tHqk1-1}\nwixd{NWNVxch-tHqk1-2}\nwixd{NWNVxch-tHqk1-3}\nwixd{NWNVxch-tHqk1-4}}}%
+\nwixlogsorted{c}{{describe-obj}{NWNVxch-1Udfoj-1}{\nwixd{NWNVxch-1Udfoj-1}\nwixu{NWNVxch-1p0Y9w-6}}}%
+\nwixlogsorted{c}{{Find the objects at the current location}{NWNVxch-4HI7rZ-1}{\nwixd{NWNVxch-4HI7rZ-1}\nwixu{NWNVxch-1p0Y9w-6}}}%
+\nwixlogsorted{c}{{Find the relevant edges.}{NWNVxch-2uLI1w-1}{\nwixd{NWNVxch-2uLI1w-1}\nwixu{NWNVxch-1p0Y9w-4}}}%
+\nwixlogsorted{c}{{garden description}{NWNVxch-4E8Y49-1}{\nwixd{NWNVxch-4E8Y49-1}\nwixu{NWNVxch-tHqk1-1}}}%
+\nwixlogsorted{c}{{garden path}{NWNVxch-1acezE-1}{\nwixd{NWNVxch-1acezE-1}\nwixu{NWNVxch-tHqk1-2}}}%
+\nwixlogsorted{c}{{get the list of objects here}{NWNVxch-23VgYu-1}{\nwixu{NWNVxch-ZgAXP-1}\nwixd{NWNVxch-23VgYu-1}}}%
+\nwixlogsorted{c}{{Join the descriptions.}{NWNVxch-2I51ok-1}{\nwixd{NWNVxch-2I51ok-1}\nwixu{NWNVxch-1p0Y9w-4}\nwixu{NWNVxch-1p0Y9w-6}}}%
+\nwixlogsorted{c}{{living-room description}{NWNVxch-ozR14-1}{\nwixd{NWNVxch-ozR14-1}\nwixu{NWNVxch-tHqk1-1}}}%
+\nwixlogsorted{c}{{living-room paths}{NWNVxch-2xf4OR-1}{\nwixd{NWNVxch-2xf4OR-1}\nwixu{NWNVxch-tHqk1-2}}}%
+\nwixlogsorted{c}{{locate the path marked with the appropriate direction}{NWNVxch-2l56no-1}{\nwixd{NWNVxch-2l56no-1}\nwixu{NWNVxch-1p0Y9w-8}}}%
+\nwixlogsorted{c}{{look up a location}{NWNVxch-3T3roy-1}{\nwixd{NWNVxch-3T3roy-1}\nwixu{NWNVxch-1p0Y9w-2}}}%
+\nwixlogsorted{c}{{look up the available walkings paths}{NWNVxch-11Xqmc-1}{\nwixd{NWNVxch-11Xqmc-1}\nwixu{NWNVxch-2l56no-1}}}%
+\nwixlogsorted{c}{{match against the \code{}cadr\edoc{} of each path}{NWNVxch-3GxTYM-1}{\nwixd{NWNVxch-3GxTYM-1}\nwixu{NWNVxch-2l56no-1}}}%
+\nwixlogsorted{c}{{pick it up}{NWNVxch-4LBe3S-1}{\nwixd{NWNVxch-4LBe3S-1}\nwixu{NWNVxch-1p0Y9w-9}}}%
+\nwixlogsorted{c}{{retrieve the list of carried objects}{NWNVxch-2OUSai-1}{\nwixd{NWNVxch-2OUSai-1}\nwixu{NWNVxch-1p0Y9w-A}}}%
+\nwixlogsorted{c}{{session}{NWNVxch-127rHL-1}{\nwixd{NWNVxch-127rHL-1}\nwixd{NWNVxch-127rHL-2}\nwixd{NWNVxch-127rHL-3}\nwixd{NWNVxch-127rHL-4}\nwixd{NWNVxch-127rHL-5}\nwixd{NWNVxch-127rHL-6}\nwixd{NWNVxch-127rHL-7}\nwixd{NWNVxch-127rHL-8}}}%
+\nwixlogsorted{c}{{the object is on the floor}{NWNVxch-ZgAXP-1}{\nwixd{NWNVxch-ZgAXP-1}\nwixu{NWNVxch-1p0Y9w-9}}}%
+\nwixlogsorted{c}{{try to go in that direction}{NWNVxch-1WD8QL-1}{\nwixd{NWNVxch-1WD8QL-1}\nwixu{NWNVxch-1p0Y9w-8}}}%
+\nwixlogsorted{i}{{\nwixident{*edges*}}{*edges*}}%
+\nwixlogsorted{i}{{\nwixident{*location*}}{*location*}}%
+\nwixlogsorted{i}{{\nwixident{*nodes*}}{*nodes*}}%
+\nwixlogsorted{i}{{\nwixident{*object-locations*}}{*object-locations*}}%
+\nwixlogsorted{i}{{\nwixident{*objects*}}{*objects*}}%
+\nwixlogsorted{i}{{\nwixident{describe-location}}{describe-location}}%
+\nwixlogsorted{i}{{\nwixident{describe-objects}}{describe-objects}}%
+\nwixlogsorted{i}{{\nwixident{describe-path}}{describe-path}}%
+\nwixlogsorted{i}{{\nwixident{describe-paths}}{describe-paths}}%
+\nwixlogsorted{i}{{\nwixident{inventory}}{inventory}}%
+\nwixlogsorted{i}{{\nwixident{look}}{look}}%
+\nwixlogsorted{i}{{\nwixident{objects-at}}{objects-at}}%
+\nwixlogsorted{i}{{\nwixident{pickup}}{pickup}}%
+\nwixlogsorted{i}{{\nwixident{walk}}{walk}}%
+\nwbegindocs{93}\nwdocspar
+
+
+\section{Full Listing}
+
+\inputminted[lastline=35]{lisp}{src/wizard5.lisp}
+\newpage
+\inputminted[firstline=38]{lisp}{src/wizard5.lisp}
+
+% \section{Example Session}
+
+% After loading \srclink{src/wizard5.lisp},
+% you might have {\Tt{}\LA{}session~{\nwtagstyle{}\subpageref{NWNVxch-127rHL-1}}\RA{}\nwendquote} like this.
+
+% \begin{marginfigure}
+% \begin{minted}{shell-session}
+% $ rlwrap sbcl --load src/wizard5.lisp
+% \end{minted}
+% \end{marginfigure}
+
+
+\newpage
+
+\setlength{\linewidth}{1.8\textwidth}
+
+\begin{multicols}{2}
+  \section{Chunks}
+  \nowebchunks
+  \columnbreak
+
+  \section{Index}
+  \nowebindex
+\end{multicols}
+
+
+\setlength{\linewidth}{1.4\textwidth}
+
+\bibliography{lol}
+\bibliographystyle{plainnat}
+
+
+\end{document}
+\nwenddocs{}
