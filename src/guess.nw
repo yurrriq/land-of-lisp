@@ -221,7 +221,7 @@ $ rlwrap sbcl --load src/guess.lisp
 \nowebchunks
 
 
-\bibliography{guess}
+\bibliography{lol}
 \bibliographystyle{plainnat}
 
 \end{document}

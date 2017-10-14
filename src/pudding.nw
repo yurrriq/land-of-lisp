@@ -160,7 +160,7 @@ USELESS-OLD-JOHNNY
 % \section{Chunks}
 % \nowebchunks
 
-\bibliography{pudding}
+\bibliography{lol}
 \bibliographystyle{plainnat}
 
 \end{document}
