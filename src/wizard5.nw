@@ -29,6 +29,15 @@
 \maketitle
 @
 
+\begin{abstract}
+  In this game, you are a wizard's apprentice. \\
+  \noindent You'll explore the wizard's house.
+\end{abstract}
+
+\tableofcontents
+
+
+\newpage
 \section{Setting the Scene}
 
 This world consists of only three locations:
@@ -98,8 +107,17 @@ argument, instead of referencing [[*nodes*]] directly.
 
 \section{Describing the Paths}
 
+From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
+through the \lsp{door}, or to the \lsp{attic} by going \lsp{upstairs} via the
+\lsp{ladder}.
+
+From the \lsp{garden}, you can move to the \lsp{living-room} by going \lsp{east}
+through the \lsp{door}.
+
+From the \lsp{attic}, you can move to the \lsp{living-room} by going
+\lsp{downstairs} via the \lsp{ladder}.
+
 \begin{marginfigure}
-  \vskip 15em
 <<living-room paths>>=
 (garden west door)
 (attic upstairs ladder)
@@ -118,16 +136,6 @@ argument, instead of referencing [[*nodes*]] directly.
 (THERE IS A DOOR GOING WEST FROM HERE.)
 @
 \end{marginfigure}
-
-From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
-through the \lsp{door}, or to the \lsp{attic} by going \lsp{upstairs} via the
-\lsp{ladder}.
-
-From the \lsp{garden}, you can move to the \lsp{living-room} by going \lsp{east}
-through the \lsp{door}.
-
-From the \lsp{attic}, you can move to the \lsp{living-room} by going
-\lsp{downstairs} via the \lsp{ladder}.
 
 <<define the global variables>>=
 (defparameter *edges*
@@ -161,6 +169,7 @@ To describe multiple paths:
 <<Convert the edges to descriptions.>>=
 mapcar #'describe-path
 @
+% FIXME: @index use describe-path
 
 <<Join the descriptions.>>=
 apply #'append
@@ -230,7 +239,7 @@ apply #'append
   `(you see a ,obj on the floor.))
 @
 
-<<Find the objects at the current location>>=
+<<Find the objects at the current location.>>=
 (objects-at loc objs obj-loc)
 @
 
@@ -239,12 +248,19 @@ mapcar #'describe-obj
 @
 \end{marginfigure}
 
+To describe the objects visible at a given location:
+\begin{enumerate}
+  \item [[<<Find the objects at the current location.>>]]
+  \item [[<<Convert the objects to descriptions.>>]]
+  \item [[<<Join the descriptions.>>]]
+\end{enumerate}
+
 <<*>>=
 (defun describe-objects (loc objs obj-loc)
   (labels (<<describe-obj>>)
     (<<Join the descriptions.>>
            (<<Convert the objects to descriptions.>>
-                   <<Find the objects at the current location>>))))
+                   <<Find the objects at the current location.>>))))
 
 
 @
@@ -258,18 +274,18 @@ mapcar #'describe-obj
 
 \section{Describing It All}
 
-<<define the global variables>>=
-(defparameter *location* 'living-room)
-
-
-@
-
 \marginnote{%
   N.B. The [[look]] function is {\bf not} functional, since it reads global
   variables.
 }
 
 \begin{marginfigure}
+<<define the global variables>>=
+(defparameter *location* 'living-room)
+
+
+@
+
 <<session>>=
 > (look)
 (YOU ARE IN THE LIVING ROOM.
@@ -325,7 +341,6 @@ otherwise [[<<admonish the player>>]].
 @
 
 \begin{marginfigure}
-  \vspace{-9em}
 <<adjust the player's position>>=
 (setf *location* (car next))
 @
@@ -344,6 +359,7 @@ otherwise [[<<admonish the player>>]].
 @
 
 
+% \newpage
 \section{Picking Up Objects}
 
 \begin{marginfigure}
@@ -399,9 +415,9 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 
 \section{Full Listing}
 
-\inputminted[lastline=35]{lisp}{src/wizard5.lisp}
+\inputminted[lastline=41]{lisp}{src/wizard5.lisp}
 \newpage
-\inputminted[firstline=38]{lisp}{src/wizard5.lisp}
+\inputminted[firstline=44]{lisp}{src/wizard5.lisp}
 
 % \section{Example Session}
 
@@ -416,7 +432,6 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 
 
 \newpage
-
 \setlength{\linewidth}{1.8\textwidth}
 
 \begin{multicols}{2}
