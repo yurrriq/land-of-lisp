@@ -59,14 +59,17 @@ This world consists of only three locations:
 @
 
 <<living-room description>>=
+you are in the living room.
 a wizard is snoring loudly on the couch.
 @
 
 <<garden description>>=
+you are in a beautiful garden.
 there is a well in front of you.
 @
 
 <<attic description>>=
+you are in the attic.
 there is a giant welding torch in the corner.
 @
 \end{marginfigure}
@@ -80,12 +83,9 @@ there is a giant welding torch in the corner.
 
 <<define the global variables>>=
 (defparameter *nodes*
-  '((living-room (you are in the living room.
-                  <<living-room description>>))
-    (garden      (you are in a beautiful garden.
-                  <<garden description>>))
-    (attic       (you are in the attic.
-                  <<attic description>>))))
+  '((living-room (<<living-room description>>))
+    (garden      (<<garden description>>))
+    (attic       (<<attic description>>))))
 
 @ %def *nodes*
 
@@ -97,11 +97,11 @@ there is a giant welding torch in the corner.
 (assoc location nodes)
 @
 
-<<session>>=
+\begin{minted}{lisp}
 > (describe-location 'living-room *nodes*)
 (YOU ARE IN THE LIVING-ROOM.
  A WIZARD IS SNORING LOUDLY ON THE COUCH.)
-@
+\end{minted}
 \end{marginfigure}
 
 To find the description, [[<<look up a location>>]] and take the \lsp{cadr}.
@@ -142,10 +142,10 @@ From the \lsp{attic}, you can move to the \lsp{living-room} by going
 (living-room downstairs ladder)
 @
 
-<<session>>=
+\begin{minted}{lisp}
 > (describe-path '(garden west door))
 (THERE IS A DOOR GOING WEST FROM HERE.)
-@
+\end{minted}
 \end{marginfigure}
 
 <<define the global variables>>=
@@ -186,11 +186,11 @@ mapcar #'describe-path
 apply #'append
 @
 
-<<session>>=
+\begin{minted}{lisp}
 > (describe-paths 'living-room *edges*)
 (THERE IS A DOOR GOING WEST FROM HERE.
  THERE IS A LADDER GOING UPSTAIRS FROM HERE.)
-@
+\end{minted}
 \end{marginfigure}
 
 \begin{enumerate}
@@ -236,10 +236,10 @@ apply #'append
 
 @
 
-<<session>>=
+\begin{minted}{lisp}
 > (objects-at 'living-room *objects* *object-locations*)
 (WHISKEY BUCKET)
-@
+\end{minted}
 
 
 \section{Describing Visible Objects}
@@ -276,11 +276,11 @@ To describe the objects visible at a given location:
 
 @
 
-<<session>>=
+\begin{minted}{lisp}
 > (describe-objects 'living-room *objects* *object-locations*)
 (YOU SEE A WHISKEY ON THE FLOOR.
- YOU SEE A BUCKET ON THE FLOOR)
-@
+ YOU SEE A BUCKET ON THE FLOOR.)
+\end{minted}
 
 
 \section{Describing It All}
@@ -297,7 +297,7 @@ To describe the objects visible at a given location:
 
 @
 
-<<session>>=
+\begin{minted}{lisp}
 > (look)
 (YOU ARE IN THE LIVING ROOM.
  A WIZARD IS SNORING LOUDLY ON THE COUCH.
@@ -305,7 +305,7 @@ To describe the objects visible at a given location:
  THERE IS A LADDER GOING UPSTAIRS FROM HERE.
  YOU SEE A WHISKEY ON THE FLOOR.
  YOU SEE A BUCKET ON THE FLOOR.)
-@
+\end{minted}
 \end{marginfigure}
 
 <<*>>=
@@ -399,10 +399,10 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 
 @
 
-<<session>>=
+\begin{minted}{lisp}
 > (pickup 'whiskey)
 (YOU ARE NOW CARRYING THE WHISKEY)
-@
+\end{minted}
 
 
 \section{Checking Our Inventory}
@@ -412,10 +412,10 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 (objects-at 'body *objects* *object-locations*)
 @
 
-<<session>>=
+\begin{minted}{lisp}
 > (inventory)
 (ITEMS- WHISKEY)
-@
+\end{minted}
 \end{marginfigure}
 
 <<*>>=
