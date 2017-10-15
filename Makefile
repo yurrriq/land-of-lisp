@@ -13,6 +13,8 @@ cpif   ?= | cpif
 .SUFFIXES: .nw .lisp .pdf .tex
 .nw.lisp: ; notangle $< ${cpif} $@
 .nw.tex:    export FINDUSES_LISP=1
+# .nw.tex:  ; noweave -filter noweb-minted -autodefs lisp -n -delay -index $< ${cpif} $@
+# .nw.tex:  ; noweave -filter 'pp src/pp-translation.table' -autodefs lisp -n -delay -index $< ${cpif} $@
 .nw.tex:  ; noweave -autodefs lisp -n -delay -index $< ${cpif} $@
 .tex.pdf: ; latexmk -outdir=$(call dirname,$<) -pdf $<
 

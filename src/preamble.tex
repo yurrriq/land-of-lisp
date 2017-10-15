@@ -19,6 +19,13 @@
 
 \usepackage{noweb}
 \noweboptions{smallcode,longxref,webnumbering,longchunks,english}
+% NOTE: -filter 'pp src/pp-translation.table'
+% \let\originalprime='
+% \def\setupcode{\catcode`\=10 \catcode`\'=13 \regressprime}
+% {\catcode`\'=\active
+%  \makeatletter
+%  \gdef\regressprime{\def'{^\bgroup\prim@s}}}
+% \let\Tt\relax
 
 \usepackage{color}
 % https://commons.wikimedia.org/wiki/File:Erlang_logo.svg
@@ -38,6 +45,7 @@
 \usepackage[outputdir=src]{minted}
 \newmintinline[lsp]{lisp}{}
 \newmintinline[cee]{c}{}
+% \setminted[lisp]{mathescape}
 
 \usepackage{hyperref}
 \newcommand{\srclink}[1]{%
