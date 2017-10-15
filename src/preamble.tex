@@ -45,6 +45,7 @@
 \usepackage[outputdir=src]{minted}
 \newmintinline[lsp]{lisp}{}
 \newmintinline[cee]{c}{}
+\newmintedfile{lisp}{linenos,fontsize=\footnotesize}
 % \setminted[lisp]{mathescape}
 
 \usepackage{hyperref}
@@ -53,5 +54,7 @@
     \mintinline{text}{#1}%
   }%
 }
+
+\usepackage{todonotes}
 
 \author{Eric Bailey}

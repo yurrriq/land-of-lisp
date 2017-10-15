@@ -421,14 +421,179 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 <<*>>=
 (defun inventory ()
   (cons 'items- <<retrieve the list of carried objects>>))
+
+
 @
 
 
-\section{Full Listing}
+\section{Tests}
 
-\inputminted[lastline=41]{lisp}{src/wizard5.lisp}
+<<*>>=
+(define-test describe-living-room
+  (assert-equal '(<<living-room description>>)
+                (describe-location 'living-room *nodes*)))
+
+
+@
+
+<<*>>=
+(define-test garden-path
+  (assert-equal '(THERE IS A DOOR GOING WEST FROM HERE.)
+                (describe-path '(garden west door))))
+
+
+@
+
+<<*>>=
+(define-test living-room-paths
+  (assert-equal '(THERE IS A DOOR GOING WEST FROM HERE.
+                  THERE IS A LADDER GOING UPSTAIRS FROM HERE.)
+                (describe-paths 'living-room *edges*)))
+@
+
+
+<<*>>=
+(define-test living-room-objects
+  (assert-equal '(WHISKEY BUCKET)
+                (objects-at 'living-room *objects* *object-locations*)))
+
+
+@
+
+
+<<*>>=
+(define-test describe-living-room-objects
+  (assert-equal '(YOU SEE A WHISKEY ON THE FLOOR.
+                  YOU SEE A BUCKET ON THE FLOOR.)
+                 (describe-objects 'living-room *objects* *object-locations*)))
+
+
+@
+
+<<*>>=
+(define-test look
+  (assert-equal '(<<living-room description>>
+                  THERE IS A DOOR GOING WEST FROM HERE.
+                  THERE IS A LADDER GOING UPSTAIRS FROM HERE.
+                  YOU SEE A WHISKEY ON THE FLOOR.
+                  YOU SEE A BUCKET ON THE FLOOR.)
+                 (look)))
+
+
+@
+
+<<*>>=
+(define-test pickup-whiskey
+  (assert-equal '(YOU ARE NOW CARRYING THE WHISKEY)
+                (pickup 'whiskey)))
+
+
+@
+
+<<*>>=
+(define-test have-whiskey
+  (assert-equal '(ITEMS- WHISKEY)
+                (inventory)))
+@
+
+
 \newpage
-\inputminted[firstline=44]{lisp}{src/wizard5.lisp}
+\section{Running the Tests}
+
+\begin{marginfigure}
+  The package under test is specified as the first argument on the command line
+  and prefixed with \lsp{:lol.} and used to
+  [[<<set the value of [[*package*]]>>]] in [[<<bin/runtests>>]].
+
+<<set the value of [[*package*]]>>=
+--eval "(in-package <<the specified package>>)"
+@
+
+<<the specified package>>=
+:lol.$1
+@
+
+<<Set the exit status.>>=
+(if (null failures) 0 1)
+@
+
+<<Exit with an appropriate status code.>>=
+(sb-posix:exit status)
+@
+\end{marginfigure}
+
+
+\todo[inline]{Describe [[lisp-unit]]}
+<<Run the lisp-unit tests.>>=
+(let* ((results  <<Run all tests in the package.>>)
+       (failures <<Collect the failures.>>)
+       (status   <<Set the exit status.>>))
+  <<Print the failures.>>
+  <<Exit with an appropriate status code.>>)
+@
+
+<<Run all tests in the package.>>=
+(lisp-unit:run-tests :all <<the specified package>>)
+@
+
+<<Collect the failures.>>=
+(lisp-unit:failed-tests results)
+@
+
+<<Print the failures.>>=
+(lisp-unit:print-failures results)
+@
+
+
+% \subsection{Script}
+
+\begin{marginfigure}
+<<Run SBCL quietly>>=
+sbcl --noinform --non-interactive
+@
+
+<<Load [[init.lisp]] as the user initialization file.>>=
+--userinit init.lisp
+@
+\end{marginfigure}
+
+\todo[inline]{Describe nix-shell shebang}
+<<bin/runtests>>=
+#! /usr/bin/env nix-shell
+#! nix-shell -i sh -p sbcl
+@
+
+<<bin/runtests>>=
+<<Run SBCL quietly>> \
+     <<Load [[init.lisp]] as the user initialization file.>> \
+     <<set the value of [[*package*]]>> \
+     --eval "<<Run the lisp-unit tests.>>"
+@
+
+\begin{minted}[gobble=2]{shell-session}
+  $ ./bin/runtests wizard5
+  Unit Test Summary
+ | 8 assertions total
+ | 8 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+\end{minted}
+
+
+\newpage
+\newgeometry{left=0.625in,right=3.75in}
+\setlength{\linewidth}{1.8\textwidth}
+\begin{multicols*}{2}
+[\section{Full Listing}]
+\inputminted[linenos,lastline=50,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
+\columnbreak
+\inputminted[linenos,firstline=53,lastline=85,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
+\newpage
+\inputminted[linenos,firstline=87,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
+\end{multicols*}
+\restoregeometry
+
 
 % \section{Example Session}
 
@@ -443,8 +608,7 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 
 
 \newpage
-\setlength{\linewidth}{1.8\textwidth}
-
+\setlength{\linewidth}{2\textwidth}
 \begin{multicols}{2}
   \section{Chunks}
   \nowebchunks

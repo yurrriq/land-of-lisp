@@ -19,9 +19,16 @@ cpif   ?= | cpif
 .tex.pdf: ; latexmk -f -gg -outdir=$(call dirname,$<) -pdf $<
 
 
-.PHONY: all docs
-all: ${SRCS} docs
+.PHONY: all check docs
+all: ${SRCS} check docs
+# TODO: test other files
+check: src/wizard5.lisp bin/runtests
+	bin/runtests $(basename $(notdir $<))
 docs: ${DOCS_SRCS}
+
+# FIXME: separate file
+bin/runtests: src/wizard5.nw
+	notangle -R'$@' $< ${cpif} $@
 
 
 docs/index.html: README.md

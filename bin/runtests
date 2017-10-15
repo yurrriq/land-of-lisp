@@ -1,0 +1,10 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i sh -p sbcl
+sbcl --noinform --non-interactive \
+     --userinit init.lisp \
+     --eval "(in-package :lol.$1)" \
+     --eval "(let* ((results  (lisp-unit:run-tests :all :lol.$1))
+                    (failures (lisp-unit:failed-tests results))
+                    (status   (if (null failures) 0 1)))
+               (lisp-unit:print-failures results)
+               (sb-posix:exit status))"
