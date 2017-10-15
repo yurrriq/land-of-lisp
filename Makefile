@@ -16,7 +16,7 @@ cpif   ?= | cpif
 # .nw.tex:  ; noweave -filter noweb-minted -autodefs lisp -n -delay -index $< ${cpif} $@
 # .nw.tex:  ; noweave -filter 'pp src/pp-translation.table' -autodefs lisp -n -delay -index $< ${cpif} $@
 .nw.tex:  ; noweave -autodefs lisp -n -delay -index $< ${cpif} $@
-.tex.pdf: ; latexmk -outdir=$(call dirname,$<) -pdf $<
+.tex.pdf: ; latexmk -f -gg -outdir=$(call dirname,$<) -pdf $<
 
 
 .PHONY: all docs
