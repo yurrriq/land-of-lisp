@@ -425,8 +425,6 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 <<*>>=
 (defun inventory ()
   (cons 'items- <<retrieve the list of carried objects>>))
-
-
 @
 
 
@@ -529,6 +527,7 @@ YOU SEE A CHAIN ON THE FLOOR.
 \newpage
 \section{Running the Tests}
 
+\begin{marginfigure}
 <<Set the exit status.>>=
 (if (null failures) 0 1)
 @
@@ -591,6 +590,8 @@ Load [[<<init.lisp>>]] as the user initialization file:
 
 \begin{minted}[gobble=2]{shell-session}
   $ ./bin/runtests
+  ✓ 2 tests completed (0ms)
+
   Summary:
     All 1 file passed.
 \end{minted}
@@ -598,14 +599,12 @@ Load [[<<init.lisp>>]] as the user initialization file:
 
 \newpage
 \newgeometry{left=0.625in,right=3.75in}
-\setlength{\linewidth}{1.8\textwidth}
+\setlength{\linewidth}{1.85\textwidth}
 \begin{multicols*}{2}
 [\section{Full Listing}]
-\inputminted[linenos,lastline=50,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
+\inputminted[linenos,firstline=11,lastline=51,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
 \columnbreak
-\inputminted[linenos,firstline=53,lastline=85,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
-\newpage
-\inputminted[linenos,firstline=87,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
+\inputminted[linenos,firstline=54,lastline=85,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
 \end{multicols*}
 \restoregeometry
 
@@ -623,11 +622,11 @@ Load [[<<init.lisp>>]] as the user initialization file:
 
 
 \newpage
-\setlength{\linewidth}{2\textwidth}
+\setlength{\linewidth}{1.8\textwidth}
 \begin{multicols}{2}
-  \section{Chunks}
+  [\section{Chunks}]
   \nowebchunks
-  \columnbreak
+  % \columnbreak
 
   \section{Index}
   \nowebindex

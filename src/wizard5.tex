@@ -425,8 +425,6 @@ If {\Tt{}\LA{}the object is on the floor~{\nwtagstyle{}\subpageref{NWNVxch-ZgAXP
 \nwenddocs{}\nwbegincode{98}\sublabel{NWNVxch-1p0Y9w-B}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-B}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-A}{\relax}\nwenddeflinemarkup
 (defun \nwlinkedidentc{inventory}{NWNVxch-1p0Y9w-B} ()\nwindexdefn{\nwixident{inventory}}{inventory}{NWNVxch-1p0Y9w-B}
   (cons 'items- \LA{}retrieve the list of carried objects~{\nwtagstyle{}\subpageref{NWNVxch-2OUSai-1}}\RA{}))
-
-
 \nwidentdefs{\\{{\nwixident{inventory}}{inventory}}}\nwendcode{}\nwbegindocs{99}\nwdocspar
 
 
@@ -529,6 +527,7 @@ YOU SEE A CHAIN ON THE FLOOR.
 \newpage
 \section{Running the Tests}
 
+\begin{marginfigure}
 \nwenddocs{}\nwbegincode{118}\sublabel{NWNVxch-IN2nV-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-IN2nV-1}}}\moddef{Set the exit status.~{\nwtagstyle{}\subpageref{NWNVxch-IN2nV-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 (if (null failures) 0 1)
 \nwnotused{Set the exit status.}\nwendcode{}\nwbegindocs{119}\nwdocspar
@@ -654,6 +653,8 @@ Load {\Tt{}\LA{}init.lisp~{\nwtagstyle{}\subpageref{nw@notdef}}\RA{}\nwendquote}
 
 \begin{minted}[gobble=2]{shell-session}
   $ ./bin/runtests
+  ✓ 2 tests completed (0ms)
+
   Summary:
     All 1 file passed.
 \end{minted}
@@ -661,14 +662,12 @@ Load {\Tt{}\LA{}init.lisp~{\nwtagstyle{}\subpageref{nw@notdef}}\RA{}\nwendquote}
 
 \newpage
 \newgeometry{left=0.625in,right=3.75in}
-\setlength{\linewidth}{1.8\textwidth}
+\setlength{\linewidth}{1.85\textwidth}
 \begin{multicols*}{2}
 [\section{Full Listing}]
-\inputminted[linenos,lastline=50,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
+\inputminted[linenos,firstline=11,lastline=51,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
 \columnbreak
-\inputminted[linenos,firstline=53,lastline=85,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
-\newpage
-\inputminted[linenos,firstline=87,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
+\inputminted[linenos,firstline=54,lastline=85,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
 \end{multicols*}
 \restoregeometry
 
@@ -686,11 +685,11 @@ Load {\Tt{}\LA{}init.lisp~{\nwtagstyle{}\subpageref{nw@notdef}}\RA{}\nwendquote}
 
 
 \newpage
-\setlength{\linewidth}{2\textwidth}
+\setlength{\linewidth}{1.8\textwidth}
 \begin{multicols}{2}
-  \section{Chunks}
+  [\section{Chunks}]
   \nowebchunks
-  \columnbreak
+  % \columnbreak
 
   \section{Index}
   \nowebindex

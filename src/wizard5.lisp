@@ -84,5 +84,3 @@
 
 (defun inventory ()
   (cons 'items- (objects-at 'body *objects* *object-locations*)))
-
-
