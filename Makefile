@@ -1,5 +1,6 @@
 NW_SRCS   := $(wildcard src/*.nw)
 LSP_SRCS  := ${NW_SRCS:.nw=.lisp}
+LSP_SRCS  += $(foreach pkg,${LSP_SRCS},test/$(notdir ${pkg}))
 TEX_SRCS  := ${NW_SRCS:.nw=.tex}
 PDF_SRCS  := ${NW_SRCS:.nw=.pdf}
 SRCS      := ${LSP_SRCS} ${TEX_SRCS} ${PDF_SRCS}
@@ -9,6 +10,8 @@ DOCS_SRCS := $(patsubst src/%,docs/%,${PDF_SRCS}) docs/index.html
 # http://stackoverflow.com/a/17807510
 dirname = $(patsubst %/,%,$(dir $1))
 cpif   ?= | cpif
+
+
 
 .SUFFIXES: .nw .lisp .pdf .tex
 .nw.lisp: ; notangle $< ${cpif} $@
@@ -22,8 +25,19 @@ cpif   ?= | cpif
 .PHONY: all check docs
 all: ${SRCS} check docs
 # TODO: test other files
-check: src/wizard5.lisp bin/runtests
-	bin/runtests $(basename $(notdir $<))
+check: src/wizard5.lisp bin/runtests bin/coverage
+	bin/coverage
+
+
+test/%.lisp: src/%.nw
+	notangle -R'$@' $< ${cpif} $@
+
+
+# HACK
+test/guess.lisp:   ; @ echo "$@ is not yet implemented."
+test/pudding.lisp: ; @ echo "$@ is not yet implemented."
+
+
 docs: ${DOCS_SRCS}
 
 # FIXME: separate file

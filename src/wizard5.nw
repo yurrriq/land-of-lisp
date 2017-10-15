@@ -37,16 +37,17 @@
 \tableofcontents
 
 <<*>>=
-(in-package #:lol)
-(defpackage #:lol.wizard5
-  (:use #:cl #:lisp-unit)
-  (:export #:look
-           #:walk
-           #:pickup))
-(in-package #:lol.wizard5)
+(in-package :cl-user)
+(defpackage lol.wizard5
+  (:use :cl)
+  (:export :look
+           :walk
+           :pickup
+           :inventory))
+(in-package :lol.wizard5)
 
 
-@
+@ %def lol.wizard5
 
 \newpage
 \section{Setting the Scene}
@@ -97,11 +98,10 @@ there is a giant welding torch in the corner.
 (assoc location nodes)
 @
 
-\begin{minted}{lisp}
+<<Example Session>>=
 > (describe-location 'living-room *nodes*)
-(YOU ARE IN THE LIVING-ROOM.
- A WIZARD IS SNORING LOUDLY ON THE COUCH.)
-\end{minted}
+(<<living-room description>>)
+@
 \end{marginfigure}
 
 To find the description, [[<<look up a location>>]] and take the \lsp{cadr}.
@@ -142,10 +142,14 @@ From the \lsp{attic}, you can move to the \lsp{living-room} by going
 (living-room downstairs ladder)
 @
 
-\begin{minted}{lisp}
+<<garden door>>=
+THERE IS A DOOR GOING WEST FROM HERE.
+@
+
+<<Example Session>>=
 > (describe-path '(garden west door))
-(THERE IS A DOOR GOING WEST FROM HERE.)
-\end{minted}
+<<garden door>>
+@
 \end{marginfigure}
 
 <<define the global variables>>=
@@ -186,11 +190,15 @@ mapcar #'describe-path
 apply #'append
 @
 
-\begin{minted}{lisp}
+<<attic ladder>>=
+THERE IS A LADDER GOING UPSTAIRS FROM HERE.
+@
+
+<<Example Session>>=
 > (describe-paths 'living-room *edges*)
-(THERE IS A DOOR GOING WEST FROM HERE.
- THERE IS A LADDER GOING UPSTAIRS FROM HERE.)
-\end{minted}
+(<<garden door>>
+ <<attic ladder>>)
+@
 \end{marginfigure}
 
 \begin{enumerate}
@@ -236,10 +244,10 @@ apply #'append
 
 @
 
-\begin{minted}{lisp}
+<<Example Session>>=
 > (objects-at 'living-room *objects* *object-locations*)
 (WHISKEY BUCKET)
-\end{minted}
+@
 
 
 \section{Describing Visible Objects}
@@ -276,11 +284,10 @@ To describe the objects visible at a given location:
 
 @
 
-\begin{minted}{lisp}
+<<Example Session>>=
 > (describe-objects 'living-room *objects* *object-locations*)
-(YOU SEE A WHISKEY ON THE FLOOR.
- YOU SEE A BUCKET ON THE FLOOR.)
-\end{minted}
+(<<living-room object descriptions>>)
+@
 
 
 \section{Describing It All}
@@ -297,15 +304,12 @@ To describe the objects visible at a given location:
 
 @
 
-\begin{minted}{lisp}
+<<Example Session>>=
 > (look)
-(YOU ARE IN THE LIVING ROOM.
- A WIZARD IS SNORING LOUDLY ON THE COUCH.
- THERE IS A DOOR GOING WEST FROM HERE.
- THERE IS A LADDER GOING UPSTAIRS FROM HERE.
- YOU SEE A WHISKEY ON THE FLOOR.
- YOU SEE A BUCKET ON THE FLOOR.)
-\end{minted}
+(<<living-room description>>
+ <<living-room path descriptions>>
+ <<living-room object descriptions>>)
+@
 \end{marginfigure}
 
 <<*>>=
@@ -394,15 +398,15 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 (defun pickup (object)
   (if <<the object is on the floor>>
       (progn <<pick it up>>)
-      '(you cannot get that)))
+      '(you cannot get that.)))
 
 
 @
 
-\begin{minted}{lisp}
+<<Example Session>>=
 > (pickup 'whiskey)
 (YOU ARE NOW CARRYING THE WHISKEY)
-\end{minted}
+@
 
 
 \section{Checking Our Inventory}
@@ -412,10 +416,10 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 (objects-at 'body *objects* *object-locations*)
 @
 
-\begin{minted}{lisp}
+<<Example Session>>=
 > (inventory)
-(ITEMS- WHISKEY)
-\end{minted}
+<<All you have is whiskey.>>
+@
 \end{marginfigure}
 
 <<*>>=
@@ -428,90 +432,102 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 
 \section{Tests}
 
-<<*>>=
-(define-test describe-living-room
-  (assert-equal '(<<living-room description>>)
-                (describe-location 'living-room *nodes*)))
+\begin{marginfigure}
+<<living-room path descriptions>>=
+<<garden door>>
+<<attic ladder>>
+@
+
+<<living-room object descriptions>>=
+YOU SEE A WHISKEY ON THE FLOOR.
+YOU SEE A BUCKET ON THE FLOOR.
+@
+
+<<garden path description>>=
+THERE IS A DOOR GOING EAST FROM HERE.
+@
+
+<<garden object descriptions>>=
+YOU SEE A FROG ON THE FLOOR.
+YOU SEE A CHAIN ON THE FLOOR.
+@
+
+<<You've got whiskey!>>=
+'(YOU ARE NOW CARRYING THE WHISKEY)
+@
+
+<<All you have is whiskey.>>=
+'(ITEMS- WHISKEY)
+@
+\end{marginfigure}
+
+<<test/wizard5.lisp>>=
+(in-package :lol.wizard5)
+
+
+(prove:plan 2)
+
+
+<<Test the private functions in [[lol.wizard5]]>>
+
+
+<<Test the exported functions in [[lol.wizard5]].>>
+
+
+(prove:finalize)
+@
+
+
+\subsection{\lsp{lol.wizard5} (Private Parts)}
+
+<<Test the private functions in [[lol.wizard5]]>>=
+(prove:subtest "lol.wizard5 (Private Parts)"
+  (prove:is (describe-location 'living-room *nodes*)
+            '(<<living-room description>>))
+  (prove:is (describe-path '(garden west door))
+            '(<<garden door>>))
+  (prove:is (describe-paths 'living-room *edges*)
+            '(<<living-room path descriptions>>))
+  (prove:is (describe-objects 'living-room *objects* *object-locations*)
+            '(<<living-room object descriptions>>))
+  (prove:is (objects-at 'living-room *objects* *object-locations*)
+            '(WHISKEY BUCKET)))
 
 
 @
 
-<<*>>=
-(define-test garden-path
-  (assert-equal '(THERE IS A DOOR GOING WEST FROM HERE.)
-                (describe-path '(garden west door))))
+
+\subsection{\lsp{lol.wizard5} (Public API)}
+<<Test the exported functions in [[lol.wizard5]].>>=
+(prove:subtest "lol.wizard5 (Public API)"
+  (prove:is (look)
+            '(<<living-room description>>
+              <<living-room path descriptions>>
+              <<living-room object descriptions>>))
+  (prove:subtest "Pick up the whiskey"
+    (prove:is (pickup 'whiskey)
+              <<You've got whiskey!>>)
+    (prove:is (objects-at 'living-room *objects* *object-locations*)
+              '(BUCKET))
+    (prove:is (describe-objects 'living-room *objects* *object-locations*)
+              '(YOU SEE A BUCKET ON THE FLOOR.)))
+  (prove:is (pickup 'the-pace)
+            '(you cannot get that.))
+  (prove:is (walk 'west)
+            '(<<garden description>>
+              <<garden path description>>
+              <<garden object descriptions>>))
+  (prove:is (walk 'south)
+            <<admonish the player>>)
+  (prove:is (inventory)
+            <<All you have is whiskey.>>))
 
 
-@
-
-<<*>>=
-(define-test living-room-paths
-  (assert-equal '(THERE IS A DOOR GOING WEST FROM HERE.
-                  THERE IS A LADDER GOING UPSTAIRS FROM HERE.)
-                (describe-paths 'living-room *edges*)))
-@
-
-
-<<*>>=
-(define-test living-room-objects
-  (assert-equal '(WHISKEY BUCKET)
-                (objects-at 'living-room *objects* *object-locations*)))
-
-
-@
-
-
-<<*>>=
-(define-test describe-living-room-objects
-  (assert-equal '(YOU SEE A WHISKEY ON THE FLOOR.
-                  YOU SEE A BUCKET ON THE FLOOR.)
-                 (describe-objects 'living-room *objects* *object-locations*)))
-
-
-@
-
-<<*>>=
-(define-test look
-  (assert-equal '(<<living-room description>>
-                  THERE IS A DOOR GOING WEST FROM HERE.
-                  THERE IS A LADDER GOING UPSTAIRS FROM HERE.
-                  YOU SEE A WHISKEY ON THE FLOOR.
-                  YOU SEE A BUCKET ON THE FLOOR.)
-                 (look)))
-
-
-@
-
-<<*>>=
-(define-test pickup-whiskey
-  (assert-equal '(YOU ARE NOW CARRYING THE WHISKEY)
-                (pickup 'whiskey)))
-
-
-@
-
-<<*>>=
-(define-test have-whiskey
-  (assert-equal '(ITEMS- WHISKEY)
-                (inventory)))
 @
 
 
 \newpage
 \section{Running the Tests}
-
-\begin{marginfigure}
-  The package under test is specified as the first argument on the command line
-  and prefixed with \lsp{:lol.} and used to
-  [[<<set the value of [[*package*]]>>]] in [[<<bin/runtests>>]].
-
-<<set the value of [[*package*]]>>=
---eval "(in-package <<the specified package>>)"
-@
-
-<<the specified package>>=
-:lol.$1
-@
 
 <<Set the exit status.>>=
 (if (null failures) 0 1)
@@ -523,61 +539,60 @@ If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 \end{marginfigure}
 
 
-\todo[inline]{Describe [[lisp-unit]]}
-<<Run the lisp-unit tests.>>=
-(let* ((results  <<Run all tests in the package.>>)
-       (failures <<Collect the failures.>>)
-       (status   <<Set the exit status.>>))
-  <<Print the failures.>>
-  <<Exit with an appropriate status code.>>)
+\todo[inline]{Describe [[prove]]}
+<<Run the system tests.>>=
+(prove:run-test-system :lol-test)
 @
 
-<<Run all tests in the package.>>=
-(lisp-unit:run-tests :all <<the specified package>>)
+<<Run the system tests and exit.>>=
+(uiop:quit (if <<Run the system tests.>> 0 1))
 @
-
-<<Collect the failures.>>=
-(lisp-unit:failed-tests results)
-@
-
-<<Print the failures.>>=
-(lisp-unit:print-failures results)
-@
-
 
 % \subsection{Script}
 
-\begin{marginfigure}
-<<Run SBCL quietly>>=
-sbcl --noinform --non-interactive
+\todo[inline]{Describe nix-shell shebang}
+<<script header>>=
+#! /usr/bin/env nix-shell
+#! nix-shell -i sh -p sbcl
+
+
 @
 
-<<Load [[init.lisp]] as the user initialization file.>>=
---userinit init.lisp
+\begin{marginfigure}
+  Run \mintinline{bash}{sbcl} quietly:
+<<script header>>=
+sbcl --noinform --non-interactive \
+@
+
+Load [[<<init.lisp>>]] as the user initialization file:
+<<script header>>=
+     --userinit init.lisp \
+@
+
+<<script footer>>=
+# Local Variables:
+# mode: sh
+# End:
+@
+
+<<Load the test package.>>=
+(asdf:load-system :lol-test)
 @
 \end{marginfigure}
 
-\todo[inline]{Describe nix-shell shebang}
 <<bin/runtests>>=
-#! /usr/bin/env nix-shell
-#! nix-shell -i sh -p sbcl
-@
+<<script header>>
+     --eval "<<Load the test package.>>" \
+     --eval "<<Run the system tests and exit.>>"
 
-<<bin/runtests>>=
-<<Run SBCL quietly>> \
-     <<Load [[init.lisp]] as the user initialization file.>> \
-     <<set the value of [[*package*]]>> \
-     --eval "<<Run the lisp-unit tests.>>"
+
+<<script footer>>
 @
 
 \begin{minted}[gobble=2]{shell-session}
-  $ ./bin/runtests wizard5
-  Unit Test Summary
- | 8 assertions total
- | 8 passed
- | 0 failed
- | 0 execution errors
- | 0 missing tests
+  $ ./bin/runtests
+  Summary:
+    All 1 file passed.
 \end{minted}
 
 

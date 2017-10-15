@@ -1,10 +1,11 @@
-(in-package #:lol)
-(defpackage #:lol.wizard5
-  (:use #:cl #:lisp-unit)
-  (:export #:look
-           #:walk
-           #:pickup))
-(in-package #:lol.wizard5)
+(in-package :cl-user)
+(defpackage lol.wizard5
+  (:use :cl)
+  (:export :look
+           :walk
+           :pickup
+           :inventory))
+(in-package :lol.wizard5)
 
 
 (defparameter *nodes*
@@ -78,54 +79,10 @@
   (if (member object (objects-at *location* *objects* *object-locations*))
       (progn (push (list object 'body) *object-locations*)
              `(you are now carrying the ,object))
-      '(you cannot get that)))
+      '(you cannot get that.)))
 
 
 (defun inventory ()
   (cons 'items- (objects-at 'body *objects* *object-locations*)))
 
 
-(define-test describe-living-room
-  (assert-equal '(you are in the living room.
-                  a wizard is snoring loudly on the couch.)
-                (describe-location 'living-room *nodes*)))
-
-
-(define-test garden-path
-  (assert-equal '(THERE IS A DOOR GOING WEST FROM HERE.)
-                (describe-path '(garden west door))))
-
-
-(define-test living-room-paths
-  (assert-equal '(THERE IS A DOOR GOING WEST FROM HERE.
-                  THERE IS A LADDER GOING UPSTAIRS FROM HERE.)
-                (describe-paths 'living-room *edges*)))
-(define-test living-room-objects
-  (assert-equal '(WHISKEY BUCKET)
-                (objects-at 'living-room *objects* *object-locations*)))
-
-
-(define-test describe-living-room-objects
-  (assert-equal '(YOU SEE A WHISKEY ON THE FLOOR.
-                  YOU SEE A BUCKET ON THE FLOOR.)
-                 (describe-objects 'living-room *objects* *object-locations*)))
-
-
-(define-test look
-  (assert-equal '(you are in the living room.
-                  a wizard is snoring loudly on the couch.
-                  THERE IS A DOOR GOING WEST FROM HERE.
-                  THERE IS A LADDER GOING UPSTAIRS FROM HERE.
-                  YOU SEE A WHISKEY ON THE FLOOR.
-                  YOU SEE A BUCKET ON THE FLOOR.)
-                 (look)))
-
-
-(define-test pickup-whiskey
-  (assert-equal '(YOU ARE NOW CARRYING THE WHISKEY)
-                (pickup 'whiskey)))
-
-
-(define-test have-whiskey
-  (assert-equal '(ITEMS- WHISKEY)
-                (inventory)))

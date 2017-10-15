@@ -1,16 +1,8 @@
-;;;; lol.asd
-
-(asdf:defsystem #:lol
-  :description "Land of Lisp examples"
+(defsystem "lol"
+  :version "0.0.1"
   :author "Eric Bailey <eric@ericb.me>"
-  ;; TODO :license "Specify license here"
-  :depends-on (#:lisp-unit)
-  :serial t
+  :license "MIT"
   :components ((:module "src"
-                :serial t
                 :components
-                ((:file "wizard5")))))
-
-(defpackage #:lol
-  (:use #:cl))
-(in-package #:lol)
+                ((:file "wizard5"))))
+  :description "Land of Lisp examples")

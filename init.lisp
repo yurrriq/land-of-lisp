@@ -6,5 +6,3 @@
 
 (push (concatenate 'string (sb-posix:getcwd) "/")
       asdf:*central-registry*)
-
-(asdf:load-system :lol)
