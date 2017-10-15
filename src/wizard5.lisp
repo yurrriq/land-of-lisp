@@ -1,3 +1,12 @@
+(in-package #:lol)
+(defpackage #:lol.wizard5
+  (:use #:cl #:lisp-unit)
+  (:export #:look
+           #:walk
+           #:pickup))
+(in-package #:lol.wizard5)
+
+
 (defparameter *nodes*
   '((living-room (you are in the living room.
                   a wizard is snoring loudly on the couch.))

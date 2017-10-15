@@ -36,6 +36,17 @@
 
 \tableofcontents
 
+<<*>>=
+(in-package #:lol)
+(defpackage #:lol.wizard5
+  (:use #:cl #:lisp-unit)
+  (:export #:look
+           #:walk
+           #:pickup))
+(in-package #:lol.wizard5)
+
+
+@
 
 \newpage
 \section{Setting the Scene}
