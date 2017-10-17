@@ -3,6 +3,12 @@
 
 \input{preamble.tex}
 
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+% \renewcommand*{\glstextformat}[1]{\textsl{#1}}
+
+
 \hypersetup{
   pdffitwindow=true,
   pdfstartview={FitH},
@@ -34,8 +40,7 @@
   \noindent You'll explore the wizard's house.
 \end{abstract}
 
-\tableofcontents
-
+\begin{marginfigure}
 <<*>>=
 (in-package :cl-user)
 (defpackage lol.wizard5
@@ -47,66 +52,61 @@
 (in-package :lol.wizard5)
 
 
+<<define the global variables>>
 @ %def lol.wizard5
+\end{marginfigure}
 
+\tableofcontents
 \newpage
+
+
 \section{Setting the Scene}
 
 This world consists of only three locations:
 
-\begin{marginfigure}
-<<*>>=
-<<define the global variables>>
-@
-
-<<living-room description>>=
+\begin{enumerate}[1.\hspace{1em}]
+  \item
+<<The living room>>=
 you are in the living room.
 a wizard is snoring loudly on the couch.
 @
-
-<<garden description>>=
+  \item
+<<A beautiful garden>>=
 you are in a beautiful garden.
 there is a well in front of you.
 @
-
-<<attic description>>=
+\item
+<<The attic>>=
 you are in the attic.
 there is a giant welding torch in the corner.
 @
-\end{marginfigure}
+\end{enumerate}
 
-\begin{itemize}
-  \item the living room
-  \item a beautiful garden
-  \item the attic
-\end{itemize}
-
+\marginnote{%
+  [[*nodes*]] is simply an \gls{association list} with locations as keys and the
+  previous descriptions as values.%
+}
 
 <<define the global variables>>=
 (defparameter *nodes*
-  '((living-room (<<living-room description>>))
-    (garden      (<<garden description>>))
-    (attic       (<<attic description>>))))
+  '((living-room (<<The living room>>))
+    (garden      (<<A beautiful garden>>))
+    (attic       (<<The attic>>))))
 
 @ %def *nodes*
 
 
 \section{Describing the Location}
 
+To find the description, [[<<look up a location>>]] and take the \gls{cadr}.
+Preferring the {\sl functional programming} style, pass \lsp{nodes} as an
+argument, instead of referencing [[*nodes*]] directly.
+
 \begin{marginfigure}
 <<look up a location>>=
 (assoc location nodes)
 @
-
-<<Example Session>>=
-> (describe-location 'living-room *nodes*)
-(<<living-room description>>)
-@
 \end{marginfigure}
-
-To find the description, [[<<look up a location>>]] and take the \lsp{cadr}.
-Preferring the {\sl functional programming} style, pass \lsp{nodes} as an
-argument, instead of referencing [[*nodes*]] directly.
 
 <<*>>=
 (defun describe-location (location nodes)
@@ -116,42 +116,48 @@ argument, instead of referencing [[*nodes*]] directly.
 @
 
 
+\newpage
 \section{Describing the Paths}
 
 From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
-through the \lsp{door}, or to the \lsp{attic} by going \lsp{upstairs} via the
-\lsp{ladder}.
-
-From the \lsp{garden}, you can move to the \lsp{living-room} by going \lsp{east}
-through the \lsp{door}.
-
-From the \lsp{attic}, you can move to the \lsp{living-room} by going
-\lsp{downstairs} via the \lsp{ladder}.
-
-\begin{marginfigure}
-<<living-room paths>>=
-(garden west door)
-(attic upstairs ladder)
-@
-
-<<garden path>>=
-(living-room east door)
-@
-
-<<attic path>>=
-(living-room downstairs ladder)
-@
+through the \lsp{door},
 
 <<garden door>>=
 THERE IS A DOOR GOING WEST FROM HERE.
 @
 
-<<Example Session>>=
-> (describe-path '(garden west door))
-<<garden door>>
+<<living-room paths>>=
+(garden west door)
 @
-\end{marginfigure}
 
+... or to the \lsp{attic} by going \lsp{upstairs} via the
+\lsp{ladder}.
+
+<<attic ladder>>=
+THERE IS A LADDER GOING UPSTAIRS FROM HERE.
+@
+
+<<living-room paths>>=
+(attic upstairs ladder)
+@
+
+From the \lsp{garden}, you can move to the \lsp{living-room} by going \lsp{east}
+through the \lsp{door}.
+
+<<garden path>>=
+(living-room east door)
+@
+
+From the \lsp{attic}, you can move to the \lsp{living-room} by going \newline
+\noindent \lsp{downstairs} via the \lsp{ladder}.
+
+<<attic path>>=
+(living-room downstairs ladder)
+@
+
+With those symolic paths, we can
+
+\begin{marginfigure}
 <<define the global variables>>=
 (defparameter *edges*
   '((living-room <<living-room paths>>)
@@ -159,9 +165,9 @@ THERE IS A DOOR GOING WEST FROM HERE.
     (attic       <<attic path>>)))
 
 @ %def *edges*
+\end{marginfigure}
 
-
-To describe a path, take the means (\lsp{caddr}) and direction (\lsp{cadr}) and
+To describe a path, take the means (\gls{caddr}) and direction (\gls{cadr}) and
 return a descriptive list.
 
 <<*>>=
@@ -172,45 +178,32 @@ return a descriptive list.
 @
 
 
+\newpage
 \section{Describing Multiple Paths at Once}
 
 To describe multiple paths:
 
-\begin{marginfigure}
+\begin{enumerate}[1.\hspace{1em}]
+  \item
 <<Find the relevant edges.>>=
 (cdr (assoc location edges))
 @
-
+  \item
 <<Convert the edges to descriptions.>>=
 mapcar #'describe-path
 @
 % FIXME: @index use describe-path
-
+  \item
 <<Join the descriptions.>>=
 apply #'append
 @
-
-<<attic ladder>>=
-THERE IS A LADDER GOING UPSTAIRS FROM HERE.
-@
-
-<<Example Session>>=
-> (describe-paths 'living-room *edges*)
-(<<garden door>>
- <<attic ladder>>)
-@
-\end{marginfigure}
-
-\begin{enumerate}
-
-  \item [[<<Find the relevant edges.>>]]
-  \item [[<<Convert the edges to descriptions.>>]]
-  \item [[<<Join the descriptions.>>]]
 \end{enumerate}
 
 <<*>>=
 (defun describe-paths (location edges)
-  (<<Join the descriptions.>> (<<Convert the edges to descriptions.>> <<Find the relevant edges.>>)))
+  (<<Join the descriptions.>>
+         (<<Convert the edges to descriptions.>>
+                 <<Find the relevant edges.>>)))
 
 
 @
@@ -244,35 +237,28 @@ THERE IS A LADDER GOING UPSTAIRS FROM HERE.
 
 @
 
-<<Example Session>>=
-> (objects-at 'living-room *objects* *object-locations*)
-(WHISKEY BUCKET)
-@
-
 
 \section{Describing Visible Objects}
+
+To describe the objects visible at a given location:
+\begin{enumerate}[1.\hspace{1em}]
+  \item
+<<Find the objects at the current location.>>=
+(objects-at loc objs obj-loc)
+@
+  \item
+<<Convert the objects to descriptions.>>=
+mapcar #'describe-obj
+@
+  \item [[<<Join the descriptions.>>]]
+\end{enumerate}
 
 \begin{marginfigure}
 <<describe-obj>>=
 (describe-obj (obj)
   `(you see a ,obj on the floor.))
 @
-
-<<Find the objects at the current location.>>=
-(objects-at loc objs obj-loc)
-@
-
-<<Convert the objects to descriptions.>>=
-mapcar #'describe-obj
-@
 \end{marginfigure}
-
-To describe the objects visible at a given location:
-\begin{enumerate}
-  \item [[<<Find the objects at the current location.>>]]
-  \item [[<<Convert the objects to descriptions.>>]]
-  \item [[<<Join the descriptions.>>]]
-\end{enumerate}
 
 <<*>>=
 (defun describe-objects (loc objs obj-loc)
@@ -282,11 +268,6 @@ To describe the objects visible at a given location:
                    <<Find the objects at the current location.>>))))
 
 
-@
-
-<<Example Session>>=
-> (describe-objects 'living-room *objects* *object-locations*)
-(<<living-room object descriptions>>)
 @
 
 
@@ -302,13 +283,6 @@ To describe the objects visible at a given location:
 (defparameter *location* 'living-room)
 
 
-@
-
-<<Example Session>>=
-> (look)
-(<<living-room description>>
- <<living-room path descriptions>>
- <<living-room object descriptions>>)
 @
 \end{marginfigure}
 
@@ -348,13 +322,6 @@ Given a \lsp{direction},
 If such a path is found, [[<<adjust the player's position>>]],
 otherwise [[<<admonish the player>>]].
 
-<<try to go in that direction>>=
-(if next
-    (progn <<adjust the player's position>>
-           (look))
-    <<admonish the player>>)
-@
-
 \begin{marginfigure}
 <<adjust the player's position>>=
 (setf *location* (car next))
@@ -364,6 +331,13 @@ otherwise [[<<admonish the player>>]].
 '(you cannot go that way.)
 @
 \end{marginfigure}
+
+<<try to go in that direction>>=
+(if next
+    (progn <<adjust the player's position>>
+           (look))
+    <<admonish the player>>)
+@
 
 <<*>>=
 (defun walk (direction)
@@ -377,50 +351,51 @@ otherwise [[<<admonish the player>>]].
 % \newpage
 \section{Picking Up Objects}
 
+To determine if [[<<the object is on the floor>>]],
+
 \begin{marginfigure}
 <<the object is on the floor>>=
 (member object <<get the list of objects here>>)
 @
-
-<<pick it up>>=
-(push (list object 'body) *object-locations*)
-`(you are now carrying the ,object)
-@
 \end{marginfigure}
-
-If [[<<the object is on the floor>>]], [[<<pick it up>>]].
 
 <<get the list of objects here>>=
 (objects-at *location* *objects* *object-locations*)
 @
 
+... and check if \lsp{object} is a \lsp{member}. If so...
+
+<<pick it up>>=
+(push (list object 'body) *object-locations*)
+`(you are now carrying the ,object)
+@
+
+Otherwise...
+
+<<you cannot get that.>>=
+'(you cannot get that.)
+@
+
+\begin{marginfigure}
 <<*>>=
 (defun pickup (object)
   (if <<the object is on the floor>>
       (progn <<pick it up>>)
-      '(you cannot get that.)))
+      <<you cannot get that.>>))
 
 
 @
-
-<<Example Session>>=
-> (pickup 'whiskey)
-(YOU ARE NOW CARRYING THE WHISKEY)
-@
+\end{marginfigure}
 
 
 \section{Checking Our Inventory}
 
-\begin{marginfigure}
+To check our inventory, we [[<<retrieve the list of carried objects>>]] and
+prepend (a.k.a. \lsp{cons}) the symbol \lsp{items-}.
+
 <<retrieve the list of carried objects>>=
 (objects-at 'body *objects* *object-locations*)
 @
-
-<<Example Session>>=
-> (inventory)
-<<All you have is whiskey.>>
-@
-\end{marginfigure}
 
 <<*>>=
 (defun inventory ()
@@ -481,7 +456,7 @@ YOU SEE A CHAIN ON THE FLOOR.
 <<Test the private functions in [[lol.wizard5]]>>=
 (prove:subtest "lol.wizard5 (Private Parts)"
   (prove:is (describe-location 'living-room *nodes*)
-            '(<<living-room description>>))
+            '(<<The living room>>))
   (prove:is (describe-path '(garden west door))
             '(<<garden door>>))
   (prove:is (describe-paths 'living-room *edges*)
@@ -499,7 +474,7 @@ YOU SEE A CHAIN ON THE FLOOR.
 <<Test the exported functions in [[lol.wizard5]].>>=
 (prove:subtest "lol.wizard5 (Public API)"
   (prove:is (look)
-            '(<<living-room description>>
+            '(<<The living room>>
               <<living-room path descriptions>>
               <<living-room object descriptions>>))
   (prove:subtest "Pick up the whiskey"
@@ -510,9 +485,9 @@ YOU SEE A CHAIN ON THE FLOOR.
     (prove:is (describe-objects 'living-room *objects* *object-locations*)
               '(YOU SEE A BUCKET ON THE FLOOR.)))
   (prove:is (pickup 'the-pace)
-            '(you cannot get that.))
+            <<you cannot get that.>>)
   (prove:is (walk 'west)
-            '(<<garden description>>
+            '(<<A beautiful garden>>
               <<garden path description>>
               <<garden object descriptions>>))
   (prove:is (walk 'south)
@@ -568,14 +543,14 @@ Load [[<<init.lisp>>]] as the user initialization file:
      --userinit init.lisp \
 @
 
+<<Load the test package.>>=
+(asdf:load-system :lol-test)
+@
+
 <<script footer>>=
 # Local Variables:
 # mode: sh
 # End:
-@
-
-<<Load the test package.>>=
-(asdf:load-system :lol-test)
 @
 \end{marginfigure}
 
@@ -596,29 +571,29 @@ Load [[<<init.lisp>>]] as the user initialization file:
     All 1 file passed.
 \end{minted}
 
+<<init.lisp>>=
+#-quicklisp
+(let ((quicklisp-init (merge-pathnames "quicklisp/setup.lisp"
+                                       (user-homedir-pathname))))
+  (when (probe-file quicklisp-init)
+    (load quicklisp-init)))
+
+(push (concatenate 'string (sb-posix:getcwd) "/")
+      asdf:*central-registry*)
+@
+
 
 \newpage
-\newgeometry{left=0.625in,right=3.75in}
-\setlength{\linewidth}{1.85\textwidth}
-\begin{multicols*}{2}
-[\section{Full Listing}]
-\inputminted[linenos,firstline=11,lastline=51,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
-\columnbreak
-\inputminted[linenos,firstline=54,fontsize=\footnotesize]{lisp}{src/wizard5.lisp}
-\end{multicols*}
-\restoregeometry
-
-
-% \section{Example Session}
-
-% After loading \srclink{src/wizard5.lisp},
-% you might have [[<<session>>]] like this.
-
-% \begin{marginfigure}
-% \begin{minted}{shell-session}
-% $ rlwrap sbcl --load src/wizard5.lisp
-% \end{minted}
-% \end{marginfigure}
+% \newgeometry{left=0.625in,right=3.75in}
+% \setlength{\linewidth}{1.85\textwidth}
+% \begin{multicols*}{2}
+\section{Full Listing}
+\inputminted[linenos,firstline=11,lastline=47]{lisp}{wizard5.lisp}
+% \columnbreak
+\newpage
+\inputminted[linenos,firstline=50]{lisp}{wizard5.lisp}
+% \end{multicols*}
+% \restoregeometry
 
 
 \newpage
@@ -631,9 +606,10 @@ Load [[<<init.lisp>>]] as the user initialization file:
   \section{Index}
   \nowebindex
 \end{multicols}
+\newpage
 
-
-\setlength{\linewidth}{1.4\textwidth}
+\restoregeometry
+\printglossaries
 
 \bibliography{lol}
 \bibliographystyle{plainnat}
