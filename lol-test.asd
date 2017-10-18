@@ -1,7 +1,7 @@
 (defsystem "lol-test"
-  :version "0.0.1"
+  :version "0.1.1"
   :author "Eric Bailey <eric@ericb.me>"
-  :license "MIT"
+  :license "WTFPL"
   :depends-on (:lol
                :prove
                :sb-cover)
