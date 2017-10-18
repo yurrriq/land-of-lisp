@@ -3,6 +3,10 @@
 
 \input{preamble.tex}
 
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+
 \hypersetup{
   pdffitwindow=true,
   pdfstartview={FitH},
@@ -29,9 +33,23 @@
 \maketitle
 @
 
-% \begin{abstract}
-%   Who ate my pudding?
-% \end{abstract}
+\begin{abstract}
+  Who ate my pudding?
+\end{abstract}
+
+\begin{marginfigure}
+\srclink{src/pudding.lisp}:
+<<*>>=
+(in-package :cl-user)
+(defpackage lol.pudding
+  (:use :cl :prove)
+  (:export pudding-eater))
+(in-package :lol.pudding)
+
+
+@ %def lol.pudding
+\end{marginfigure}
+
 
 % \tableofcontents
 % \newpage
@@ -39,8 +57,8 @@
 
 \section{Defining the Arch-Enemy Variable}
 
-Since at first we don't know who the pudding eater (a.k.a. our [[*arch-enemy*]])
-is, set the initial value to \lsp{nil}.
+Since at first we don't know who the pudding eater\newline
+\noindent (a.k.a. our [[*arch-enemy*]]) is, set the initial value to \gls{nil}.
 
 \marginnote[1.5\baselineskip]{%
   \say{Global variable names should start and end with asterisks (also known in
@@ -77,43 +95,42 @@ Since \lsp{test-form}s are evaluated for truthiness, we can branch on which
 <<it was Henry>>=
 (eq person 'henry)
 @
+\end{marginfigure}
 
-<<blame Henry>>=
+If [[<<it was Henry>>]], the Lisp alien,
+<<blame Henry.>>=
 (setf *arch-enemy* 'stupid-lisp-alien)
 '(curse you lisp alien - you ate my pudding)
 @
-\end{marginfigure}
-
-If [[<<it was Henry>>]], the Lisp alien, [[<<blame Henry>>]];
 
 \begin{marginfigure}
 <<it was Johnny>>=
 (eq person 'johnny)
 @
-
-<<blame Johnny>>=
-(setf *arch-enemy* 'useless-old-johnny)
-'(i hope you chocked on my pudding johnny)
-@
 \end{marginfigure}
 
-If [[<<it was Johnny>>]], [[<<blame Johnny>>]].
+If [[<<it was Johnny>>]],
+<<blame Johnny.>>=
+(setf *arch-enemy* 'useless-old-johnny)
+'(i hope you choked on my pudding johnny)
+@
 
 \begin{marginfigure}
-<<ask them why>>=
+<<ask them why.>>=
 '(why you eat my pudding stranger ?)
 @
 \end{marginfigure}
 
-If it was someone else, [[<<ask them why>>]].
+If it was someone else, [[<<ask them why.>>]].
 
+\newpage
 The \lsp{cond} version of [[pudding-eater]] then, would look like this:
 
 <<[[cond]]-flavoured [[pudding-eater]]>>=
 (λ (person)
-  (cond (<<it was Johnny>> <<blame Johnny>>)
-        (<<it was Henry>>  <<blame Henry>>)
-        (t                <<ask them why>>)))
+  (cond (<<it was Johnny>> <<blame Johnny.>>)
+        (<<it was Henry>>  <<blame Henry.>>)
+        (t                <<ask them why.>>)))
 @
 
 More succinctly, with \lsp{case}, we can define the [[pudding-eater]] function.
@@ -121,45 +138,56 @@ More succinctly, with \lsp{case}, we can define the [[pudding-eater]] function.
 <<*>>=
 (defun pudding-eater (person)
   (case person
-        ((henry)   <<blame Henry>>)
-        ((johnny)  <<blame Johnny>>)
-        (otherwise <<ask them why>>)))
+        ((henry)   <<blame Henry.>>)
+        ((johnny)  <<blame Johnny.>>)
+        (otherwise <<ask them why.>>)))
 @
 
 
-\section{Full Listing}
+% \section{Full Listing}
 
-\inputminted{lisp}{src/pudding.lisp}
+% \inputminted[linenos]{lisp}{pudding.lisp}
 
 
-\section{Example Session}
+\section{Tests}
 
-After loading \srclink{src/pudding.lisp},
-you might have [[<<a session>>]] like this:
+<<test/pudding.lisp>>=
+(in-package :lol.pudding)
 
-\begin{marginfigure}
-\begin{minted}{shell-session}
-$ rlwrap sbcl --load src/pudding.lisp
-\end{minted}
-\end{marginfigure}
 
-<<a session>>=
-> (pudding-eater 'johnny)
-(I HOPE YOU CHOKED ON MY PUDDING JOHNNY)
-> *arch-enemy*
-USELESS-OLD-JOHNNY
-> (pudding-eater 'george-clooney)
-(WHY YOU EAT MY PUDDING STRANGER ?)
+(plan 1)
+
+
+(subtest "A Plausible Session"
+  (is (pudding-eater 'johnny)
+      '(I HOPE YOU CHOKED ON MY PUDDING JOHNNY)
+      "I hope you choked on my pudding, Johnny!")
+  (is *arch-enemy*
+      'USELESS-OLD-JOHNNY
+      "Useless old Johnny!")
+  (is (pudding-eater 'george-clooney)
+      '(WHY YOU EAT MY PUDDING STRANGER ?)))
+
+
+(finalize)
 @
 
 
 % \section{Index}
 % \nowebindex
-% \newpage
 
+
+% \newpage
 % \section{Chunks}
 % \nowebchunks
 
+
+\restoregeometry
+\thanks{\cite{hyperspec-glossary}}
+\printglossaries
+
+
+\setlength{\linewidth}{1.4\textwidth}
 \bibliography{lol}
 \bibliographystyle{plainnat}
 

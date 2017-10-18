@@ -33,10 +33,6 @@ test/%.lisp: src/%.nw
 	notangle -R'$@' $< ${cpif} $@
 
 
-# HACK
-test/pudding.lisp: ; @ echo "$@ is not yet implemented."
-
-
 docs: ${DOCS_SRCS}
 
 # FIXME: separate file

@@ -10,6 +10,7 @@
                 :serial t
                 :components
                 ((:test-file "guess")
+                 (:test-file "pudding")
                  (:test-file "wizard5"))))
 
   :defsystem-depends-on ("prove-asdf")

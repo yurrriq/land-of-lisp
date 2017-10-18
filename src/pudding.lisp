@@ -1,3 +1,10 @@
+(in-package :cl-user)
+(defpackage lol.pudding
+  (:use :cl :prove)
+  (:export pudding-eater))
+(in-package :lol.pudding)
+
+
 (defvar *arch-enemy* nil)
 
 
@@ -6,5 +13,5 @@
         ((henry)   (setf *arch-enemy* 'stupid-lisp-alien)
                    '(curse you lisp alien - you ate my pudding))
         ((johnny)  (setf *arch-enemy* 'useless-old-johnny)
-                   '(i hope you chocked on my pudding johnny))
+                   '(i hope you choked on my pudding johnny))
         (otherwise '(why you eat my pudding stranger ?))))

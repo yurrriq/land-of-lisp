@@ -3,6 +3,10 @@
 
 \input{preamble.tex}
 
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+
 \hypersetup{
   pdffitwindow=true,
   pdfstartview={FitH},
@@ -29,9 +33,22 @@
 \maketitle
 \nwfilename{src/pudding.nw}\nwbegindocs{1}\nwdocspar
 
-% \begin{abstract}
-%   Who ate my pudding?
-% \end{abstract}
+\begin{abstract}
+  Who ate my pudding?
+\end{abstract}
+
+\begin{marginfigure}
+\srclink{src/pudding.lisp}:
+\nwenddocs{}\nwbegincode{2}\sublabel{NWlm77s-1p0Y9w-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-1}}}\moddef{*~{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-1}}}\endmoddef\nwstartdeflinemarkup\nwprevnextdefs{\relax}{NWlm77s-1p0Y9w-2}\nwenddeflinemarkup
+(in-package :cl-user)
+(defpackage \nwlinkedidentc{lol.pudding}{NWlm77s-1p0Y9w-1}
+  (:use :cl :prove)
+(in-package :\nwlinkedidentc{lol.pudding}{NWlm77s-1p0Y9w-1})
+
+
+\nwindexdefn{\nwixident{lol.pudding}}{lol.pudding}{NWlm77s-1p0Y9w-1}\eatline
+\nwalsodefined{\\{NWlm77s-1p0Y9w-2}\\{NWlm77s-1p0Y9w-3}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.pudding}}{lol.pudding}}}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
+
 
 % \tableofcontents
 % \newpage
@@ -39,19 +56,19 @@
 
 \section{Defining the Arch-Enemy Variable}
 
-Since at first we don't know who the pudding eater (a.k.a. our {\Tt{}\nwlinkedidentq{*arch-enemy*}{NWlm77s-1p0Y9w-1}\nwendquote})
-is, set the initial value to \lsp{nil}.
+Since at first we don't know who the pudding eater\newline
+\noindent (a.k.a. our {\Tt{}\nwlinkedidentq{*arch-enemy*}{NWlm77s-1p0Y9w-2}\nwendquote}) is, set the initial value to \gls{nil}.
 
 \marginnote[1.5\baselineskip]{%
   \say{Global variable names should start and end with asterisks (also known in
     this context as earmuffs)} \citep{google-style-guide}.
 }
 
-\nwenddocs{}\nwbegincode{2}\sublabel{NWlm77s-1p0Y9w-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-1}}}\moddef{*~{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-1}}}\endmoddef\nwstartdeflinemarkup\nwprevnextdefs{\relax}{NWlm77s-1p0Y9w-2}\nwenddeflinemarkup
-(defvar \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-1} nil)\nwindexdefn{\nwixident{*arch-enemy*}}{*arch-enemy*}{NWlm77s-1p0Y9w-1}
+\nwenddocs{}\nwbegincode{4}\sublabel{NWlm77s-1p0Y9w-2}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-2}}}\moddef{*~{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWlm77s-1p0Y9w-1}{NWlm77s-1p0Y9w-3}\nwenddeflinemarkup
+(defvar \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-2} nil)\nwindexdefn{\nwixident{*arch-enemy*}}{*arch-enemy*}{NWlm77s-1p0Y9w-2}
 
 
-\nwalsodefined{\\{NWlm77s-1p0Y9w-2}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{*arch-enemy*}}{*arch-enemy*}}}\nwendcode{}\nwbegindocs{3}\nwdocspar
+\nwidentdefs{\\{{\nwixident{*arch-enemy*}}{*arch-enemy*}}}\nwendcode{}\nwbegindocs{5}\nwdocspar
 
 
 \section{Defining the Pudding-Eater Function}
@@ -74,104 +91,115 @@ Since \lsp{test-form}s are evaluated for truthiness, we can branch on which
 \lsp{person} ate our pudding.
 
 \begin{marginfigure}
-\nwenddocs{}\nwbegincode{4}\sublabel{NWlm77s-e7MAZ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-e7MAZ-1}}}\moddef{it was Henry~{\nwtagstyle{}\subpageref{NWlm77s-e7MAZ-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{6}\sublabel{NWlm77s-e7MAZ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-e7MAZ-1}}}\moddef{it was Henry~{\nwtagstyle{}\subpageref{NWlm77s-e7MAZ-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}}\nwenddeflinemarkup
 (eq person 'henry)
-\nwused{\\{NWlm77s-2TVrZS-1}}\nwendcode{}\nwbegindocs{5}\nwdocspar
+\nwused{\\{NWlm77s-2TVrZS-1}}\nwendcode{}\nwbegindocs{7}\nwdocspar
+\end{marginfigure}
 
-\nwenddocs{}\nwbegincode{6}\sublabel{NWlm77s-155yI6-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-155yI6-1}}}\moddef{blame Henry~{\nwtagstyle{}\subpageref{NWlm77s-155yI6-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-2}}\nwenddeflinemarkup
-(setf \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-1} 'stupid-lisp-alien)
+If {\Tt{}\LA{}it was Henry~{\nwtagstyle{}\subpageref{NWlm77s-e7MAZ-1}}\RA{}\nwendquote}, the Lisp alien,
+\nwenddocs{}\nwbegincode{8}\sublabel{NWlm77s-zhIxQ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-zhIxQ-1}}}\moddef{blame Henry.~{\nwtagstyle{}\subpageref{NWlm77s-zhIxQ-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-3}}\nwenddeflinemarkup
+(setf \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-2} 'stupid-lisp-alien)
 '(curse you lisp alien - you ate my pudding)
-\nwused{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-2}}\nwidentuses{\\{{\nwixident{*arch-enemy*}}{*arch-enemy*}}}\nwindexuse{\nwixident{*arch-enemy*}}{*arch-enemy*}{NWlm77s-155yI6-1}\nwendcode{}\nwbegindocs{7}\nwdocspar
-\end{marginfigure}
-
-If {\Tt{}\LA{}it was Henry~{\nwtagstyle{}\subpageref{NWlm77s-e7MAZ-1}}\RA{}\nwendquote}, the Lisp alien, {\Tt{}\LA{}blame Henry~{\nwtagstyle{}\subpageref{NWlm77s-155yI6-1}}\RA{}\nwendquote};
+\nwused{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-3}}\nwidentuses{\\{{\nwixident{*arch-enemy*}}{*arch-enemy*}}}\nwindexuse{\nwixident{*arch-enemy*}}{*arch-enemy*}{NWlm77s-zhIxQ-1}\nwendcode{}\nwbegindocs{9}\nwdocspar
 
 \begin{marginfigure}
-\nwenddocs{}\nwbegincode{8}\sublabel{NWlm77s-23wlyr-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-23wlyr-1}}}\moddef{it was Johnny~{\nwtagstyle{}\subpageref{NWlm77s-23wlyr-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{10}\sublabel{NWlm77s-23wlyr-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-23wlyr-1}}}\moddef{it was Johnny~{\nwtagstyle{}\subpageref{NWlm77s-23wlyr-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}}\nwenddeflinemarkup
 (eq person 'johnny)
-\nwused{\\{NWlm77s-2TVrZS-1}}\nwendcode{}\nwbegindocs{9}\nwdocspar
+\nwused{\\{NWlm77s-2TVrZS-1}}\nwendcode{}\nwbegindocs{11}\nwdocspar
+\end{marginfigure}
 
-\nwenddocs{}\nwbegincode{10}\sublabel{NWlm77s-3I6gnZ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-3I6gnZ-1}}}\moddef{blame Johnny~{\nwtagstyle{}\subpageref{NWlm77s-3I6gnZ-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-2}}\nwenddeflinemarkup
-(setf \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-1} 'useless-old-johnny)
+If {\Tt{}\LA{}it was Johnny~{\nwtagstyle{}\subpageref{NWlm77s-23wlyr-1}}\RA{}\nwendquote},
+\nwenddocs{}\nwbegincode{12}\sublabel{NWlm77s-3Ska6D-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-3Ska6D-1}}}\moddef{blame Johnny.~{\nwtagstyle{}\subpageref{NWlm77s-3Ska6D-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-3}}\nwenddeflinemarkup
+(setf \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-2} 'useless-old-johnny)
 '(i hope you chocked on my pudding johnny)
-\nwused{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-2}}\nwidentuses{\\{{\nwixident{*arch-enemy*}}{*arch-enemy*}}}\nwindexuse{\nwixident{*arch-enemy*}}{*arch-enemy*}{NWlm77s-3I6gnZ-1}\nwendcode{}\nwbegindocs{11}\nwdocspar
-\end{marginfigure}
-
-If {\Tt{}\LA{}it was Johnny~{\nwtagstyle{}\subpageref{NWlm77s-23wlyr-1}}\RA{}\nwendquote}, {\Tt{}\LA{}blame Johnny~{\nwtagstyle{}\subpageref{NWlm77s-3I6gnZ-1}}\RA{}\nwendquote}.
+\nwused{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-3}}\nwidentuses{\\{{\nwixident{*arch-enemy*}}{*arch-enemy*}}}\nwindexuse{\nwixident{*arch-enemy*}}{*arch-enemy*}{NWlm77s-3Ska6D-1}\nwendcode{}\nwbegindocs{13}\nwdocspar
 
 \begin{marginfigure}
-\nwenddocs{}\nwbegincode{12}\sublabel{NWlm77s-I8i5u-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-I8i5u-1}}}\moddef{ask them why~{\nwtagstyle{}\subpageref{NWlm77s-I8i5u-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-2}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{14}\sublabel{NWlm77s-FC5AE-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-FC5AE-1}}}\moddef{ask them why.~{\nwtagstyle{}\subpageref{NWlm77s-FC5AE-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-3}}\nwenddeflinemarkup
 '(why you eat my pudding stranger ?)
-\nwused{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-2}}\nwendcode{}\nwbegindocs{13}\nwdocspar
+\nwused{\\{NWlm77s-2TVrZS-1}\\{NWlm77s-1p0Y9w-3}}\nwendcode{}\nwbegindocs{15}\nwdocspar
 \end{marginfigure}
 
-If it was someone else, {\Tt{}\LA{}ask them why~{\nwtagstyle{}\subpageref{NWlm77s-I8i5u-1}}\RA{}\nwendquote}.
+If it was someone else, {\Tt{}\LA{}ask them why.~{\nwtagstyle{}\subpageref{NWlm77s-FC5AE-1}}\RA{}\nwendquote}.
 
-The \lsp{cond} version of {\Tt{}\nwlinkedidentq{pudding-eater}{NWlm77s-1p0Y9w-2}\nwendquote} then, would look like this:
+\newpage
+The \lsp{cond} version of {\Tt{}\nwlinkedidentq{pudding-eater}{NWlm77s-1p0Y9w-3}\nwendquote} then, would look like this:
 
-\nwenddocs{}\nwbegincode{14}\sublabel{NWlm77s-2TVrZS-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-2TVrZS-1}}}\moddef{\code{}cond\edoc{}-flavoured \code{}pudding-eater\edoc{}~{\nwtagstyle{}\subpageref{NWlm77s-2TVrZS-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{16}\sublabel{NWlm77s-2TVrZS-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-2TVrZS-1}}}\moddef{\code{}cond\edoc{}-flavoured \code{}pudding-eater\edoc{}~{\nwtagstyle{}\subpageref{NWlm77s-2TVrZS-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 (λ (person)
-  (cond (\LA{}it was Johnny~{\nwtagstyle{}\subpageref{NWlm77s-23wlyr-1}}\RA{} \LA{}blame Johnny~{\nwtagstyle{}\subpageref{NWlm77s-3I6gnZ-1}}\RA{})
-        (\LA{}it was Henry~{\nwtagstyle{}\subpageref{NWlm77s-e7MAZ-1}}\RA{}  \LA{}blame Henry~{\nwtagstyle{}\subpageref{NWlm77s-155yI6-1}}\RA{})
-        (t                \LA{}ask them why~{\nwtagstyle{}\subpageref{NWlm77s-I8i5u-1}}\RA{})))
-\nwnotused{[[cond]]-flavoured [[pudding-eater]]}\nwendcode{}\nwbegindocs{15}\nwdocspar
+  (cond (\LA{}it was Johnny~{\nwtagstyle{}\subpageref{NWlm77s-23wlyr-1}}\RA{} \LA{}blame Johnny.~{\nwtagstyle{}\subpageref{NWlm77s-3Ska6D-1}}\RA{})
+        (\LA{}it was Henry~{\nwtagstyle{}\subpageref{NWlm77s-e7MAZ-1}}\RA{}  \LA{}blame Henry.~{\nwtagstyle{}\subpageref{NWlm77s-zhIxQ-1}}\RA{})
+        (t                \LA{}ask them why.~{\nwtagstyle{}\subpageref{NWlm77s-FC5AE-1}}\RA{})))
+\nwnotused{[[cond]]-flavoured [[pudding-eater]]}\nwendcode{}\nwbegindocs{17}\nwdocspar
 
-More succinctly, with \lsp{case}, we can define the {\Tt{}\nwlinkedidentq{pudding-eater}{NWlm77s-1p0Y9w-2}\nwendquote} function.
+More succinctly, with \lsp{case}, we can define the {\Tt{}\nwlinkedidentq{pudding-eater}{NWlm77s-1p0Y9w-3}\nwendquote} function.
 
-\nwenddocs{}\nwbegincode{16}\sublabel{NWlm77s-1p0Y9w-2}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-2}}}\moddef{*~{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWlm77s-1p0Y9w-1}{\relax}\nwenddeflinemarkup
-(defun \nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-2} (person)\nwindexdefn{\nwixident{pudding-eater}}{pudding-eater}{NWlm77s-1p0Y9w-2}
+\nwenddocs{}\nwbegincode{18}\sublabel{NWlm77s-1p0Y9w-3}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-3}}}\moddef{*~{\nwtagstyle{}\subpageref{NWlm77s-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWlm77s-1p0Y9w-2}{\relax}\nwenddeflinemarkup
+(defun \nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-3} (person)\nwindexdefn{\nwixident{pudding-eater}}{pudding-eater}{NWlm77s-1p0Y9w-3}
   (case person
-        ((henry)   \LA{}blame Henry~{\nwtagstyle{}\subpageref{NWlm77s-155yI6-1}}\RA{})
-        ((johnny)  \LA{}blame Johnny~{\nwtagstyle{}\subpageref{NWlm77s-3I6gnZ-1}}\RA{})
-        (otherwise \LA{}ask them why~{\nwtagstyle{}\subpageref{NWlm77s-I8i5u-1}}\RA{})))
-\nwidentdefs{\\{{\nwixident{pudding-eater}}{pudding-eater}}}\nwendcode{}\nwbegindocs{17}\nwdocspar
+        ((henry)   \LA{}blame Henry.~{\nwtagstyle{}\subpageref{NWlm77s-zhIxQ-1}}\RA{})
+        ((johnny)  \LA{}blame Johnny.~{\nwtagstyle{}\subpageref{NWlm77s-3Ska6D-1}}\RA{})
+        (otherwise \LA{}ask them why.~{\nwtagstyle{}\subpageref{NWlm77s-FC5AE-1}}\RA{})))
+\nwidentdefs{\\{{\nwixident{pudding-eater}}{pudding-eater}}}\nwendcode{}\nwbegindocs{19}\nwdocspar
 
 
-\section{Full Listing}
+% \section{Full Listing}
 
-\inputminted{lisp}{src/pudding.lisp}
+% \inputminted[linenos]{lisp}{pudding.lisp}
 
 
-\section{Example Session}
+\section{Tests}
 
-After loading \srclink{src/pudding.lisp},
-you might have {\Tt{}\LA{}a session~{\nwtagstyle{}\subpageref{NWlm77s-2aJKj5-1}}\RA{}\nwendquote} like this:
+\nwenddocs{}\nwbegincode{20}\sublabel{NWlm77s-2h6Bp2-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-2h6Bp2-1}}}\moddef{test/pudding.lisp~{\nwtagstyle{}\subpageref{NWlm77s-2h6Bp2-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+(in-package :\nwlinkedidentc{lol.pudding}{NWlm77s-1p0Y9w-1})
 
-\begin{marginfigure}
-\begin{minted}{shell-session}
-$ rlwrap sbcl --load src/pudding.lisp
-\end{minted}
-\end{marginfigure}
 
-\nwenddocs{}\nwbegincode{18}\sublabel{NWlm77s-2aJKj5-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWlm77s-2aJKj5-1}}}\moddef{a session~{\nwtagstyle{}\subpageref{NWlm77s-2aJKj5-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
-> (\nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-2} 'johnny)
-(I HOPE YOU CHOKED ON MY PUDDING JOHNNY)
-> \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-1}
-USELESS-OLD-JOHNNY
-> (\nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-2} 'george-clooney)
-(WHY YOU EAT MY PUDDING STRANGER ?)
-\nwnotused{a session}\nwidentuses{\\{{\nwixident{*arch-enemy*}}{*arch-enemy*}}\\{{\nwixident{pudding-eater}}{pudding-eater}}}\nwindexuse{\nwixident{*arch-enemy*}}{*arch-enemy*}{NWlm77s-2aJKj5-1}\nwindexuse{\nwixident{pudding-eater}}{pudding-eater}{NWlm77s-2aJKj5-1}\nwendcode{}
+(plan 1)
 
-\nwixlogsorted{c}{{*}{NWlm77s-1p0Y9w-1}{\nwixd{NWlm77s-1p0Y9w-1}\nwixd{NWlm77s-1p0Y9w-2}}}%
+
+(subtest "A Plausible Session"
+  (is (\nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-3} 'johnny)
+      '(I HOPE YOU CHOKED ON MY PUDDING JOHNNY)
+      "I hope you choked on my pudding, Johnny!")
+  (is \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-2}
+      USELESS-OLD-JOHNNY
+      "Useless old Johnny!")
+  (is (\nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-3} 'george-clooney)
+      '(WHY YOU EAT MY PUDDING STRANGER ?)))
+
+
+(finalize)
+\nwnotused{test/pudding.lisp}\nwidentuses{\\{{\nwixident{*arch-enemy*}}{*arch-enemy*}}\\{{\nwixident{lol.pudding}}{lol.pudding}}\\{{\nwixident{pudding-eater}}{pudding-eater}}}\nwindexuse{\nwixident{*arch-enemy*}}{*arch-enemy*}{NWlm77s-2h6Bp2-1}\nwindexuse{\nwixident{lol.pudding}}{lol.pudding}{NWlm77s-2h6Bp2-1}\nwindexuse{\nwixident{pudding-eater}}{pudding-eater}{NWlm77s-2h6Bp2-1}\nwendcode{}
+
+\nwixlogsorted{c}{{*}{NWlm77s-1p0Y9w-1}{\nwixd{NWlm77s-1p0Y9w-1}\nwixd{NWlm77s-1p0Y9w-2}\nwixd{NWlm77s-1p0Y9w-3}}}%
 \nwixlogsorted{c}{{\code{}cond\edoc{}-flavoured \code{}pudding-eater\edoc{}}{NWlm77s-2TVrZS-1}{\nwixd{NWlm77s-2TVrZS-1}}}%
-\nwixlogsorted{c}{{a session}{NWlm77s-2aJKj5-1}{\nwixd{NWlm77s-2aJKj5-1}}}%
-\nwixlogsorted{c}{{ask them why}{NWlm77s-I8i5u-1}{\nwixd{NWlm77s-I8i5u-1}\nwixu{NWlm77s-2TVrZS-1}\nwixu{NWlm77s-1p0Y9w-2}}}%
-\nwixlogsorted{c}{{blame Henry}{NWlm77s-155yI6-1}{\nwixd{NWlm77s-155yI6-1}\nwixu{NWlm77s-2TVrZS-1}\nwixu{NWlm77s-1p0Y9w-2}}}%
-\nwixlogsorted{c}{{blame Johnny}{NWlm77s-3I6gnZ-1}{\nwixd{NWlm77s-3I6gnZ-1}\nwixu{NWlm77s-2TVrZS-1}\nwixu{NWlm77s-1p0Y9w-2}}}%
+\nwixlogsorted{c}{{ask them why.}{NWlm77s-FC5AE-1}{\nwixd{NWlm77s-FC5AE-1}\nwixu{NWlm77s-2TVrZS-1}\nwixu{NWlm77s-1p0Y9w-3}}}%
+\nwixlogsorted{c}{{blame Henry.}{NWlm77s-zhIxQ-1}{\nwixd{NWlm77s-zhIxQ-1}\nwixu{NWlm77s-2TVrZS-1}\nwixu{NWlm77s-1p0Y9w-3}}}%
+\nwixlogsorted{c}{{blame Johnny.}{NWlm77s-3Ska6D-1}{\nwixd{NWlm77s-3Ska6D-1}\nwixu{NWlm77s-2TVrZS-1}\nwixu{NWlm77s-1p0Y9w-3}}}%
 \nwixlogsorted{c}{{it was Henry}{NWlm77s-e7MAZ-1}{\nwixd{NWlm77s-e7MAZ-1}\nwixu{NWlm77s-2TVrZS-1}}}%
 \nwixlogsorted{c}{{it was Johnny}{NWlm77s-23wlyr-1}{\nwixd{NWlm77s-23wlyr-1}\nwixu{NWlm77s-2TVrZS-1}}}%
+\nwixlogsorted{c}{{test/pudding.lisp}{NWlm77s-2h6Bp2-1}{\nwixd{NWlm77s-2h6Bp2-1}}}%
 \nwixlogsorted{i}{{\nwixident{*arch-enemy*}}{*arch-enemy*}}%
+\nwixlogsorted{i}{{\nwixident{lol.pudding}}{lol.pudding}}%
 \nwixlogsorted{i}{{\nwixident{pudding-eater}}{pudding-eater}}%
-\nwbegindocs{19}\nwdocspar
+\nwbegindocs{21}\nwdocspar
 
 
 % \section{Index}
 % \nowebindex
-% \newpage
 
+
+% \newpage
 % \section{Chunks}
 % \nowebchunks
 
+
+\restoregeometry
+\thanks{\cite{hyperspec-glossary}}
+\printglossaries
+
+
+\setlength{\linewidth}{1.4\textwidth}
 \bibliography{lol}
 \bibliographystyle{plainnat}
 
