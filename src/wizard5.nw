@@ -299,6 +299,7 @@ mapcar #'describe-obj
 @
 
 
+\newpage
 \section{Walking Around in Our World}
 
 Given a \lsp{direction},
@@ -391,6 +392,7 @@ Otherwise...
 \end{marginfigure}
 
 
+\newpage
 \section{Checking Our Inventory}
 
 To check our inventory, we [[<<retrieve the list of carried objects>>]] and
@@ -454,6 +456,7 @@ YOU SEE A CHAIN ON THE FLOOR.
 @
 
 
+\newpage
 \subsection{\lsp{lol.wizard5} (Private Parts)}
 
 <<Test the private functions in [[lol.wizard5]]>>=
@@ -591,10 +594,10 @@ Load [[<<init.lisp>>]] as the user initialization file:
 % \setlength{\linewidth}{1.85\textwidth}
 % \begin{multicols*}{2}
 \section{Full Listing}
-\inputminted[linenos,firstline=11,lastline=47]{lisp}{wizard5.lisp}
+\inputminted[linenos,firstline=11,lastline=51]{lisp}{wizard5.lisp}
 % \columnbreak
 \newpage
-\inputminted[linenos,firstline=50]{lisp}{wizard5.lisp}
+\inputminted[linenos,firstline=54]{lisp}{wizard5.lisp}
 % \end{multicols*}
 % \restoregeometry
 
