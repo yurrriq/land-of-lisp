@@ -4,6 +4,9 @@
 
 curl -O https://beta.quicklisp.org/quicklisp.lisp
 curl -O https://beta.quicklisp.org/quicklisp.lisp.asc
+
+
+curl https://beta.quicklisp.org/release-key.txt | gpg --import
 gpg --verify quicklisp.lisp.asc quicklisp.lisp
 
 
