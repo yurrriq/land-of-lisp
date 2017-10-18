@@ -120,8 +120,8 @@ argument, instead of referencing [[*nodes*]] directly.
 \section{Describing the Paths}
 
 \marginnote{%
-  From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
-through the \lsp{door}.
+  From the \lsp{living-room}, you can move to the \lsp{garden} by going
+  \lsp{west} through the \lsp{door}.%
 }
 
 <<garden door>>=
@@ -133,7 +133,7 @@ THERE IS A DOOR GOING WEST FROM HERE.
 @
 
 \marginnote{%
-  Or to the \lsp{attic} by going \lsp{upstairs} via the \lsp{ladder}.
+  Or to the \lsp{attic} by going \lsp{upstairs} via the \lsp{ladder}.%
 }
 
 <<attic ladder>>=
@@ -146,7 +146,7 @@ THERE IS A LADDER GOING UPSTAIRS FROM HERE.
 
 \marginnote{%
   From the \lsp{garden}, you can move to the \lsp{living-room} by going
-  \lsp{east} through the \lsp{door}.
+  \lsp{east} through the \lsp{door}.%
 }
 
 <<garden path>>=
@@ -155,7 +155,7 @@ THERE IS A LADDER GOING UPSTAIRS FROM HERE.
 
 \marginnote{%
   From the \lsp{attic}, you can move to the \lsp{living-room} by going
-  \lsp{downstairs} via the \lsp{ladder}.
+  \lsp{downstairs} via the \lsp{ladder}.%
 }
 
 <<attic path>>=
@@ -278,7 +278,7 @@ mapcar #'describe-obj
 
 \marginnote{%
   N.B. The [[look]] function is {\bf not} functional, since it reads global
-  variables.
+  variables.%
 }
 
 \begin{marginfigure}
