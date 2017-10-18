@@ -1,2 +1,14 @@
-language: nix
-script: ./bin/install-quicklisp && ./bin/runtests
+language: common-lisp
+sudo: required
+
+env:
+  matrix:
+    - LISP=sbcl
+    # TODO: - LISP=ccl
+
+install:
+  # Install cl-travis
+  - curl https://raw.githubusercontent.com/luismbo/cl-travis/master/install.sh | bash
+
+script:
+  - cl -l prove -e '(or (prove:run :lol-test) (uiop:quit -1))'
