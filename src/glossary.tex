@@ -1,56 +1,108 @@
 \newglossaryentry{association list}
 {
   name={\sl association list},
-  description={a list of \gls{cons}es representing an assocation of
-    keys with values, where the \gls{car} of each \gls{cons} is the key and
-    the \gls{cdr} is the associated value \citep{hyperspec-glossary}.}
+  description={%
+    a \gls{list} of \glspl{cons} representing an assocation of keys with values,
+    where the \gls{car} of each \gls{cons} is the key and the \gls{cdr} is the
+    associated value.
+  }
 }
+
 
 \newglossaryentry{cadr}
 {
   name={\lsp{cadr}},
-  description={\ \\ \todo[inline]{write me}}
+  description={%
+    \lsp{(lambda (x) (}\gls{car}\lsp{ (}\gls{cdr}\lsp{ x)))}
+  }
 }
 
 \newglossaryentry{caddr}
 {
   name={\lsp{caddr}},
-  description={\ \\ \todo[inline]{write me}}
+  description={%
+    \lsp{(lambda (x) (}\gls{car}\lsp{ (}\gls{cdr}\lsp{ (}\gls{cdr}\lsp{ x))))}
+  }
 }
+
 
 \newglossaryentry{car}
 {
   name={\lsp{car}},
   description={\ \\
     \begin{enumerate}
-    \item
-      \begin{itemize}
+    \item \ \\
+      \begin{enumerate}[a.]
       \item the first component of a \gls{cons}; the other is the \gls{cdr}.
-      \item the first element of a list, or \gls{nil} if the list is the empty
-        list.
-      \end{itemize}
-    \item the object that is held in the \lsp{car}. \say{The function
+      \item the head of a \gls{list}, or \gls{nil} if the list is the \gls{empty
+          list}.
+      \end{enumerate}
+    \item the \gls{object} that is held in the \lsp{car}. \say{The function
         \lsp{car} returns the \lsp{car} of a \gls{cons}.}
-    \end{enumerate}%
-    \citet*{hyperspec-glossary}%
+    \end{enumerate}
   }
 }
 
 \newglossaryentry{cdr}
 {
   name={\lsp{cdr}},
-  description={\ \\ \todo[inline]{write me}}
+  description={\ \\
+    \begin{enumerate}
+    \item \ \\
+      \begin{enumerate}[a.]
+      \item the second component of a \gls{cons}; the other is the \gls{car}.
+      \item the tail of a \gls{list}, or \gls{nil} if the list is the \gls{empty
+          list}.
+      \end{enumerate}
+    \item the \gls{object} that is held in the \lsp{cdr}. \say{The function
+        \lsp{cdr} returns the \lsp{cdr} of a \lsp{cons}.}
+    \end{enumerate}
+  }
 }
 
 
 \newglossaryentry{cons}
 {
   name={\lsp{cons}},
-  description={\ \\ \todo[inline]{write me}}
+  description={\ \\
+    \begin{enumerate}
+    \item a compound data \gls{object} made up of a \gls{car} and a \gls{cdr}.
+    \item to create such an \gls{object}.
+    \item to create any \gls{object} or to allocate storage.
+    \end{enumerate}
+  },
+  plural={\lsp{cons}es}
 }
+
+
+\newglossaryentry{empty list}
+{
+  name={\sl empty list},
+  description={the \gls{list} containing no elements.}
+}
+
+
+\newglossaryentry{list}
+{
+  name={\sl list},
+  description={WRITE ME}
+}
+
 
 \newglossaryentry{nil}
 {
   name={\lsp{nil}},
-  description={\ \\ \todo[inline]{write me}}
+  symbol={\lsp{()}},
+  description={%
+    represents both boolean \lsp{false} and the \gls{empty list}.
+    Alternatively notated as \glssymbol{nil}
+    to emphasize its use as an \gls{empty list}.
+  }
+}
+
+
+\newglossaryentry{object}
+{
+  name={\sl object},
+  description={any Lisp datum.}
 }

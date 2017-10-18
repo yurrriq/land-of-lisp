@@ -119,8 +119,10 @@ argument, instead of referencing [[*nodes*]] directly.
 \newpage
 \section{Describing the Paths}
 
-From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
-through the \lsp{door},
+\marginnote{%
+  From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
+through the \lsp{door}.
+}
 
 <<garden door>>=
 THERE IS A DOOR GOING WEST FROM HERE.
@@ -130,8 +132,9 @@ THERE IS A DOOR GOING WEST FROM HERE.
 (garden west door)
 @
 
-... or to the \lsp{attic} by going \lsp{upstairs} via the
-\lsp{ladder}.
+\marginnote{%
+  Or to the \lsp{attic} by going \lsp{upstairs} via the \lsp{ladder}.
+}
 
 <<attic ladder>>=
 THERE IS A LADDER GOING UPSTAIRS FROM HERE.
@@ -141,21 +144,23 @@ THERE IS A LADDER GOING UPSTAIRS FROM HERE.
 (attic upstairs ladder)
 @
 
-From the \lsp{garden}, you can move to the \lsp{living-room} by going \lsp{east}
-through the \lsp{door}.
+\marginnote{%
+  From the \lsp{garden}, you can move to the \lsp{living-room} by going
+  \lsp{east} through the \lsp{door}.
+}
 
 <<garden path>>=
 (living-room east door)
 @
 
-From the \lsp{attic}, you can move to the \lsp{living-room} by going \newline
-\noindent \lsp{downstairs} via the \lsp{ladder}.
+\marginnote{%
+  From the \lsp{attic}, you can move to the \lsp{living-room} by going
+  \lsp{downstairs} via the \lsp{ladder}.
+}
 
 <<attic path>>=
 (living-room downstairs ladder)
 @
-
-With those symolic paths, we can
 
 \begin{marginfigure}
 <<define the global variables>>=
@@ -167,8 +172,8 @@ With those symolic paths, we can
 @ %def *edges*
 \end{marginfigure}
 
-To describe a path, take the means (\gls{caddr}) and direction (\gls{cadr}) and
-return a descriptive list.
+To describe such a symbolic path, take the means (\gls{caddr}) and direction
+(\gls{cadr}) and return a descriptive list.
 
 <<*>>=
 (defun describe-path (edge)
@@ -201,9 +206,7 @@ apply #'append
 
 <<*>>=
 (defun describe-paths (location edges)
-  (<<Join the descriptions.>>
-         (<<Convert the edges to descriptions.>>
-                 <<Find the relevant edges.>>)))
+  (<<Join the descriptions.>> (<<Convert the edges to descriptions.>> <<Find the relevant edges.>>)))
 
 
 @
@@ -606,9 +609,11 @@ Load [[<<init.lisp>>]] as the user initialization file:
   \section{Index}
   \nowebindex
 \end{multicols}
-\newpage
 
+
+\newpage
 \restoregeometry
+\thanks{\cite{hyperspec-glossary}}
 \printglossaries
 
 \bibliography{lol}

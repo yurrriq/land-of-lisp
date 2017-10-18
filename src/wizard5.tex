@@ -119,8 +119,10 @@ argument, instead of referencing {\Tt{}\nwlinkedidentq{*nodes*}{NWNVxch-tHqk1-1}
 \newpage
 \section{Describing the Paths}
 
-From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
-through the \lsp{door},
+\marginnote{%
+  From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
+through the \lsp{door}.
+}
 
 \nwenddocs{}\nwbegincode{16}\sublabel{NWNVxch-vCtwU-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-vCtwU-1}}}\moddef{garden door~{\nwtagstyle{}\subpageref{NWNVxch-vCtwU-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1Thvud-1}\\{NWNVxch-386mef-1}}\nwenddeflinemarkup
 THERE IS A DOOR GOING WEST FROM HERE.
@@ -130,8 +132,9 @@ THERE IS A DOOR GOING WEST FROM HERE.
 (garden west door)
 \nwalsodefined{\\{NWNVxch-2xf4OR-2}}\nwused{\\{NWNVxch-tHqk1-2}}\nwendcode{}\nwbegindocs{19}\nwdocspar
 
-... or to the \lsp{attic} by going \lsp{upstairs} via the
-\lsp{ladder}.
+\marginnote{%
+  Or to the \lsp{attic} by going \lsp{upstairs} via the \lsp{ladder}.
+}
 
 \nwenddocs{}\nwbegincode{20}\sublabel{NWNVxch-1nNOhz-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1nNOhz-1}}}\moddef{attic ladder~{\nwtagstyle{}\subpageref{NWNVxch-1nNOhz-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1Thvud-1}}\nwenddeflinemarkup
 THERE IS A LADDER GOING UPSTAIRS FROM HERE.
@@ -141,21 +144,23 @@ THERE IS A LADDER GOING UPSTAIRS FROM HERE.
 (attic upstairs ladder)
 \nwused{\\{NWNVxch-tHqk1-2}}\nwendcode{}\nwbegindocs{23}\nwdocspar
 
-From the \lsp{garden}, you can move to the \lsp{living-room} by going \lsp{east}
-through the \lsp{door}.
+\marginnote{%
+  From the \lsp{garden}, you can move to the \lsp{living-room} by going
+  \lsp{east} through the \lsp{door}.
+}
 
 \nwenddocs{}\nwbegincode{24}\sublabel{NWNVxch-1acezE-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1acezE-1}}}\moddef{garden path~{\nwtagstyle{}\subpageref{NWNVxch-1acezE-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-2}}\nwenddeflinemarkup
 (living-room east door)
 \nwused{\\{NWNVxch-tHqk1-2}}\nwendcode{}\nwbegindocs{25}\nwdocspar
 
-From the \lsp{attic}, you can move to the \lsp{living-room} by going \newline
-\noindent \lsp{downstairs} via the \lsp{ladder}.
+\marginnote{%
+  From the \lsp{attic}, you can move to the \lsp{living-room} by going
+  \lsp{downstairs} via the \lsp{ladder}.
+}
 
 \nwenddocs{}\nwbegincode{26}\sublabel{NWNVxch-2ZorP9-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2ZorP9-1}}}\moddef{attic path~{\nwtagstyle{}\subpageref{NWNVxch-2ZorP9-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-2}}\nwenddeflinemarkup
 (living-room downstairs ladder)
 \nwused{\\{NWNVxch-tHqk1-2}}\nwendcode{}\nwbegindocs{27}\nwdocspar
-
-With those symolic paths, we can
 
 \begin{marginfigure}
 \nwenddocs{}\nwbegincode{28}\sublabel{NWNVxch-tHqk1-2}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-2}}}\moddef{define the global variables~{\nwtagstyle{}\subpageref{NWNVxch-tHqk1-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1p0Y9w-1}}\nwprevnextdefs{NWNVxch-tHqk1-1}{NWNVxch-tHqk1-3}\nwenddeflinemarkup
@@ -167,8 +172,8 @@ With those symolic paths, we can
 \nwindexdefn{\nwixident{*edges*}}{*edges*}{NWNVxch-tHqk1-2}\eatline
 \nwused{\\{NWNVxch-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{*edges*}}{*edges*}}}\nwendcode{}\nwbegindocs{29}\end{marginfigure}
 
-To describe a path, take the means (\gls{caddr}) and direction (\gls{cadr}) and
-return a descriptive list.
+To describe such a symbolic path, take the means (\gls{caddr}) and direction
+(\gls{cadr}) and return a descriptive list.
 
 \nwenddocs{}\nwbegincode{30}\sublabel{NWNVxch-1p0Y9w-3}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-3}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-2}{NWNVxch-1p0Y9w-4}\nwenddeflinemarkup
 (defun \nwlinkedidentc{describe-path}{NWNVxch-1p0Y9w-3} (edge)\nwindexdefn{\nwixident{describe-path}}{describe-path}{NWNVxch-1p0Y9w-3}
@@ -201,9 +206,7 @@ apply #'append
 
 \nwenddocs{}\nwbegincode{38}\sublabel{NWNVxch-1p0Y9w-4}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-4}}}\moddef{*~{\nwtagstyle{}\subpageref{NWNVxch-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWNVxch-1p0Y9w-3}{NWNVxch-1p0Y9w-5}\nwenddeflinemarkup
 (defun \nwlinkedidentc{describe-paths}{NWNVxch-1p0Y9w-4} (location edges)\nwindexdefn{\nwixident{describe-paths}}{describe-paths}{NWNVxch-1p0Y9w-4}
-  (\LA{}Join the descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-2I51ok-1}}\RA{}
-         (\LA{}Convert the edges to descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-3UGKyl-1}}\RA{}
-                 \LA{}Find the relevant edges.~{\nwtagstyle{}\subpageref{NWNVxch-2uLI1w-1}}\RA{})))
+  (\LA{}Join the descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-2I51ok-1}}\RA{} (\LA{}Convert the edges to descriptions.~{\nwtagstyle{}\subpageref{NWNVxch-3UGKyl-1}}\RA{} \LA{}Find the relevant edges.~{\nwtagstyle{}\subpageref{NWNVxch-2uLI1w-1}}\RA{})))
 
 
 \nwidentdefs{\\{{\nwixident{describe-paths}}{describe-paths}}}\nwendcode{}\nwbegindocs{39}\nwdocspar
@@ -670,9 +673,11 @@ Load {\Tt{}\LA{}init.lisp~{\nwtagstyle{}\subpageref{NWNVxch-40xICN-1}}\RA{}\nwen
   \section{Index}
   \nowebindex
 \end{multicols}
-\newpage
 
+
+\newpage
 \restoregeometry
+\thanks{\cite{hyperspec-glossary}}
 \printglossaries
 
 \bibliography{lol}

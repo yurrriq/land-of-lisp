@@ -42,9 +42,7 @@
 
 
 (defun describe-paths (location edges)
-  (apply #'append
-         (mapcar #'describe-path
-                 (cdr (assoc location edges)))))
+  (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
 
 
 (defun objects-at (loc objs obj-locs)
