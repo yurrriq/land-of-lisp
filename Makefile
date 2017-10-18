@@ -55,7 +55,7 @@ docs/%.pdf: src/%.lisp src/%.pdf
 
 
 .PHONY: clean clean-docs clobber
-clean_keep_regex := '.*.[bib|eps|lisp|nw|tex]'
+clean_keep_regex := '.*.[bib|eps|lisp|nw|tex|ttf]'
 
 clean:
 	@ find src -type f \! -regex ${clean_keep_regex} -delete
@@ -65,10 +65,11 @@ clean-docs:
 	@ rm -fr docs
 
 
-clobber_keep_regex := '.*.[bib|nw|eps]'
+clobber_keep_regex := '.*.[bib|nw|eps|ttf]'
 
 clobber:
 	@ find src -type f \
 		\! -regex ${clobber_keep_regex} \
+		\! -name glossary.tex \
 		\! -name preamble.tex \
 		-delete
