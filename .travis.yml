@@ -3,16 +3,12 @@ sudo: required
 
 env:
   matrix:
-    - LISP=sbcl COVERALLS=true
+    - LISP=sbcl
     # TODO: - LISP=ccl
 
 install:
   # Install cl-travis
   - curl https://raw.githubusercontent.com/luismbo/cl-travis/master/install.sh | bash
-   # Coveralls support
-  - git clone https://github.com/fukamachi/cl-coveralls ~/lisp/cl-coveralls
 
 script:
-  - cl -l prove -l cl-coveralls
-       -e '(coveralls:with-coveralls ()
-             (or (prove:run :lol-test) (uiop:quit -1)))'
+  - cl -l prove -e '(or (prove:run :lol-test) (uiop:quit -1))'
