@@ -519,7 +519,11 @@ YOU SEE A CHAIN ON THE FLOOR.
 \end{marginfigure}
 
 
-\todo[inline]{Describe [[prove]]}
+\marginnote{%
+  \href{https://github.com/fukamachi/prove}{\lsp{prove}} is yet another unit
+  testing framework for Common Lisp.%
+}
+
 <<Run the system tests.>>=
 (prove:run-test-system :lol-test)
 @
@@ -530,7 +534,13 @@ YOU SEE A CHAIN ON THE FLOOR.
 
 % \subsection{Script}
 
-\todo[inline]{Describe nix-shell shebang}
+\marginnote{%
+  See the \href{https://nixos.org/nixpkgs/manual/}{Nixpkgs Contributors Guide}
+  for more information on using
+  \href{https://nixos.org/nixpkgs/manual/\#nix-shell-as-shebang}{%
+    \mintinline{bash}{nix-shell} as a shebang}.%
+}
+
 <<script header>>=
 #! /usr/bin/env nix-shell
 #! nix-shell -i sh -p sbcl
