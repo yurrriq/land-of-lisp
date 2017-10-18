@@ -1,3 +1,12 @@
+(in-package :cl-user)
+(defpackage lol.guess
+  (:use :cl :prove)
+  (:export :bigger
+           :smaller
+           :start-over))
+(in-package :lol.guess)
+
+
 (defparameter *small* 1)
 (defparameter *big* 100)
 

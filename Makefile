@@ -25,7 +25,7 @@ cpif   ?= | cpif
 .PHONY: all check docs
 all: ${SRCS} check docs
 # TODO: test other files
-check: src/wizard5.lisp bin/runtests bin/coverage
+check: ${LSP_SRCS} bin/runtests bin/coverage
 	bin/coverage
 
 
@@ -34,7 +34,6 @@ test/%.lisp: src/%.nw
 
 
 # HACK
-test/guess.lisp:   ; @ echo "$@ is not yet implemented."
 test/pudding.lisp: ; @ echo "$@ is not yet implemented."
 
 

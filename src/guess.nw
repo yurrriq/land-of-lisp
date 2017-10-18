@@ -34,6 +34,26 @@
   guess it.
 \end{abstract}
 
+
+\begin{marginfigure}
+\srclink{src/guess.lisp}:
+<<*>>=
+(in-package :cl-user)
+(defpackage lol.guess
+  (:use :cl :prove)
+  (:export :bigger
+           :smaller
+           :start-over))
+(in-package :lol.guess)
+
+
+<<reset the global state>>
+
+
+@ %def lol.guess
+\end{marginfigure}
+
+
 % \tableofcontents
 % \newpage
 
@@ -44,9 +64,9 @@ To give the computer a range of numbers in which to guess, we define the lower
 and upper limits, [[*small*]] and [[*big*]], respectively. We'll need to
 [[<<reset the global state>>]] as such whenever we want to restart the game,
 
-\marginnote[1.5\baselineskip]{%
+\marginnote{%
   \say{Global variable names should start and end with asterisks (also known in
-    this context as earmuffs)} \citep{google-style-guide}.
+    this context as earmuffs)} \citep{google-style-guide}.%
 }
 
 <<reset the global state>>=
@@ -54,28 +74,13 @@ and upper limits, [[*small*]] and [[*big*]], respectively. We'll need to
 (defparameter *big* 100)
 @
 
-\begin{marginfigure}
-<<*>>=
-<<reset the global state>>
-
-
-@
-\end{marginfigure}
 
 \section{Defining the Guess-My-Number Function}
 
 With [[*small*]] and [[*big*]] defined, we can tell the computer how to guess a
 number ([[guess-my-number]]) within those limits.
 
-The basic algorithm is to
-[[<<halve the sum of the limits and shorten the result>>]].
-To achieve that, we use Common Lisp's
-\href{http://www.lispworks.com/documentation/HyperSpec/Body/f_ash.htm}{\lsp{ash}}
-function to perform an {\sl arithmetic right shift} by $1$, i.e.
-$\floor{\cee{sum} \times 2^{-1}}$.
-
 \begin{marginfigure}%
-  \vskip -3\baselineskip
   \caption{The guessing algorithm}
   \begin{minted}{c}
 sum <- small + big
@@ -84,6 +89,14 @@ return sum
   \end{minted}
   \label{fig:guessing-algorithm}
 \end{marginfigure}
+
+The basic algorithm is to
+[[<<halve the sum of the limits and shorten the result>>]].
+To achieve that, we use Common Lisp's
+\href{http://www.lispworks.com/documentation/HyperSpec/Body/f_ash.htm}{\lsp{ash}}
+function to perform an {\sl arithmetic right shift} by $1$, i.e.
+$\floor{\cee{sum} \times 2^{-1}}$.
+
 
 To define the [[guess-my-number]] function, we simply implement the algorithm
 described in pseudocode in \Fref{fig:guessing-algorithm}.
@@ -112,7 +125,7 @@ Now, when we want to [[<<have the computer guess a number>>]], we simply call
 
 \marginnote{%
   To appropriately adjust [[*big*]],
-  [[<<subtract one from the most recent guess>>]].
+  [[<<subtract one from the most recent guess>>]].%
 }
 
 \begin{marginfigure}
@@ -140,7 +153,7 @@ such that the next guess is {\em smaller} than the last, i.e.
 
 \marginnote{%
   To appropriately adjust [[*small*]],
-  [[<<add one to the most recent guess>>]].
+  [[<<add one to the most recent guess>>]].%
 }
 
 \begin{marginfigure}
@@ -179,49 +192,54 @@ At this point, to define the [[start-over]] function is trivial. We simply
 @
 
 
+\newpage
+\setlength{\linewidth}{1.5\textwidth}
+\begin{multicols}{2}
 \section{Full Listing}
 
-\inputminted{lisp}{src/guess.lisp}
+\inputminted[linenos]{lisp}{guess.lisp}
 
 
-\section{Example Session}
+\columnbreak
+\section{Tests}
 
-After loading \srclink{src/guess.lisp},
-you might have [[<<a session>>]] like this:
+<<test/guess.lisp>>=
+(in-package :lol.guess)
 
-\begin{marginfigure}
-\begin{minted}{shell-session}
-$ rlwrap sbcl --load src/guess.lisp
-\end{minted}
-\end{marginfigure}
 
-<<a session>>=
-> (start-over)
-50
-> (smaller)
-25
-> (bigger)
-37
-> (bigger)
-43
-> (smaller)
-40
-> (bigger)
-41
-> (bigger)
-42
+(plan 1)
+
+
+(subtest "A Plausible Session"
+  (is (start-over) 50 "(start-over) ; => 50")
+  (is (smaller)    25 "(smaller)    ; => 25")
+  (is (bigger)     37 "(bigger)     ; => 37")
+  (is (bigger)     43 "(bigger)     ; => 43")
+  (is (smaller)    40 "(smaller)    ; => 40")
+  (is (bigger)     41 "(bigger)     ; => 41")
+  (is (bigger)     42 "(bigger)     ; => 42"))
+
+
+(finalize)
 @
+\end{multicols}
 
 
-\section{Index}
-\nowebindex
-
-
+\newpage
+\setlength{\linewidth}{1.8\textwidth}
+\begin{multicols}{2}
 \section{Chunks}
 \nowebchunks
 
 
+% \columnbreak
+\section{Index}
+\nowebindex
+\end{multicols}
+
+\setlength{\linewidth}{1.4\textwidth}
 \bibliography{lol}
 \bibliographystyle{plainnat}
+
 
 \end{document}

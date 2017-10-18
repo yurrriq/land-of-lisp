@@ -9,7 +9,8 @@
   :components ((:module "test"
                 :serial t
                 :components
-                ((:test-file "wizard5"))))
+                ((:test-file "guess")
+                 (:test-file "wizard5"))))
 
   :defsystem-depends-on ("prove-asdf")
   :perform (test-op :after (op c)
