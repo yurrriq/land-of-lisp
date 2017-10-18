@@ -1,0 +1,18 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i sh -p curl gnupg sbcl
+
+
+curl -O https://beta.quicklisp.org/quicklisp.lisp
+curl -O https://beta.quicklisp.org/quicklisp.lisp.asc
+gpg --verify quicklisp.lisp.asc quicklisp.lisp
+
+
+sbcl --noinform --non-interactive \
+     --load quicklisp.lisp \
+     --eval '(quicklisp-quickstart:install)' \
+     --eval '(ql::without-prompting (ql:add-to-init-file))'
+
+
+# Local Variables:
+# mode: sh
+# End:

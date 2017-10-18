@@ -1,5 +1,7 @@
 # Land of Lisp
 
+[![Build Status][Travis badge]][Travis link]
+
 *Working through examples from [Land of Lisp][book]*
 
 - Chapter 2: The Guess-My-Number Game
@@ -21,6 +23,9 @@
 
 
 <!-- Named Links -->
+
+[Travis badge]: https://travis-ci.org/yurrriq/land-of-lisp.svg?branch=master
+[Travis link]: https://travis-ci.org/yurrriq/land-of-lisp
 [book]: http://landoflisp.com
 [guess.nw]: https://github.com/yurrriq/land-of-lisp/blob/master/src/guess.nw
 [guess.lisp]: https://github.com/yurrriq/land-of-lisp/blob/master/src/guess.lisp

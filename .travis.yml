@@ -1,2 +1,2 @@
 language: nix
-script: ./bin/runtests
+script: ./bin/install-quicklisp && ./bin/runtests
