@@ -120,8 +120,8 @@ argument, instead of referencing {\Tt{}\nwlinkedidentq{*nodes*}{NWNVxch-tHqk1-1}
 \section{Describing the Paths}
 
 \marginnote{%
-  From the \lsp{living-room}, you can move to the \lsp{garden} by going \lsp{west}
-through the \lsp{door}.
+  From the \lsp{living-room}, you can move to the \lsp{garden} by going
+  \lsp{west} through the \lsp{door}.%
 }
 
 \nwenddocs{}\nwbegincode{16}\sublabel{NWNVxch-vCtwU-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-vCtwU-1}}}\moddef{garden door~{\nwtagstyle{}\subpageref{NWNVxch-vCtwU-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1Thvud-1}\\{NWNVxch-386mef-1}}\nwenddeflinemarkup
@@ -133,7 +133,7 @@ THERE IS A DOOR GOING WEST FROM HERE.
 \nwalsodefined{\\{NWNVxch-2xf4OR-2}}\nwused{\\{NWNVxch-tHqk1-2}}\nwendcode{}\nwbegindocs{19}\nwdocspar
 
 \marginnote{%
-  Or to the \lsp{attic} by going \lsp{upstairs} via the \lsp{ladder}.
+  Or to the \lsp{attic} by going \lsp{upstairs} via the \lsp{ladder}.%
 }
 
 \nwenddocs{}\nwbegincode{20}\sublabel{NWNVxch-1nNOhz-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1nNOhz-1}}}\moddef{attic ladder~{\nwtagstyle{}\subpageref{NWNVxch-1nNOhz-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-1Thvud-1}}\nwenddeflinemarkup
@@ -146,7 +146,7 @@ THERE IS A LADDER GOING UPSTAIRS FROM HERE.
 
 \marginnote{%
   From the \lsp{garden}, you can move to the \lsp{living-room} by going
-  \lsp{east} through the \lsp{door}.
+  \lsp{east} through the \lsp{door}.%
 }
 
 \nwenddocs{}\nwbegincode{24}\sublabel{NWNVxch-1acezE-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-1acezE-1}}}\moddef{garden path~{\nwtagstyle{}\subpageref{NWNVxch-1acezE-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-2}}\nwenddeflinemarkup
@@ -155,7 +155,7 @@ THERE IS A LADDER GOING UPSTAIRS FROM HERE.
 
 \marginnote{%
   From the \lsp{attic}, you can move to the \lsp{living-room} by going
-  \lsp{downstairs} via the \lsp{ladder}.
+  \lsp{downstairs} via the \lsp{ladder}.%
 }
 
 \nwenddocs{}\nwbegincode{26}\sublabel{NWNVxch-2ZorP9-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2ZorP9-1}}}\moddef{attic path~{\nwtagstyle{}\subpageref{NWNVxch-2ZorP9-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-tHqk1-2}}\nwenddeflinemarkup
@@ -278,7 +278,7 @@ mapcar #'describe-obj
 
 \marginnote{%
   N.B. The {\Tt{}\nwlinkedidentq{look}{NWNVxch-1p0Y9w-7}\nwendquote} function is {\bf not} functional, since it reads global
-  variables.
+  variables.%
 }
 
 \begin{marginfigure}
@@ -519,7 +519,11 @@ YOU SEE A CHAIN ON THE FLOOR.
 \end{marginfigure}
 
 
-\todo[inline]{Describe {\Tt{}prove\nwendquote}}
+\marginnote{%
+  \href{https://github.com/fukamachi/prove}{\lsp{prove}} is yet another unit
+  testing framework for Common Lisp.%
+}
+
 \nwenddocs{}\nwbegincode{108}\sublabel{NWNVxch-2IS8oX-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-2IS8oX-1}}}\moddef{Run the system tests.~{\nwtagstyle{}\subpageref{NWNVxch-2IS8oX-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-3OgzqG-1}}\nwenddeflinemarkup
 (prove:run-test-system :lol-test)
 \nwused{\\{NWNVxch-3OgzqG-1}}\nwendcode{}\nwbegindocs{109}\nwdocspar
@@ -530,7 +534,13 @@ YOU SEE A CHAIN ON THE FLOOR.
 
 % \subsection{Script}
 
-\todo[inline]{Describe nix-shell shebang}
+\marginnote{%
+  See the \href{https://nixos.org/nixpkgs/manual/}{Nixpkgs Contributors Guide}
+  for more information on using
+  \href{https://nixos.org/nixpkgs/manual/\#nix-shell-as-shebang}{%
+    \mintinline{bash}{nix-shell} as a shebang}.%
+}
+
 \nwenddocs{}\nwbegincode{112}\sublabel{NWNVxch-40XvAF-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWNVxch-40XvAF-1}}}\moddef{script header~{\nwtagstyle{}\subpageref{NWNVxch-40XvAF-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWNVxch-3QIFQJ-1}}\nwprevnextdefs{\relax}{NWNVxch-40XvAF-2}\nwenddeflinemarkup
 #! /usr/bin/env nix-shell
 #! nix-shell -i sh -p sbcl
