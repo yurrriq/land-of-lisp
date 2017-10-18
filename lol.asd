@@ -1,7 +1,7 @@
 (defsystem "lol"
   :version "0.0.1"
   :author "Eric Bailey <eric@ericb.me>"
-  :license "MIT"
+  :license "WTFPL"
   :depends-on (:prove)
   :components ((:module "src"
                 :components
