@@ -11,6 +11,8 @@
       (game-print (game-eval cmd))
       (game-repl))))
 
+(export (find-symbol "GAME-REPL"))
+
 
 (defun game-read ()
   (let ((cmd (read-from-string (concatenate 'string "(" (read-line) ")"))))
@@ -22,6 +24,8 @@
   (if (member (car sexp) *allowed-commands*)
       (eval sexp)
       '(i do not know that command.)))
+
+
 (defun tweak-text (lst caps lit)
   (when lst
     (let ((item (car lst))
@@ -42,6 +46,3 @@
                              nil)
                  'string))
   (fresh-line))
-
-
-(export (find-symbol "GAME-REPL"))

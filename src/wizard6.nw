@@ -49,7 +49,6 @@
 \end{marginfigure}
 
 \tableofcontents
-\newpage
 
 
 \section{Setting Up a Custom REPL}
@@ -61,10 +60,13 @@
       (game-print (game-eval cmd))
       (game-repl))))
 
+(export (find-symbol "GAME-REPL"))
+
 
 @
 
 
+\newpage
 \section{Writing a Custom read Function}
 
 [[game-read]] needs to:
@@ -94,7 +96,6 @@
 @
 
 
-\newpage
 \section{Writing a game-eval Function}
 
 First, we need to:
@@ -127,9 +128,12 @@ Then, when evaluating user input, if [[an entered command is allowed]],
   (if <<an entered command is allowed>>
       <<evaluate it.>>
       <<admonish the user.>>))
+
+
 @
 
 
+\newpage
 \section{Writing a game-print Function}
 
 <<*>>=
@@ -156,31 +160,20 @@ Then, when evaluating user input, if [[an entered command is allowed]],
                              nil)
                  'string))
   (fresh-line))
-
-
 @
 
 
-<<*>>=
-(export (find-symbol "GAME-REPL"))
-@
+% \section{Tests}
 
-\section{Tests}
-
-<<test/wizard5.lisp>>=
-(in-package :lol.wizard5)
+% @<<test/wizard5.lisp>>=
+% (in-package :lol.wizard5)
 
 
-(prove:plan 1)
+% (prove:plan n)
 
 
-;; > (game-read)
-;; walk east
-;; (WALK 'EAST)
-
-
-(prove:finalize)
-@
+% (prove:finalize)
+% @
 
 
 \newpage
@@ -188,7 +181,7 @@ Then, when evaluating user input, if [[an entered command is allowed]],
 % \setlength{\linewidth}{1.85\textwidth}
 % \begin{multicols*}{2}
 \section{Full Listing}
-% \inputminted[linenos,firstline=11,lastline=51]{lisp}{wizard6.lisp}
+\inputminted[linenos,firstline=5,lastline=48,fontsize=\small]{lisp}{wizard6.lisp}
 % \columnbreak
 % \newpage
 % \inputminted[linenos,firstline=54]{lisp}{wizard6.lisp}
@@ -197,24 +190,21 @@ Then, when evaluating user input, if [[an entered command is allowed]],
 
 
 \newpage
-\setlength{\linewidth}{1.8\textwidth}
+\setlength{\linewidth}{1.5\textwidth}
 \begin{multicols}{2}
-  [\section{Chunks}]
+  \section{Chunks}
   \nowebchunks
-  % \columnbreak
 
   \section{Index}
   \nowebindex
+
+  \vfill
+  \bibliography{lol}
+  \bibliographystyle{plainnat}
+
+  \columnbreak
+  % \thanks{\cite{hyperspec-glossary}}
+  \printglossaries
 \end{multicols}
-
-
-\newpage
-\restoregeometry
-\thanks{\cite{hyperspec-glossary}}
-\printglossaries
-
-\bibliography{lol}
-\bibliographystyle{plainnat}
-
 
 \end{document}

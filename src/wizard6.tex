@@ -46,10 +46,9 @@
 
 \LA{}define the allowed commands.~{\nwtagstyle{}\subpageref{NWOFbi8-1CLPa3-1}}\RA{}
 \nwindexdefn{\nwixident{lol.wizard6}}{lol.wizard6}{NWOFbi8-1p0Y9w-1}\eatline
-\nwalsodefined{\\{NWOFbi8-1p0Y9w-2}\\{NWOFbi8-1p0Y9w-3}\\{NWOFbi8-1p0Y9w-4}\\{NWOFbi8-1p0Y9w-5}\\{NWOFbi8-1p0Y9w-6}\\{NWOFbi8-1p0Y9w-7}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.wizard6}}{lol.wizard6}}}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
+\nwalsodefined{\\{NWOFbi8-1p0Y9w-2}\\{NWOFbi8-1p0Y9w-3}\\{NWOFbi8-1p0Y9w-4}\\{NWOFbi8-1p0Y9w-5}\\{NWOFbi8-1p0Y9w-6}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.wizard6}}{lol.wizard6}}}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
 
 \tableofcontents
-\newpage
 
 
 \section{Setting Up a Custom REPL}
@@ -61,10 +60,13 @@
       (\nwlinkedidentc{game-print}{NWOFbi8-1p0Y9w-6} (\nwlinkedidentc{game-eval}{NWOFbi8-1p0Y9w-4} cmd))
       (\nwlinkedidentc{game-repl}{NWOFbi8-1p0Y9w-2}))))
 
+(export (find-symbol "GAME-REPL"))
+
 
 \nwidentdefs{\\{{\nwixident{game-repl}}{game-repl}}}\nwidentuses{\\{{\nwixident{game-eval}}{game-eval}}\\{{\nwixident{game-print}}{game-print}}\\{{\nwixident{game-read}}{game-read}}}\nwindexuse{\nwixident{game-eval}}{game-eval}{NWOFbi8-1p0Y9w-2}\nwindexuse{\nwixident{game-print}}{game-print}{NWOFbi8-1p0Y9w-2}\nwindexuse{\nwixident{game-read}}{game-read}{NWOFbi8-1p0Y9w-2}\nwendcode{}\nwbegindocs{5}\nwdocspar
 
 
+\newpage
 \section{Writing a Custom read Function}
 
 {\Tt{}\nwlinkedidentq{game-read}{NWOFbi8-1p0Y9w-3}\nwendquote} needs to:
@@ -94,7 +96,6 @@
 \nwidentdefs{\\{{\nwixident{game-read}}{game-read}}}\nwendcode{}\nwbegindocs{13}\nwdocspar
 
 
-\newpage
 \section{Writing a game-eval Function}
 
 First, we need to:
@@ -127,9 +128,12 @@ Then, when evaluating user input, if {\Tt{}an\ entered\ command\ is\ allowed\nwe
   (if \LA{}an entered command is allowed~{\nwtagstyle{}\subpageref{NWOFbi8-2ocSKw-1}}\RA{}
       \LA{}evaluate it.~{\nwtagstyle{}\subpageref{NWOFbi8-2Gepd0-1}}\RA{}
       \LA{}admonish the user.~{\nwtagstyle{}\subpageref{NWOFbi8-1wJ8ZF-1}}\RA{}))
+
+
 \nwidentdefs{\\{{\nwixident{game-eval}}{game-eval}}}\nwendcode{}\nwbegindocs{23}\nwdocspar
 
 
+\newpage
 \section{Writing a game-print Function}
 
 \nwenddocs{}\nwbegincode{24}\sublabel{NWOFbi8-1p0Y9w-5}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-5}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-4}{NWOFbi8-1p0Y9w-6}\nwenddeflinemarkup
@@ -147,7 +151,7 @@ Then, when evaluating user input, if {\Tt{}an\ entered\ command\ is\ allowed\nwe
 
 \nwidentdefs{\\{{\nwixident{tweak-text}}{tweak-text}}}\nwendcode{}\nwbegindocs{25}\nwdocspar
 
-\nwenddocs{}\nwbegincode{26}\sublabel{NWOFbi8-1p0Y9w-6}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-6}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-5}{NWOFbi8-1p0Y9w-7}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{26}\sublabel{NWOFbi8-1p0Y9w-6}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-6}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-5}{\relax}\nwenddeflinemarkup
 (defun \nwlinkedidentc{game-print}{NWOFbi8-1p0Y9w-6} (lst)\nwindexdefn{\nwixident{game-print}}{game-print}{NWOFbi8-1p0Y9w-6}
   (princ (coerce (\nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} (coerce (string-trim "() "
                                                   (prin1-to-string lst))
@@ -156,33 +160,9 @@ Then, when evaluating user input, if {\Tt{}an\ entered\ command\ is\ allowed\nwe
                              nil)
                  'string))
   (fresh-line))
+\nwidentdefs{\\{{\nwixident{game-print}}{game-print}}}\nwidentuses{\\{{\nwixident{tweak-text}}{tweak-text}}}\nwindexuse{\nwixident{tweak-text}}{tweak-text}{NWOFbi8-1p0Y9w-6}\nwendcode{}
 
-
-\nwidentdefs{\\{{\nwixident{game-print}}{game-print}}}\nwidentuses{\\{{\nwixident{tweak-text}}{tweak-text}}}\nwindexuse{\nwixident{tweak-text}}{tweak-text}{NWOFbi8-1p0Y9w-6}\nwendcode{}\nwbegindocs{27}\nwdocspar
-
-
-\nwenddocs{}\nwbegincode{28}\sublabel{NWOFbi8-1p0Y9w-7}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-7}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-6}{\relax}\nwenddeflinemarkup
-(export (find-symbol "GAME-REPL"))
-\nwendcode{}\nwbegindocs{29}\nwdocspar
-
-\section{Tests}
-
-\nwenddocs{}\nwbegincode{30}\sublabel{NWOFbi8-2hXnLe-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-2hXnLe-1}}}\moddef{test/wizard5.lisp~{\nwtagstyle{}\subpageref{NWOFbi8-2hXnLe-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
-(in-package :lol.wizard5)
-
-
-(prove:plan 1)
-
-
-;; > (\nwlinkedidentc{game-read}{NWOFbi8-1p0Y9w-3})
-;; walk east
-;; (WALK 'EAST)
-
-
-(prove:finalize)
-\nwnotused{test/wizard5.lisp}\nwidentuses{\\{{\nwixident{game-read}}{game-read}}}\nwindexuse{\nwixident{game-read}}{game-read}{NWOFbi8-2hXnLe-1}\nwendcode{}
-
-\nwixlogsorted{c}{{*}{NWOFbi8-1p0Y9w-1}{\nwixd{NWOFbi8-1p0Y9w-1}\nwixd{NWOFbi8-1p0Y9w-2}\nwixd{NWOFbi8-1p0Y9w-3}\nwixd{NWOFbi8-1p0Y9w-4}\nwixd{NWOFbi8-1p0Y9w-5}\nwixd{NWOFbi8-1p0Y9w-6}\nwixd{NWOFbi8-1p0Y9w-7}}}%
+\nwixlogsorted{c}{{*}{NWOFbi8-1p0Y9w-1}{\nwixd{NWOFbi8-1p0Y9w-1}\nwixd{NWOFbi8-1p0Y9w-2}\nwixd{NWOFbi8-1p0Y9w-3}\nwixd{NWOFbi8-1p0Y9w-4}\nwixd{NWOFbi8-1p0Y9w-5}\nwixd{NWOFbi8-1p0Y9w-6}}}%
 \nwixlogsorted{c}{{\gls{cons} the \gls{car} to the result.}{NWOFbi8-4MVyoH-1}{\nwixd{NWOFbi8-4MVyoH-1}\nwixu{NWOFbi8-1p0Y9w-3}}}%
 \nwixlogsorted{c}{{admonish the user.}{NWOFbi8-1wJ8ZF-1}{\nwixd{NWOFbi8-1wJ8ZF-1}\nwixu{NWOFbi8-1p0Y9w-4}}}%
 \nwixlogsorted{c}{{an entered command is allowed}{NWOFbi8-2ocSKw-1}{\nwixd{NWOFbi8-2ocSKw-1}\nwixu{NWOFbi8-1p0Y9w-4}}}%
@@ -190,7 +170,6 @@ Then, when evaluating user input, if {\Tt{}an\ entered\ command\ is\ allowed\nwe
 \nwixlogsorted{c}{{evaluate it.}{NWOFbi8-2Gepd0-1}{\nwixd{NWOFbi8-2Gepd0-1}\nwixu{NWOFbi8-1p0Y9w-4}}}%
 \nwixlogsorted{c}{{quote it.}{NWOFbi8-ACeIq-1}{\nwixd{NWOFbi8-ACeIq-1}\nwixu{NWOFbi8-1p0Y9w-3}}}%
 \nwixlogsorted{c}{{Read a command.}{NWOFbi8-WyfSo-1}{\nwixd{NWOFbi8-WyfSo-1}\nwixu{NWOFbi8-1p0Y9w-3}}}%
-\nwixlogsorted{c}{{test/wizard5.lisp}{NWOFbi8-2hXnLe-1}{\nwixd{NWOFbi8-2hXnLe-1}}}%
 \nwixlogsorted{i}{{\nwixident{*allowed-commands*}}{*allowed-commands*}}%
 \nwixlogsorted{i}{{\nwixident{game-eval}}{game-eval}}%
 \nwixlogsorted{i}{{\nwixident{game-print}}{game-print}}%
@@ -198,7 +177,20 @@ Then, when evaluating user input, if {\Tt{}an\ entered\ command\ is\ allowed\nwe
 \nwixlogsorted{i}{{\nwixident{game-repl}}{game-repl}}%
 \nwixlogsorted{i}{{\nwixident{lol.wizard6}}{lol.wizard6}}%
 \nwixlogsorted{i}{{\nwixident{tweak-text}}{tweak-text}}%
-\nwbegindocs{31}\nwdocspar
+\nwbegindocs{27}\nwdocspar
+
+
+% \section{Tests}
+
+% <<test/wizard5.lisp>>=
+% (in-package :lol.wizard5)
+
+
+% (prove:plan n)
+
+
+% (prove:finalize)
+% @
 
 
 \newpage
@@ -206,7 +198,7 @@ Then, when evaluating user input, if {\Tt{}an\ entered\ command\ is\ allowed\nwe
 % \setlength{\linewidth}{1.85\textwidth}
 % \begin{multicols*}{2}
 \section{Full Listing}
-% \inputminted[linenos,firstline=11,lastline=51]{lisp}{wizard6.lisp}
+\inputminted[linenos,firstline=5,lastline=48,fontsize=\small]{lisp}{wizard6.lisp}
 % \columnbreak
 % \newpage
 % \inputminted[linenos,firstline=54]{lisp}{wizard6.lisp}
@@ -215,25 +207,22 @@ Then, when evaluating user input, if {\Tt{}an\ entered\ command\ is\ allowed\nwe
 
 
 \newpage
-\setlength{\linewidth}{1.8\textwidth}
+\setlength{\linewidth}{1.5\textwidth}
 \begin{multicols}{2}
-  [\section{Chunks}]
+  \section{Chunks}
   \nowebchunks
-  % \columnbreak
 
   \section{Index}
   \nowebindex
+
+  \vfill
+  \bibliography{lol}
+  \bibliographystyle{plainnat}
+
+  \columnbreak
+  % \thanks{\cite{hyperspec-glossary}}
+  \printglossaries
 \end{multicols}
-
-
-\newpage
-\restoregeometry
-\thanks{\cite{hyperspec-glossary}}
-\printglossaries
-
-\bibliography{lol}
-\bibliographystyle{plainnat}
-
 
 \end{document}
 \nwenddocs{}
