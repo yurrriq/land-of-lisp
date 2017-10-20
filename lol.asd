@@ -7,5 +7,6 @@
                 :components
                 ((:file "guess")
                  (:file "pudding")
-                 (:file "wizard5"))))
+                 (:file "wizard5")
+                 (:file "wizard6"))))
   :description "Land of Lisp examples")
