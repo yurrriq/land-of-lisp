@@ -33,6 +33,10 @@ test/%.lisp: src/%.nw
 	notangle -R'$@' $< ${cpif} $@
 
 
+# TODO
+test/wizard6.lisp: ; true
+
+
 docs: ${DOCS_SRCS}
 
 # FIXME: separate file

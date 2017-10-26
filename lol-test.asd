@@ -1,5 +1,5 @@
 (defsystem "lol-test"
-  :version "0.1.1"
+  :version "0.2.1"
   :author "Eric Bailey <eric@ericb.me>"
   :license "WTFPL"
   :depends-on (:lol
