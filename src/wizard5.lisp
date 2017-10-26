@@ -4,7 +4,8 @@
   (:export :look
            :walk
            :pickup
-           :inventory))
+           :inventory
+           :game-repl))
 (in-package :lol.wizard5)
 
 

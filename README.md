@@ -6,11 +6,12 @@
 *Working through examples from [Land of Lisp][book]*
 
 
-| *Title* | *Chapter*                   | *Links*                                            |
-|---------|-----------------------------|----------------------------------------------------|
-|       2 | The Guess-My-Number Game    | [Source][guess.nw] / [Code][guess.lisp] / [Coverage][guess.lisp coverage] / [PDF][guess.pdf] |
-|       4 | Pudding Eater               | [Source][pudding.nw] / [Code][pudding.lisp] / [Coverage][pudding.lisp coverage] / [PDF][pudding.pdf] |
-|       5 | The Wizard's Adventure Game | [Source][wizard5.nw] / [Code][wizard5.lisp] / [Coverage][wizard5.lisp coverage] / [PDF][wizard5.pdf] |
+| *Chapter* | *Title*                          | *Links*                                                                                              |
+|-----------|----------------------------------|------------------------------------------------------------------------------------------------------|
+|         2 | The Guess-My-Number Game         | [Source][guess.nw] / [Code][guess.lisp] / [Coverage][guess.lisp coverage] / [PDF][guess.pdf]         |
+|         4 | Pudding Eater                    | [Source][pudding.nw] / [Code][pudding.lisp] / [Coverage][pudding.lisp coverage] / [PDF][pudding.pdf] |
+|         5 | The Wizard's Adventure Game      | [Source][wizard5.nw] / [Code][wizard5.lisp] / [Coverage][wizard5.lisp coverage] / [PDF][wizard5.pdf] |
+|         6 | The Wizard's Adventure Game REPL | [Source][wizard6.nw] / [Code][wizard6.lisp] / [Coverage][wizard6.lisp coverage] / [PDF][wizard6.pdf] |
 
 
 [![Warning: Built Using Lisp](http://www.lisperati.com/lisplogo_warning2_256.png)](http://www.lisperati.com/logo.html)
@@ -20,7 +21,7 @@
 
 [Travis badge]: https://travis-ci.org/yurrriq/land-of-lisp.svg?branch=master
 [Travis link]: https://travis-ci.org/yurrriq/land-of-lisp
-[Coverage badge]: https://img.shields.io/badge/coverage-97%25-green.svg?style=flat
+[Coverage badge]: https://img.shields.io/badge/coverage-51%25-green.svg?style=flat
 [Coverage link]: https://yurrriq.github.io/land-of-lisp/coverage/
 [book]: http://landoflisp.com
 [guess.nw]: https://github.com/yurrriq/land-of-lisp/blob/master/src/guess.nw
@@ -35,3 +36,7 @@
 [wizard5.lisp]: https://github.com/yurrriq/land-of-lisp/blob/master/src/wizard5.lisp
 [wizard5.lisp coverage]: http://yurrriq.codes/land-of-lisp/coverage/68bef9052143c6883beb88b1318bc676.html
 [wizard5.pdf]: https://yurrriq.github.io/land-of-lisp/wizard5.pdf
+[wizard6.nw]: https://github.com/yurrriq/land-of-lisp/blob/master/src/wizard6.nw
+[wizard6.lisp]: https://github.com/yurrriq/land-of-lisp/blob/master/src/wizard6.lisp
+[wizard6.lisp coverage]: http://yurrriq.codes/land-of-lisp/coverage/cb6de0f5c6764f2ade496d09c88d77a4.html
+[wizard6.pdf]: https://yurrriq.github.io/land-of-lisp/wizard6.pdf

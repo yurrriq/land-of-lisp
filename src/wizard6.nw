@@ -1,0 +1,210 @@
+% -*- mode: ess-noweb; ess-noweb-default-code-mode: lisp-mode; -*-
+\documentclass{tufte-handout}
+
+\input{preamble.tex}
+
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+% \renewcommand*{\glstextformat}[1]{\textsl{#1}}
+
+
+\hypersetup{
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={The Wizard's Adventure Game REPL},
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 6},
+  pdfkeywords={Lisp, REPL, game, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\title{%
+  The Wizard's Adventure Game REPL
+  \thanks{\cite{barski2010land-ch6}}
+}
+
+\date{%
+  October 14, 2017
+  \thanks{Last updated \today}
+}
+
+\begin{document}
+\maketitle
+@
+
+% \begin{abstract}
+% \end{abstract}
+
+\begin{marginfigure}
+<<*>>=
+(in-package :cl-user)
+(in-package :lol.wizard5)
+
+
+<<define the allowed commands.>>
+@ %def lol.wizard6
+\end{marginfigure}
+
+\tableofcontents
+
+
+\section{Setting Up a Custom REPL}
+
+<<*>>=
+(defun game-repl ()
+  (let ((cmd (game-read)))
+    (unless (eq (car cmd) 'quit)
+      (game-print (game-eval cmd))
+      (game-repl))))
+
+(export (find-symbol "GAME-REPL"))
+
+
+@
+
+
+\newpage
+\section{Writing a Custom read Function}
+
+[[game-read]] needs to:
+
+\begin{enumerate}[1.\hspace{1em}]
+  \item
+<<Read a command.>>=
+(read-from-string (concatenate 'string "(" (read-line) ")"))
+@
+  \item Take the \gls{cdr} and [[<<quote it.>>]]
+<<quote it.>>=
+(quote-it (x) (list 'quote x))
+@
+  \item
+<<\gls{cons} the \gls{car} to the result.>>=
+(cons (car cmd) (mapcar #'quote-it (cdr cmd)))
+@
+\end{enumerate}
+
+<<*>>=
+(defun game-read ()
+  (let ((cmd <<Read a command.>>))
+    (flet (<<quote it.>>)
+      <<\gls{cons} the \gls{car} to the result.>>)))
+
+
+@
+
+
+\section{Writing a game-eval Function}
+
+First, we need to:
+
+<<define the allowed commands.>>=
+(defparameter *allowed-commands* '(look walk pickup inventory))
+
+
+@
+
+\begin{marginfigure}%
+<<an entered command is allowed>>=
+(member (car sexp) *allowed-commands*)
+@
+
+<<evaluate it.>>=
+(eval sexp)
+@
+
+<<admonish the user.>>=
+'(i do not know that command.)
+@
+\end{marginfigure}
+
+Then, when evaluating user input, if [[an entered command is allowed]],
+[[<<evaluate it.>>]] Otherwise [[<<admonish the user.>>]]
+
+<<*>>=
+(defun game-eval (sexp)
+  (if <<an entered command is allowed>>
+      <<evaluate it.>>
+      <<admonish the user.>>))
+
+
+@
+
+
+\newpage
+\section{Writing a game-print Function}
+
+<<*>>=
+(defun tweak-text (lst caps lit)
+  (when lst
+    (let ((item (car lst))
+          (rest (cdr lst)))
+      (cond ((eql item #\space) (cons item (tweak-text rest caps lit)))
+            ((member item '(#\! #\? #\.)) (cons item (tweak-text rest t lit)))
+            ((eql item #\") (tweak-text rest caps (not lit)))
+            (lit (cons item (tweak-text rest nil lit)))
+            (caps (cons (char-upcase item) (tweak-text rest nil lit)))
+            (t (cons (char-downcase item) (tweak-text rest nil nil)))))))
+
+
+@
+
+<<*>>=
+(defun game-print (lst)
+  (princ (coerce (tweak-text (coerce (string-trim "() "
+                                                  (prin1-to-string lst))
+                                     'list)
+                             t
+                             nil)
+                 'string))
+  (fresh-line))
+@
+
+
+% \section{Tests}
+
+% @<<test/wizard5.lisp>>=
+% (in-package :lol.wizard5)
+
+
+% (prove:plan n)
+
+
+% (prove:finalize)
+% @
+
+
+\newpage
+% \newgeometry{left=0.625in,right=3.75in}
+% \setlength{\linewidth}{1.85\textwidth}
+% \begin{multicols*}{2}
+\section{Full Listing}
+\inputminted[linenos,firstline=5,lastline=48,fontsize=\small]{lisp}{wizard6.lisp}
+% \columnbreak
+% \newpage
+% \inputminted[linenos,firstline=54]{lisp}{wizard6.lisp}
+% \end{multicols*}
+% \restoregeometry
+
+
+\newpage
+\setlength{\linewidth}{1.5\textwidth}
+\begin{multicols}{2}
+  \section{Chunks}
+  \nowebchunks
+
+  \section{Index}
+  \nowebindex
+
+  \vfill
+  \bibliography{lol}
+  \bibliographystyle{plainnat}
+
+  \columnbreak
+  % \thanks{\cite{hyperspec-glossary}}
+  \printglossaries
+\end{multicols}
+
+\end{document}
