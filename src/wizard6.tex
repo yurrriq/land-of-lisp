@@ -1,0 +1,228 @@
+% -*- mode: ess-noweb; ess-noweb-default-code-mode: lisp-mode; -*-% ===> this file was generated automatically by noweave --- better not edit it
+\documentclass{tufte-handout}
+
+\input{preamble.tex}
+
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+% \renewcommand*{\glstextformat}[1]{\textsl{#1}}
+
+
+\hypersetup{
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={The Wizard's Adventure Game REPL},
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 6},
+  pdfkeywords={Lisp, REPL, game, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\title{%
+  The Wizard's Adventure Game REPL
+  \thanks{\cite{barski2010land-ch6}}
+}
+
+\date{%
+  October 14, 2017
+  \thanks{Last updated \today}
+}
+
+\begin{document}
+\maketitle
+\nwfilename{src/wizard6.nw}\nwbegindocs{1}\nwdocspar
+
+% \begin{abstract}
+% \end{abstract}
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{2}\sublabel{NWOFbi8-1p0Y9w-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\endmoddef\nwstartdeflinemarkup\nwprevnextdefs{\relax}{NWOFbi8-1p0Y9w-2}\nwenddeflinemarkup
+(in-package :cl-user)
+(in-package :lol.wizard5)
+
+
+\LA{}define the allowed commands.~{\nwtagstyle{}\subpageref{NWOFbi8-1CLPa3-1}}\RA{}
+\nwindexdefn{\nwixident{lol.wizard6}}{lol.wizard6}{NWOFbi8-1p0Y9w-1}\eatline
+\nwalsodefined{\\{NWOFbi8-1p0Y9w-2}\\{NWOFbi8-1p0Y9w-3}\\{NWOFbi8-1p0Y9w-4}\\{NWOFbi8-1p0Y9w-5}\\{NWOFbi8-1p0Y9w-6}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.wizard6}}{lol.wizard6}}}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
+
+\tableofcontents
+
+
+\section{Setting Up a Custom REPL}
+
+\nwenddocs{}\nwbegincode{4}\sublabel{NWOFbi8-1p0Y9w-2}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-2}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-1}{NWOFbi8-1p0Y9w-3}\nwenddeflinemarkup
+(defun \nwlinkedidentc{game-repl}{NWOFbi8-1p0Y9w-2} ()\nwindexdefn{\nwixident{game-repl}}{game-repl}{NWOFbi8-1p0Y9w-2}
+  (let ((cmd (\nwlinkedidentc{game-read}{NWOFbi8-1p0Y9w-3})))
+    (unless (eq (car cmd) 'quit)
+      (\nwlinkedidentc{game-print}{NWOFbi8-1p0Y9w-6} (\nwlinkedidentc{game-eval}{NWOFbi8-1p0Y9w-4} cmd))
+      (\nwlinkedidentc{game-repl}{NWOFbi8-1p0Y9w-2}))))
+
+(export (find-symbol "GAME-REPL"))
+
+
+\nwidentdefs{\\{{\nwixident{game-repl}}{game-repl}}}\nwidentuses{\\{{\nwixident{game-eval}}{game-eval}}\\{{\nwixident{game-print}}{game-print}}\\{{\nwixident{game-read}}{game-read}}}\nwindexuse{\nwixident{game-eval}}{game-eval}{NWOFbi8-1p0Y9w-2}\nwindexuse{\nwixident{game-print}}{game-print}{NWOFbi8-1p0Y9w-2}\nwindexuse{\nwixident{game-read}}{game-read}{NWOFbi8-1p0Y9w-2}\nwendcode{}\nwbegindocs{5}\nwdocspar
+
+
+\newpage
+\section{Writing a Custom read Function}
+
+{\Tt{}\nwlinkedidentq{game-read}{NWOFbi8-1p0Y9w-3}\nwendquote} needs to:
+
+\begin{enumerate}[1.\hspace{1em}]
+  \item
+\nwenddocs{}\nwbegincode{6}\sublabel{NWOFbi8-WyfSo-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-WyfSo-1}}}\moddef{Read a command.~{\nwtagstyle{}\subpageref{NWOFbi8-WyfSo-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWOFbi8-1p0Y9w-3}}\nwenddeflinemarkup
+(read-from-string (concatenate 'string "(" (read-line) ")"))
+\nwused{\\{NWOFbi8-1p0Y9w-3}}\nwendcode{}\nwbegindocs{7}\nwdocspar
+  \item Take the \gls{cdr} and {\Tt{}\LA{}quote it.~{\nwtagstyle{}\subpageref{NWOFbi8-ACeIq-1}}\RA{}\nwendquote}
+\nwenddocs{}\nwbegincode{8}\sublabel{NWOFbi8-ACeIq-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-ACeIq-1}}}\moddef{quote it.~{\nwtagstyle{}\subpageref{NWOFbi8-ACeIq-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWOFbi8-1p0Y9w-3}}\nwenddeflinemarkup
+(quote-it (x) (list 'quote x))
+\nwused{\\{NWOFbi8-1p0Y9w-3}}\nwendcode{}\nwbegindocs{9}\nwdocspar
+  \item
+\nwenddocs{}\nwbegincode{10}\sublabel{NWOFbi8-4MVyoH-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-4MVyoH-1}}}\moddef{\gls{cons} the \gls{car} to the result.~{\nwtagstyle{}\subpageref{NWOFbi8-4MVyoH-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWOFbi8-1p0Y9w-3}}\nwenddeflinemarkup
+(cons (car cmd) (mapcar #'quote-it (cdr cmd)))
+\nwused{\\{NWOFbi8-1p0Y9w-3}}\nwendcode{}\nwbegindocs{11}\nwdocspar
+\end{enumerate}
+
+\nwenddocs{}\nwbegincode{12}\sublabel{NWOFbi8-1p0Y9w-3}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-3}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-2}{NWOFbi8-1p0Y9w-4}\nwenddeflinemarkup
+(defun \nwlinkedidentc{game-read}{NWOFbi8-1p0Y9w-3} ()\nwindexdefn{\nwixident{game-read}}{game-read}{NWOFbi8-1p0Y9w-3}
+  (let ((cmd \LA{}Read a command.~{\nwtagstyle{}\subpageref{NWOFbi8-WyfSo-1}}\RA{}))
+    (flet (\LA{}quote it.~{\nwtagstyle{}\subpageref{NWOFbi8-ACeIq-1}}\RA{})
+      \LA{}\gls{cons} the \gls{car} to the result.~{\nwtagstyle{}\subpageref{NWOFbi8-4MVyoH-1}}\RA{})))
+
+
+\nwidentdefs{\\{{\nwixident{game-read}}{game-read}}}\nwendcode{}\nwbegindocs{13}\nwdocspar
+
+
+\section{Writing a game-eval Function}
+
+First, we need to:
+
+\nwenddocs{}\nwbegincode{14}\sublabel{NWOFbi8-1CLPa3-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1CLPa3-1}}}\moddef{define the allowed commands.~{\nwtagstyle{}\subpageref{NWOFbi8-1CLPa3-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWOFbi8-1p0Y9w-1}}\nwenddeflinemarkup
+(defparameter \nwlinkedidentc{*allowed-commands*}{NWOFbi8-1CLPa3-1} '(look walk pickup inventory))\nwindexdefn{\nwixident{*allowed-commands*}}{*allowed-commands*}{NWOFbi8-1CLPa3-1}
+
+
+\nwused{\\{NWOFbi8-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{*allowed-commands*}}{*allowed-commands*}}}\nwendcode{}\nwbegindocs{15}\nwdocspar
+
+\begin{marginfigure}%
+\nwenddocs{}\nwbegincode{16}\sublabel{NWOFbi8-2ocSKw-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-2ocSKw-1}}}\moddef{an entered command is allowed~{\nwtagstyle{}\subpageref{NWOFbi8-2ocSKw-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWOFbi8-1p0Y9w-4}}\nwenddeflinemarkup
+(member (car sexp) \nwlinkedidentc{*allowed-commands*}{NWOFbi8-1CLPa3-1})
+\nwused{\\{NWOFbi8-1p0Y9w-4}}\nwidentuses{\\{{\nwixident{*allowed-commands*}}{*allowed-commands*}}}\nwindexuse{\nwixident{*allowed-commands*}}{*allowed-commands*}{NWOFbi8-2ocSKw-1}\nwendcode{}\nwbegindocs{17}\nwdocspar
+
+\nwenddocs{}\nwbegincode{18}\sublabel{NWOFbi8-2Gepd0-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-2Gepd0-1}}}\moddef{evaluate it.~{\nwtagstyle{}\subpageref{NWOFbi8-2Gepd0-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWOFbi8-1p0Y9w-4}}\nwenddeflinemarkup
+(eval sexp)
+\nwused{\\{NWOFbi8-1p0Y9w-4}}\nwendcode{}\nwbegindocs{19}\nwdocspar
+
+\nwenddocs{}\nwbegincode{20}\sublabel{NWOFbi8-1wJ8ZF-1}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1wJ8ZF-1}}}\moddef{admonish the user.~{\nwtagstyle{}\subpageref{NWOFbi8-1wJ8ZF-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NWOFbi8-1p0Y9w-4}}\nwenddeflinemarkup
+'(i do not know that command.)
+\nwused{\\{NWOFbi8-1p0Y9w-4}}\nwendcode{}\nwbegindocs{21}\nwdocspar
+\end{marginfigure}
+
+Then, when evaluating user input, if {\Tt{}an\ entered\ command\ is\ allowed\nwendquote},
+{\Tt{}\LA{}evaluate it.~{\nwtagstyle{}\subpageref{NWOFbi8-2Gepd0-1}}\RA{}\nwendquote} Otherwise {\Tt{}\LA{}admonish the user.~{\nwtagstyle{}\subpageref{NWOFbi8-1wJ8ZF-1}}\RA{}\nwendquote}
+
+\nwenddocs{}\nwbegincode{22}\sublabel{NWOFbi8-1p0Y9w-4}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-4}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-3}{NWOFbi8-1p0Y9w-5}\nwenddeflinemarkup
+(defun \nwlinkedidentc{game-eval}{NWOFbi8-1p0Y9w-4} (sexp)\nwindexdefn{\nwixident{game-eval}}{game-eval}{NWOFbi8-1p0Y9w-4}
+  (if \LA{}an entered command is allowed~{\nwtagstyle{}\subpageref{NWOFbi8-2ocSKw-1}}\RA{}
+      \LA{}evaluate it.~{\nwtagstyle{}\subpageref{NWOFbi8-2Gepd0-1}}\RA{}
+      \LA{}admonish the user.~{\nwtagstyle{}\subpageref{NWOFbi8-1wJ8ZF-1}}\RA{}))
+
+
+\nwidentdefs{\\{{\nwixident{game-eval}}{game-eval}}}\nwendcode{}\nwbegindocs{23}\nwdocspar
+
+
+\newpage
+\section{Writing a game-print Function}
+
+\nwenddocs{}\nwbegincode{24}\sublabel{NWOFbi8-1p0Y9w-5}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-5}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-4}{NWOFbi8-1p0Y9w-6}\nwenddeflinemarkup
+(defun \nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} (lst caps lit)\nwindexdefn{\nwixident{tweak-text}}{tweak-text}{NWOFbi8-1p0Y9w-5}
+  (when lst
+    (let ((item (car lst))
+          (rest (cdr lst)))
+      (cond ((eql item #\\space) (cons item (\nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} rest caps lit)))
+            ((member item '(#\\! #\\? #\\.)) (cons item (\nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} rest t lit)))
+            ((eql item #\\") (\nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} rest caps (not lit)))
+            (lit (cons item (\nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} rest nil lit)))
+            (caps (cons (char-upcase item) (\nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} rest nil lit)))
+            (t (cons (char-downcase item) (\nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} rest nil nil)))))))
+
+
+\nwidentdefs{\\{{\nwixident{tweak-text}}{tweak-text}}}\nwendcode{}\nwbegindocs{25}\nwdocspar
+
+\nwenddocs{}\nwbegincode{26}\sublabel{NWOFbi8-1p0Y9w-6}\nwmargintag{{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-6}}}\moddef{*~{\nwtagstyle{}\subpageref{NWOFbi8-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NWOFbi8-1p0Y9w-5}{\relax}\nwenddeflinemarkup
+(defun \nwlinkedidentc{game-print}{NWOFbi8-1p0Y9w-6} (lst)\nwindexdefn{\nwixident{game-print}}{game-print}{NWOFbi8-1p0Y9w-6}
+  (princ (coerce (\nwlinkedidentc{tweak-text}{NWOFbi8-1p0Y9w-5} (coerce (string-trim "() "
+                                                  (prin1-to-string lst))
+                                     'list)
+                             t
+                             nil)
+                 'string))
+  (fresh-line))
+\nwidentdefs{\\{{\nwixident{game-print}}{game-print}}}\nwidentuses{\\{{\nwixident{tweak-text}}{tweak-text}}}\nwindexuse{\nwixident{tweak-text}}{tweak-text}{NWOFbi8-1p0Y9w-6}\nwendcode{}
+
+\nwixlogsorted{c}{{*}{NWOFbi8-1p0Y9w-1}{\nwixd{NWOFbi8-1p0Y9w-1}\nwixd{NWOFbi8-1p0Y9w-2}\nwixd{NWOFbi8-1p0Y9w-3}\nwixd{NWOFbi8-1p0Y9w-4}\nwixd{NWOFbi8-1p0Y9w-5}\nwixd{NWOFbi8-1p0Y9w-6}}}%
+\nwixlogsorted{c}{{\gls{cons} the \gls{car} to the result.}{NWOFbi8-4MVyoH-1}{\nwixd{NWOFbi8-4MVyoH-1}\nwixu{NWOFbi8-1p0Y9w-3}}}%
+\nwixlogsorted{c}{{admonish the user.}{NWOFbi8-1wJ8ZF-1}{\nwixd{NWOFbi8-1wJ8ZF-1}\nwixu{NWOFbi8-1p0Y9w-4}}}%
+\nwixlogsorted{c}{{an entered command is allowed}{NWOFbi8-2ocSKw-1}{\nwixd{NWOFbi8-2ocSKw-1}\nwixu{NWOFbi8-1p0Y9w-4}}}%
+\nwixlogsorted{c}{{define the allowed commands.}{NWOFbi8-1CLPa3-1}{\nwixu{NWOFbi8-1p0Y9w-1}\nwixd{NWOFbi8-1CLPa3-1}}}%
+\nwixlogsorted{c}{{evaluate it.}{NWOFbi8-2Gepd0-1}{\nwixd{NWOFbi8-2Gepd0-1}\nwixu{NWOFbi8-1p0Y9w-4}}}%
+\nwixlogsorted{c}{{quote it.}{NWOFbi8-ACeIq-1}{\nwixd{NWOFbi8-ACeIq-1}\nwixu{NWOFbi8-1p0Y9w-3}}}%
+\nwixlogsorted{c}{{Read a command.}{NWOFbi8-WyfSo-1}{\nwixd{NWOFbi8-WyfSo-1}\nwixu{NWOFbi8-1p0Y9w-3}}}%
+\nwixlogsorted{i}{{\nwixident{*allowed-commands*}}{*allowed-commands*}}%
+\nwixlogsorted{i}{{\nwixident{game-eval}}{game-eval}}%
+\nwixlogsorted{i}{{\nwixident{game-print}}{game-print}}%
+\nwixlogsorted{i}{{\nwixident{game-read}}{game-read}}%
+\nwixlogsorted{i}{{\nwixident{game-repl}}{game-repl}}%
+\nwixlogsorted{i}{{\nwixident{lol.wizard6}}{lol.wizard6}}%
+\nwixlogsorted{i}{{\nwixident{tweak-text}}{tweak-text}}%
+\nwbegindocs{27}\nwdocspar
+
+
+% \section{Tests}
+
+% <<test/wizard5.lisp>>=
+% (in-package :lol.wizard5)
+
+
+% (prove:plan n)
+
+
+% (prove:finalize)
+% @
+
+
+\newpage
+% \newgeometry{left=0.625in,right=3.75in}
+% \setlength{\linewidth}{1.85\textwidth}
+% \begin{multicols*}{2}
+\section{Full Listing}
+\inputminted[linenos,firstline=5,lastline=48,fontsize=\small]{lisp}{wizard6.lisp}
+% \columnbreak
+% \newpage
+% \inputminted[linenos,firstline=54]{lisp}{wizard6.lisp}
+% \end{multicols*}
+% \restoregeometry
+
+
+\newpage
+\setlength{\linewidth}{1.5\textwidth}
+\begin{multicols}{2}
+  \section{Chunks}
+  \nowebchunks
+
+  \section{Index}
+  \nowebindex
+
+  \vfill
+  \bibliography{lol}
+  \bibliographystyle{plainnat}
+
+  \columnbreak
+  % \thanks{\cite{hyperspec-glossary}}
+  \printglossaries
+\end{multicols}
+
+\end{document}
+\nwenddocs{}

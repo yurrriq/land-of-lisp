@@ -1,4 +1,4 @@
-% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
+% -*- mode: ess-noweb; ess-noweb-default-code-mode: lisp-mode; -*-
 \documentclass{tufte-handout}
 
 \input{preamble.tex}
@@ -48,12 +48,15 @@
   (:export :look
            :walk
            :pickup
-           :inventory))
+           :inventory
+           :game-repl))
 (in-package :lol.wizard5)
 
 
 <<define the global variables>>
 @ %def lol.wizard5
+
+N.B. \lsp{game-repl} is defined in \srclink{src/wizard6.lisp}.
 \end{marginfigure}
 
 \tableofcontents
