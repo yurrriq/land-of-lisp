@@ -1,4 +1,4 @@
-% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
+% -*- mode: ess-noweb; ess-noweb-default-code-mode: lisp-mode; -*-
 \documentclass{tufte-handout}
 
 \input{preamble.tex}
@@ -155,18 +155,26 @@ More succinctly, with \lsp{case}, we can define the [[pudding-eater]] function.
 (in-package :lol.pudding)
 
 
-(plan 1)
+(plan 3)
 
 
-(subtest "A Plausible Session"
+(subtest "Useless old Johnny"
   (is (pudding-eater 'johnny)
       '(I HOPE YOU CHOKED ON MY PUDDING JOHNNY)
       "I hope you choked on my pudding, Johnny!")
   (is *arch-enemy*
       'USELESS-OLD-JOHNNY
-      "Useless old Johnny!")
+      "Useless old Johnny!"))
+
+
+(subtest "George Clooney"
   (is (pudding-eater 'george-clooney)
       '(WHY YOU EAT MY PUDDING STRANGER ?)))
+
+
+(subtest "Stupid Lisp Alien"
+  (is (pudding-eater 'henry)
+      '(CURSE YOU LISP ALIEN - YOU ATE MY PUDDING)))
 
 
 (finalize)
@@ -181,9 +189,7 @@ More succinctly, with \lsp{case}, we can define the [[pudding-eater]] function.
 % \section{Chunks}
 % \nowebchunks
 
-
-\restoregeometry
-\thanks{\cite{hyperspec-glossary}}
+\newpage
 \printglossaries
 
 
