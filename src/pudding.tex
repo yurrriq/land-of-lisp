@@ -1,4 +1,4 @@
-% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-% ===> this file was generated automatically by noweave --- better not edit it
+% -*- mode: ess-noweb; ess-noweb-default-code-mode: lisp-mode; -*-% ===> this file was generated automatically by noweave --- better not edit it
 \documentclass{tufte-handout}
 
 \input{preamble.tex}
@@ -155,18 +155,26 @@ More succinctly, with \lsp{case}, we can define the {\Tt{}\nwlinkedidentq{puddin
 (in-package :\nwlinkedidentc{lol.pudding}{NWlm77s-1p0Y9w-1})
 
 
-(plan 1)
+(plan 3)
 
 
-(subtest "A Plausible Session"
+(subtest "Useless old Johnny"
   (is (\nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-3} 'johnny)
       '(I HOPE YOU CHOKED ON MY PUDDING JOHNNY)
       "I hope you choked on my pudding, Johnny!")
   (is \nwlinkedidentc{*arch-enemy*}{NWlm77s-1p0Y9w-2}
       'USELESS-OLD-JOHNNY
-      "Useless old Johnny!")
+      "Useless old Johnny!"))
+
+
+(subtest "George Clooney"
   (is (\nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-3} 'george-clooney)
       '(WHY YOU EAT MY PUDDING STRANGER ?)))
+
+
+(subtest "Stupid Lisp Alien"
+  (is (\nwlinkedidentc{pudding-eater}{NWlm77s-1p0Y9w-3} 'henry)
+      '(CURSE YOU LISP ALIEN - YOU ATE MY PUDDING)))
 
 
 (finalize)
@@ -194,9 +202,7 @@ More succinctly, with \lsp{case}, we can define the {\Tt{}\nwlinkedidentq{puddin
 % \section{Chunks}
 % \nowebchunks
 
-
-\restoregeometry
-\thanks{\cite{hyperspec-glossary}}
+\newpage
 \printglossaries
 
 

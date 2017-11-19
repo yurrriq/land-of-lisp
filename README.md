@@ -21,7 +21,7 @@
 
 [Travis badge]: https://travis-ci.org/yurrriq/land-of-lisp.svg?branch=master
 [Travis link]: https://travis-ci.org/yurrriq/land-of-lisp
-[Coverage badge]: https://img.shields.io/badge/coverage-51%25-green.svg?style=flat
+[Coverage badge]: https://img.shields.io/badge/coverage-53%25-green.svg?style=flat
 [Coverage link]: https://yurrriq.github.io/land-of-lisp/coverage/
 [book]: http://landoflisp.com
 [guess.nw]: https://github.com/yurrriq/land-of-lisp/blob/master/src/guess.nw
