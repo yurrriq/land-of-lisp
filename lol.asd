@@ -8,5 +8,6 @@
                 ((:file "guess")
                  (:file "pudding")
                  (:file "wizard5")
-                 (:file "wizard6"))))
+                 (:file "wizard6")
+                 (:file "graphviz"))))
   :description "Land of Lisp examples")

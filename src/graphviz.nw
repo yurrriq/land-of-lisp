@@ -1,0 +1,196 @@
+% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
+\documentclass{tufte-handout}
+
+\input{preamble.tex}
+
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+
+\hypersetup{
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={Pudding Eater},
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 7},
+  pdfkeywords={Lisp, Graphviz, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\title{%
+  Pudding Eater
+  \thanks{\cite{barski2010land-ch7}}
+}
+
+\date{%
+  November 20, 2017
+  \thanks{Last updated \today}
+}
+
+\begin{document}
+\maketitle
+@
+
+% \begin{abstract}
+% \end{abstract}
+
+\begin{marginfigure}
+\srclink{src/graphviz.lisp}:
+<<*>>=
+(in-package :cl-user)
+(defpackage lol.graphviz
+  (:use :cl :prove)
+  (:export dot-name))
+(in-package :lol.graphviz)
+
+
+@ %def lol.graphviz
+\end{marginfigure}
+
+
+% \tableofcontents
+% \newpage
+
+
+\section{Converting Node Identifiers}
+
+<<*>>=
+(defun dot-name (exp)
+  (substitute-if #\_ (complement #'alphanumericp) (prin1-to-string exp)))
+
+
+@
+
+
+\section{Adding Labels to Graph Nodes}
+
+<<*>>=
+(defparameter *max-label-length* 30)
+
+(defun dot-label (exp)
+  (if exp
+      (let ((s (write-to-string exp :pretty nil)))
+        (if (> (length s) *max-label-length*)
+            (concatenate 'string (subseq s 0 (- *max-label-length* 3)) "...")
+            s))
+      ""))
+
+
+@
+
+
+\section{Generating the DOT Information for the Nodes}
+
+<<*>>=
+(defun nodes->dot (nodes)
+  (mapc (lambda (node)
+          (fresh-line)
+          (princ (dot-name (car node)))
+          (princ "[label=\"")
+          (princ (dot-label node))
+          (princ "\"];"))
+        nodes))
+
+
+@
+
+
+\section{Converting Edges into DOT Format}
+
+<<*>>=
+(defun edges->dot (edges)
+  (mapc (lambda (node)
+          (mapc (lambda (edge)
+                  (fresh-line)
+                  (princ (dot-name (car node)))
+                  (princ "->")
+                  (princ (dot-name (car edge)))
+                  (princ "[label=\"")
+                  (princ (dot-label (cdr edge)))
+                  (princ "\"];"))
+                (cdr node)))
+        edges))
+
+
+@
+
+
+\section{Generating All the DOT Data}
+
+<<*>>=
+(defun graph->dot (nodes edges)
+  (princ "digraph{")
+  (nodes->dot nodes)
+  (edges->dot edges)
+  (princ "}"))
+
+
+@
+
+
+\section{Turning the DOT File into a Picture}
+
+<<*>>=
+(defun dot->png (fname thunk)
+  (with-open-file (*standard-output*
+                   fname
+                   :direction :output
+                   :if-exists :supersede)
+    (funcall thunk))
+  (uiop:run-program (concatenate 'string "dot -Tpng -O " fname)))
+
+
+@
+
+
+\section{Creating a Picture of Our Graph}
+
+<<*>>=
+(defun graph->png (fname nodes edges)
+  (dot->png fname
+            (lambda ()
+              (graph->dot nodes edges))))
+
+
+@
+
+\section{Tests}
+
+<<test/graphviz.lisp>>=
+(in-package :lol.graphviz)
+
+
+(plan 1)
+
+
+(subtest "Converting Node Identifiers"
+  (is (dot-name 'living-room)
+      "LIVING_ROOM")
+  (is (dot-name 'foo!)
+      "FOO_")
+  (is (dot-name '24)
+      "24"))
+
+
+(finalize)
+@
+
+% \section{Index}
+% \nowebindex
+
+
+% \newpage
+% \section{Chunks}
+% \nowebchunks
+
+\newpage
+\printglossaries
+
+
+\setlength{\linewidth}{1.4\textwidth}
+\bibliography{lol}
+\bibliographystyle{plainnat}
+
+\end{document}
