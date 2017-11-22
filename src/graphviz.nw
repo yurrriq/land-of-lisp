@@ -56,9 +56,32 @@
 
 \section{Converting Node Identifiers}
 
+\begin{marginfigure}
+<<\lsp{exp} as a string>>=
+(prin1-to-string exp)
+@
+\end{marginfigure}
+
+First, create a string representation of \lsp{exp}, with escape characters
+written where appropriate, via \gls{prin1-to-string}.
+
+\begin{marginfigure}
+<<is not alphanumeric>>=
+(complement #'alphanumericp)
+@
+
+<<an underscore>>=
+#\_
+@
+\end{marginfigure}
+
+
+Then replace each character that [[<<is not alphanumeric>>]]
+with [[<<an underscore>>]].
+
 <<*>>=
 (defun dot-name (exp)
-  (substitute-if #\_ (complement #'alphanumericp) (prin1-to-string exp)))
+  (substitute-if <<an underscore>> <<is not alphanumeric>> <<\lsp{exp} as a string>>))
 
 
 @
@@ -66,18 +89,45 @@
 
 \section{Adding Labels to Graph Nodes}
 
+\begin{marginfigure}
+<<create a string representation of \lsp{exp}>>=
+(write-to-string exp :pretty nil)
+@
+
+<<otherwise return the empty string>>=
+""
+@
+\end{marginfigure}
+
 <<*>>=
 (defparameter *max-label-length* 30)
 
 (defun dot-label (exp)
   (if exp
-      (let ((s (write-to-string exp :pretty nil)))
-        (if (> (length s) *max-label-length*)
-            (concatenate 'string (subseq s 0 (- *max-label-length* 3)) "...")
-            s))
-      ""))
+      (let ((s <<create a string representation of \lsp{exp}>>))
+        <<Truncate \lsp{s} if it's too long.>>)
+      <<otherwise return the empty string>>))
 
 
+@
+
+\begin{marginfigure}
+<<\lsp{s} is too long>>=
+(> (length s) *max-label-length*)
+@
+
+<<truncate \lsp{s}>>=
+(subseq s 0 (- *max-label-length* 3))
+@
+\end{marginfigure}
+
+If [[<<\lsp{s} is too long>>]], i.e. more than [[*max-label-length*]] long,
+\newline \noindent [[<<truncate \lsp{s}>>]] and append \lsp{"..."}.
+
+<<Truncate \lsp{s} if it's too long.>>=
+(if <<\lsp{s} is too long>>
+    (concatenate 'string <<truncate \lsp{s}>> "...")
+    s)
 @
 
 
@@ -156,6 +206,48 @@
 
 @
 
+
+\section{Creating Undirected Graphs}
+
+<<*>>=
+(defun uedges->dot (edges)
+  (maplist (lambda (lst)
+             (mapc (lambda (edge)
+                     (unless (assoc (car edge) (cdr lst))
+                       (fresh-line)
+                       (princ (dot-name (caar lst)))
+                       (princ "--")
+                       (princ (dot-name (car edge)))
+                       (princ "[label=\"")
+                       (princ (dot-label (cdr edge)))
+                       (princ "\"];")))
+                   (cdar lst)))
+           edges))
+
+
+(defun ugraph->dot (nodes edges)
+  (princ "graph{")
+  (nodes->dot nodes)
+  (edges->dot edges)
+  (princ "}"))
+
+
+(defun ugraph->png (fname nodes edges)
+  (dot->png fname
+            (lambda ()
+              (ugraph->dot nodes edges))))
+@
+
+
+\newpage
+\section{Full Listing}
+
+\inputminted[linenos,firstline=1,lastline=44,fontsize=\small]{lisp}{graphviz.lisp}
+
+\newpage
+\inputminted[linenos,firstline=47,fontsize=\small]{lisp}{graphviz.lisp}
+
+
 \section{Tests}
 
 <<test/graphviz.lisp>>=
@@ -177,6 +269,7 @@
 (finalize)
 @
 
+
 % \section{Index}
 % \nowebindex
 
@@ -184,6 +277,7 @@
 % \newpage
 % \section{Chunks}
 % \nowebchunks
+
 
 \newpage
 \printglossaries

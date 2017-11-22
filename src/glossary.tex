@@ -99,3 +99,25 @@
   name={\sl object},
   description={any Lisp datum.}
 }
+
+
+\newglossaryentry{prin1-to-string}
+{
+  name={\lsp{prin1-to-string}},
+  description={%
+    acts like \gls{write-to-string} with \lsp{:escape t}, that is,
+    escape characters are written where appropriate.
+  }
+}
+
+
+\newglossaryentry{write-to-string}
+{
+  name={\lsp{write-to-string}},
+  description={%
+    \gls{prin1-to-string} and \lsp{princ-to-string} effectively print an
+    \gls{object} as if by \lsp{write}, \lsp{prin1}, or \lsp{princ},
+    respectively, and the characters that would be output
+    are made into a string.
+  }
+}

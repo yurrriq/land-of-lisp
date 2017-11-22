@@ -47,7 +47,7 @@
 
 
 \nwindexdefn{\nwixident{lol.graphviz}}{lol.graphviz}{NW1BD1Gb-1p0Y9w-1}\eatline
-\nwalsodefined{\\{NW1BD1Gb-1p0Y9w-2}\\{NW1BD1Gb-1p0Y9w-3}\\{NW1BD1Gb-1p0Y9w-4}\\{NW1BD1Gb-1p0Y9w-5}\\{NW1BD1Gb-1p0Y9w-6}\\{NW1BD1Gb-1p0Y9w-7}\\{NW1BD1Gb-1p0Y9w-8}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.graphviz}}{lol.graphviz}}}\nwidentuses{\\{{\nwixident{dot-name}}{dot-name}}}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-1}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
+\nwalsodefined{\\{NW1BD1Gb-1p0Y9w-2}\\{NW1BD1Gb-1p0Y9w-3}\\{NW1BD1Gb-1p0Y9w-4}\\{NW1BD1Gb-1p0Y9w-5}\\{NW1BD1Gb-1p0Y9w-6}\\{NW1BD1Gb-1p0Y9w-7}\\{NW1BD1Gb-1p0Y9w-8}\\{NW1BD1Gb-1p0Y9w-9}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.graphviz}}{lol.graphviz}}}\nwidentuses{\\{{\nwixident{dot-name}}{dot-name}}}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-1}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
 
 
 % \tableofcontents
@@ -56,34 +56,84 @@
 
 \section{Converting Node Identifiers}
 
-\nwenddocs{}\nwbegincode{4}\sublabel{NW1BD1Gb-1p0Y9w-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-2}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-1}{NW1BD1Gb-1p0Y9w-3}\nwenddeflinemarkup
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{4}\sublabel{NW1BD1Gb-22tgFG-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-22tgFG-1}}}\moddef{\lsp{exp} as a string~{\nwtagstyle{}\subpageref{NW1BD1Gb-22tgFG-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW1BD1Gb-1p0Y9w-2}}\nwenddeflinemarkup
+(prin1-to-string exp)
+\nwused{\\{NW1BD1Gb-1p0Y9w-2}}\nwendcode{}\nwbegindocs{5}\nwdocspar
+\end{marginfigure}
+
+First, create a string representation of \lsp{exp}, with escape characters
+written where appropriate, via \gls{prin1-to-string}.
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{6}\sublabel{NW1BD1Gb-3IG3EY-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-3IG3EY-1}}}\moddef{is not alphanumeric~{\nwtagstyle{}\subpageref{NW1BD1Gb-3IG3EY-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW1BD1Gb-1p0Y9w-2}}\nwenddeflinemarkup
+(complement #'alphanumericp)
+\nwused{\\{NW1BD1Gb-1p0Y9w-2}}\nwendcode{}\nwbegindocs{7}\nwdocspar
+
+\nwenddocs{}\nwbegincode{8}\sublabel{NW1BD1Gb-mDrgi-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-mDrgi-1}}}\moddef{an underscore~{\nwtagstyle{}\subpageref{NW1BD1Gb-mDrgi-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW1BD1Gb-1p0Y9w-2}}\nwenddeflinemarkup
+#\\_
+\nwused{\\{NW1BD1Gb-1p0Y9w-2}}\nwendcode{}\nwbegindocs{9}\nwdocspar
+\end{marginfigure}
+
+
+Then replace each character that {\Tt{}\LA{}is not alphanumeric~{\nwtagstyle{}\subpageref{NW1BD1Gb-3IG3EY-1}}\RA{}\nwendquote}
+with {\Tt{}\LA{}an underscore~{\nwtagstyle{}\subpageref{NW1BD1Gb-mDrgi-1}}\RA{}\nwendquote}.
+
+\nwenddocs{}\nwbegincode{10}\sublabel{NW1BD1Gb-1p0Y9w-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-2}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-1}{NW1BD1Gb-1p0Y9w-3}\nwenddeflinemarkup
 (defun \nwlinkedidentc{dot-name}{NW1BD1Gb-1p0Y9w-2} (exp)\nwindexdefn{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-2}
-  (substitute-if #\\_ (complement #'alphanumericp) (prin1-to-string exp)))
+  (substitute-if \LA{}an underscore~{\nwtagstyle{}\subpageref{NW1BD1Gb-mDrgi-1}}\RA{} \LA{}is not alphanumeric~{\nwtagstyle{}\subpageref{NW1BD1Gb-3IG3EY-1}}\RA{} \LA{}\lsp{exp} as a string~{\nwtagstyle{}\subpageref{NW1BD1Gb-22tgFG-1}}\RA{}))
 
 
-\nwidentdefs{\\{{\nwixident{dot-name}}{dot-name}}}\nwendcode{}\nwbegindocs{5}\nwdocspar
+\nwidentdefs{\\{{\nwixident{dot-name}}{dot-name}}}\nwendcode{}\nwbegindocs{11}\nwdocspar
 
 
 \section{Adding Labels to Graph Nodes}
 
-\nwenddocs{}\nwbegincode{6}\sublabel{NW1BD1Gb-1p0Y9w-3}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-3}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-2}{NW1BD1Gb-1p0Y9w-4}\nwenddeflinemarkup
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{12}\sublabel{NW1BD1Gb-2jGWLX-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-2jGWLX-1}}}\moddef{create a string representation of \lsp{exp}~{\nwtagstyle{}\subpageref{NW1BD1Gb-2jGWLX-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW1BD1Gb-1p0Y9w-3}}\nwenddeflinemarkup
+(write-to-string exp :pretty nil)
+\nwused{\\{NW1BD1Gb-1p0Y9w-3}}\nwendcode{}\nwbegindocs{13}\nwdocspar
+
+\nwenddocs{}\nwbegincode{14}\sublabel{NW1BD1Gb-2vw4T5-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-2vw4T5-1}}}\moddef{otherwise return the empty string~{\nwtagstyle{}\subpageref{NW1BD1Gb-2vw4T5-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW1BD1Gb-1p0Y9w-3}}\nwenddeflinemarkup
+""
+\nwused{\\{NW1BD1Gb-1p0Y9w-3}}\nwendcode{}\nwbegindocs{15}\nwdocspar
+\end{marginfigure}
+
+\nwenddocs{}\nwbegincode{16}\sublabel{NW1BD1Gb-1p0Y9w-3}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-3}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-2}{NW1BD1Gb-1p0Y9w-4}\nwenddeflinemarkup
 (defparameter \nwlinkedidentc{*max-label-length*}{NW1BD1Gb-1p0Y9w-3} 30)\nwindexdefn{\nwixident{*max-label-length*}}{*max-label-length*}{NW1BD1Gb-1p0Y9w-3}
 
 (defun \nwlinkedidentc{dot-label}{NW1BD1Gb-1p0Y9w-3} (exp)\nwindexdefn{\nwixident{dot-label}}{dot-label}{NW1BD1Gb-1p0Y9w-3}
   (if exp
-      (let ((s (write-to-string exp :pretty nil)))
-        (if (> (length s) \nwlinkedidentc{*max-label-length*}{NW1BD1Gb-1p0Y9w-3})
-            (concatenate 'string (subseq s 0 (- \nwlinkedidentc{*max-label-length*}{NW1BD1Gb-1p0Y9w-3} 3)) "...")
-            s))
-      ""))
+      (let ((s \LA{}create a string representation of \lsp{exp}~{\nwtagstyle{}\subpageref{NW1BD1Gb-2jGWLX-1}}\RA{}))
+        \LA{}Truncate \lsp{s} if it's too long.~{\nwtagstyle{}\subpageref{NW1BD1Gb-1YmlrA-1}}\RA{})
+      \LA{}otherwise return the empty string~{\nwtagstyle{}\subpageref{NW1BD1Gb-2vw4T5-1}}\RA{}))
 
 
-\nwidentdefs{\\{{\nwixident{*max-label-length*}}{*max-label-length*}}\\{{\nwixident{dot-label}}{dot-label}}}\nwendcode{}\nwbegindocs{7}\nwdocspar
+\nwidentdefs{\\{{\nwixident{*max-label-length*}}{*max-label-length*}}\\{{\nwixident{dot-label}}{dot-label}}}\nwendcode{}\nwbegindocs{17}\nwdocspar
+
+\begin{marginfigure}
+\nwenddocs{}\nwbegincode{18}\sublabel{NW1BD1Gb-2fuoXy-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-2fuoXy-1}}}\moddef{\lsp{s} is too long~{\nwtagstyle{}\subpageref{NW1BD1Gb-2fuoXy-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW1BD1Gb-1YmlrA-1}}\nwenddeflinemarkup
+(> (length s) \nwlinkedidentc{*max-label-length*}{NW1BD1Gb-1p0Y9w-3})
+\nwused{\\{NW1BD1Gb-1YmlrA-1}}\nwidentuses{\\{{\nwixident{*max-label-length*}}{*max-label-length*}}}\nwindexuse{\nwixident{*max-label-length*}}{*max-label-length*}{NW1BD1Gb-2fuoXy-1}\nwendcode{}\nwbegindocs{19}\nwdocspar
+
+\nwenddocs{}\nwbegincode{20}\sublabel{NW1BD1Gb-2a7GNu-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-2a7GNu-1}}}\moddef{truncate \lsp{s}~{\nwtagstyle{}\subpageref{NW1BD1Gb-2a7GNu-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW1BD1Gb-1YmlrA-1}}\nwenddeflinemarkup
+(subseq s 0 (- \nwlinkedidentc{*max-label-length*}{NW1BD1Gb-1p0Y9w-3} 3))
+\nwused{\\{NW1BD1Gb-1YmlrA-1}}\nwidentuses{\\{{\nwixident{*max-label-length*}}{*max-label-length*}}}\nwindexuse{\nwixident{*max-label-length*}}{*max-label-length*}{NW1BD1Gb-2a7GNu-1}\nwendcode{}\nwbegindocs{21}\nwdocspar
+\end{marginfigure}
+
+If {\Tt{}\LA{}\lsp{s} is too long~{\nwtagstyle{}\subpageref{NW1BD1Gb-2fuoXy-1}}\RA{}\nwendquote}, i.e. more than {\Tt{}\nwlinkedidentq{*max-label-length*}{NW1BD1Gb-1p0Y9w-3}\nwendquote} long,
+\newline \noindent {\Tt{}\LA{}truncate \lsp{s}~{\nwtagstyle{}\subpageref{NW1BD1Gb-2a7GNu-1}}\RA{}\nwendquote} and append \lsp{"..."}.
+
+\nwenddocs{}\nwbegincode{22}\sublabel{NW1BD1Gb-1YmlrA-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1YmlrA-1}}}\moddef{Truncate \lsp{s} if it's too long.~{\nwtagstyle{}\subpageref{NW1BD1Gb-1YmlrA-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW1BD1Gb-1p0Y9w-3}}\nwenddeflinemarkup
+(if \LA{}\lsp{s} is too long~{\nwtagstyle{}\subpageref{NW1BD1Gb-2fuoXy-1}}\RA{}
+    (concatenate 'string \LA{}truncate \lsp{s}~{\nwtagstyle{}\subpageref{NW1BD1Gb-2a7GNu-1}}\RA{} "...")
+    s)
+\nwused{\\{NW1BD1Gb-1p0Y9w-3}}\nwendcode{}\nwbegindocs{23}\nwdocspar
 
 
 \section{Generating the DOT Information for the Nodes}
 
-\nwenddocs{}\nwbegincode{8}\sublabel{NW1BD1Gb-1p0Y9w-4}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-4}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-3}{NW1BD1Gb-1p0Y9w-5}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{24}\sublabel{NW1BD1Gb-1p0Y9w-4}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-4}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-3}{NW1BD1Gb-1p0Y9w-5}\nwenddeflinemarkup
 (defun \nwlinkedidentc{nodes->dot}{NW1BD1Gb-1p0Y9w-4} (nodes)\nwindexdefn{\nwixident{nodes->dot}}{nodes->dot}{NW1BD1Gb-1p0Y9w-4}
   (mapc (lambda (node)
           (fresh-line)
@@ -94,12 +144,12 @@
         nodes))
 
 
-\nwidentdefs{\\{{\nwixident{nodes->dot}}{nodes->dot}}}\nwidentuses{\\{{\nwixident{dot-label}}{dot-label}}\\{{\nwixident{dot-name}}{dot-name}}}\nwindexuse{\nwixident{dot-label}}{dot-label}{NW1BD1Gb-1p0Y9w-4}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-4}\nwendcode{}\nwbegindocs{9}\nwdocspar
+\nwidentdefs{\\{{\nwixident{nodes->dot}}{nodes->dot}}}\nwidentuses{\\{{\nwixident{dot-label}}{dot-label}}\\{{\nwixident{dot-name}}{dot-name}}}\nwindexuse{\nwixident{dot-label}}{dot-label}{NW1BD1Gb-1p0Y9w-4}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-4}\nwendcode{}\nwbegindocs{25}\nwdocspar
 
 
 \section{Converting Edges into DOT Format}
 
-\nwenddocs{}\nwbegincode{10}\sublabel{NW1BD1Gb-1p0Y9w-5}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-5}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-4}{NW1BD1Gb-1p0Y9w-6}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{26}\sublabel{NW1BD1Gb-1p0Y9w-5}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-5}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-4}{NW1BD1Gb-1p0Y9w-6}\nwenddeflinemarkup
 (defun \nwlinkedidentc{edges->dot}{NW1BD1Gb-1p0Y9w-5} (edges)\nwindexdefn{\nwixident{edges->dot}}{edges->dot}{NW1BD1Gb-1p0Y9w-5}
   (mapc (lambda (node)
           (mapc (lambda (edge)
@@ -114,12 +164,12 @@
         edges))
 
 
-\nwidentdefs{\\{{\nwixident{edges->dot}}{edges->dot}}}\nwidentuses{\\{{\nwixident{dot-label}}{dot-label}}\\{{\nwixident{dot-name}}{dot-name}}}\nwindexuse{\nwixident{dot-label}}{dot-label}{NW1BD1Gb-1p0Y9w-5}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-5}\nwendcode{}\nwbegindocs{11}\nwdocspar
+\nwidentdefs{\\{{\nwixident{edges->dot}}{edges->dot}}}\nwidentuses{\\{{\nwixident{dot-label}}{dot-label}}\\{{\nwixident{dot-name}}{dot-name}}}\nwindexuse{\nwixident{dot-label}}{dot-label}{NW1BD1Gb-1p0Y9w-5}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-5}\nwendcode{}\nwbegindocs{27}\nwdocspar
 
 
 \section{Generating All the DOT Data}
 
-\nwenddocs{}\nwbegincode{12}\sublabel{NW1BD1Gb-1p0Y9w-6}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-6}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-5}{NW1BD1Gb-1p0Y9w-7}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{28}\sublabel{NW1BD1Gb-1p0Y9w-6}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-6}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-5}{NW1BD1Gb-1p0Y9w-7}\nwenddeflinemarkup
 (defun \nwlinkedidentc{graph->dot}{NW1BD1Gb-1p0Y9w-6} (nodes edges)\nwindexdefn{\nwixident{graph->dot}}{graph->dot}{NW1BD1Gb-1p0Y9w-6}
   (princ "digraph\{")
   (\nwlinkedidentc{nodes->dot}{NW1BD1Gb-1p0Y9w-4} nodes)
@@ -127,12 +177,12 @@
   (princ "\}"))
 
 
-\nwidentdefs{\\{{\nwixident{graph->dot}}{graph->dot}}}\nwidentuses{\\{{\nwixident{edges->dot}}{edges->dot}}\\{{\nwixident{nodes->dot}}{nodes->dot}}}\nwindexuse{\nwixident{edges->dot}}{edges->dot}{NW1BD1Gb-1p0Y9w-6}\nwindexuse{\nwixident{nodes->dot}}{nodes->dot}{NW1BD1Gb-1p0Y9w-6}\nwendcode{}\nwbegindocs{13}\nwdocspar
+\nwidentdefs{\\{{\nwixident{graph->dot}}{graph->dot}}}\nwidentuses{\\{{\nwixident{edges->dot}}{edges->dot}}\\{{\nwixident{nodes->dot}}{nodes->dot}}}\nwindexuse{\nwixident{edges->dot}}{edges->dot}{NW1BD1Gb-1p0Y9w-6}\nwindexuse{\nwixident{nodes->dot}}{nodes->dot}{NW1BD1Gb-1p0Y9w-6}\nwendcode{}\nwbegindocs{29}\nwdocspar
 
 
 \section{Turning the DOT File into a Picture}
 
-\nwenddocs{}\nwbegincode{14}\sublabel{NW1BD1Gb-1p0Y9w-7}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-7}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-6}{NW1BD1Gb-1p0Y9w-8}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{30}\sublabel{NW1BD1Gb-1p0Y9w-7}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-7}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-6}{NW1BD1Gb-1p0Y9w-8}\nwenddeflinemarkup
 (defun \nwlinkedidentc{dot->png}{NW1BD1Gb-1p0Y9w-7} (fname thunk)\nwindexdefn{\nwixident{dot->png}}{dot->png}{NW1BD1Gb-1p0Y9w-7}
   (with-open-file (*standard-output*
                    fname
@@ -142,23 +192,65 @@
   (uiop:run-program (concatenate 'string "dot -Tpng -O " fname)))
 
 
-\nwidentdefs{\\{{\nwixident{dot->png}}{dot->png}}}\nwendcode{}\nwbegindocs{15}\nwdocspar
+\nwidentdefs{\\{{\nwixident{dot->png}}{dot->png}}}\nwendcode{}\nwbegindocs{31}\nwdocspar
 
 
 \section{Creating a Picture of Our Graph}
 
-\nwenddocs{}\nwbegincode{16}\sublabel{NW1BD1Gb-1p0Y9w-8}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-8}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-7}{\relax}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{32}\sublabel{NW1BD1Gb-1p0Y9w-8}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-8}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-7}{NW1BD1Gb-1p0Y9w-9}\nwenddeflinemarkup
 (defun \nwlinkedidentc{graph->png}{NW1BD1Gb-1p0Y9w-8} (fname nodes edges)\nwindexdefn{\nwixident{graph->png}}{graph->png}{NW1BD1Gb-1p0Y9w-8}
   (\nwlinkedidentc{dot->png}{NW1BD1Gb-1p0Y9w-7} fname
             (lambda ()
               (\nwlinkedidentc{graph->dot}{NW1BD1Gb-1p0Y9w-6} nodes edges))))
 
 
-\nwidentdefs{\\{{\nwixident{graph->png}}{graph->png}}}\nwidentuses{\\{{\nwixident{dot->png}}{dot->png}}\\{{\nwixident{graph->dot}}{graph->dot}}}\nwindexuse{\nwixident{dot->png}}{dot->png}{NW1BD1Gb-1p0Y9w-8}\nwindexuse{\nwixident{graph->dot}}{graph->dot}{NW1BD1Gb-1p0Y9w-8}\nwendcode{}\nwbegindocs{17}\nwdocspar
+\nwidentdefs{\\{{\nwixident{graph->png}}{graph->png}}}\nwidentuses{\\{{\nwixident{dot->png}}{dot->png}}\\{{\nwixident{graph->dot}}{graph->dot}}}\nwindexuse{\nwixident{dot->png}}{dot->png}{NW1BD1Gb-1p0Y9w-8}\nwindexuse{\nwixident{graph->dot}}{graph->dot}{NW1BD1Gb-1p0Y9w-8}\nwendcode{}\nwbegindocs{33}\nwdocspar
+
+
+\section{Creating Undirected Graphs}
+
+\nwenddocs{}\nwbegincode{34}\sublabel{NW1BD1Gb-1p0Y9w-9}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-9}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-8}{\relax}\nwenddeflinemarkup
+(defun \nwlinkedidentc{uedges->dot}{NW1BD1Gb-1p0Y9w-9} (edges)\nwindexdefn{\nwixident{uedges->dot}}{uedges->dot}{NW1BD1Gb-1p0Y9w-9}
+  (maplist (lambda (lst)
+             (mapc (lambda (edge)
+                     (unless (assoc (car edge) (cdr lst))
+                       (fresh-line)
+                       (princ (\nwlinkedidentc{dot-name}{NW1BD1Gb-1p0Y9w-2} (caar lst)))
+                       (princ "--")
+                       (princ (\nwlinkedidentc{dot-name}{NW1BD1Gb-1p0Y9w-2} (car edge)))
+                       (princ "[label=\\"")
+                       (princ (\nwlinkedidentc{dot-label}{NW1BD1Gb-1p0Y9w-3} (cdr edge)))
+                       (princ "\\"];")))
+                   (cdar lst)))
+           edges))
+
+
+(defun \nwlinkedidentc{ugraph->dot}{NW1BD1Gb-1p0Y9w-9} (nodes edges)\nwindexdefn{\nwixident{ugraph->dot}}{ugraph->dot}{NW1BD1Gb-1p0Y9w-9}
+  (princ "graph\{")
+  (\nwlinkedidentc{nodes->dot}{NW1BD1Gb-1p0Y9w-4} nodes)
+  (\nwlinkedidentc{edges->dot}{NW1BD1Gb-1p0Y9w-5} edges)
+  (princ "\}"))
+
+
+(defun \nwlinkedidentc{ugraph->png}{NW1BD1Gb-1p0Y9w-9} (fname nodes edges)\nwindexdefn{\nwixident{ugraph->png}}{ugraph->png}{NW1BD1Gb-1p0Y9w-9}
+  (\nwlinkedidentc{dot->png}{NW1BD1Gb-1p0Y9w-7} fname
+            (lambda ()
+              (\nwlinkedidentc{ugraph->dot}{NW1BD1Gb-1p0Y9w-9} nodes edges))))
+\nwidentdefs{\\{{\nwixident{uedges->dot}}{uedges->dot}}\\{{\nwixident{ugraph->dot}}{ugraph->dot}}\\{{\nwixident{ugraph->png}}{ugraph->png}}}\nwidentuses{\\{{\nwixident{dot->png}}{dot->png}}\\{{\nwixident{dot-label}}{dot-label}}\\{{\nwixident{dot-name}}{dot-name}}\\{{\nwixident{edges->dot}}{edges->dot}}\\{{\nwixident{nodes->dot}}{nodes->dot}}}\nwindexuse{\nwixident{dot->png}}{dot->png}{NW1BD1Gb-1p0Y9w-9}\nwindexuse{\nwixident{dot-label}}{dot-label}{NW1BD1Gb-1p0Y9w-9}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-9}\nwindexuse{\nwixident{edges->dot}}{edges->dot}{NW1BD1Gb-1p0Y9w-9}\nwindexuse{\nwixident{nodes->dot}}{nodes->dot}{NW1BD1Gb-1p0Y9w-9}\nwendcode{}\nwbegindocs{35}\nwdocspar
+
+
+\newpage
+\section{Full Listing}
+
+\inputminted[linenos,firstline=1,lastline=44,fontsize=\small]{lisp}{graphviz.lisp}
+
+\newpage
+\inputminted[linenos,firstline=47,fontsize=\small]{lisp}{graphviz.lisp}
+
 
 \section{Tests}
 
-\nwenddocs{}\nwbegincode{18}\sublabel{NW1BD1Gb-BTTjt-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-BTTjt-1}}}\moddef{test/graphviz.lisp~{\nwtagstyle{}\subpageref{NW1BD1Gb-BTTjt-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{36}\sublabel{NW1BD1Gb-BTTjt-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-BTTjt-1}}}\moddef{test/graphviz.lisp~{\nwtagstyle{}\subpageref{NW1BD1Gb-BTTjt-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 (in-package :\nwlinkedidentc{lol.graphviz}{NW1BD1Gb-1p0Y9w-1})
 
 
@@ -177,8 +269,16 @@
 (finalize)
 \nwnotused{test/graphviz.lisp}\nwidentuses{\\{{\nwixident{dot-name}}{dot-name}}\\{{\nwixident{lol.graphviz}}{lol.graphviz}}}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-BTTjt-1}\nwindexuse{\nwixident{lol.graphviz}}{lol.graphviz}{NW1BD1Gb-BTTjt-1}\nwendcode{}
 
-\nwixlogsorted{c}{{*}{NW1BD1Gb-1p0Y9w-1}{\nwixd{NW1BD1Gb-1p0Y9w-1}\nwixd{NW1BD1Gb-1p0Y9w-2}\nwixd{NW1BD1Gb-1p0Y9w-3}\nwixd{NW1BD1Gb-1p0Y9w-4}\nwixd{NW1BD1Gb-1p0Y9w-5}\nwixd{NW1BD1Gb-1p0Y9w-6}\nwixd{NW1BD1Gb-1p0Y9w-7}\nwixd{NW1BD1Gb-1p0Y9w-8}}}%
+\nwixlogsorted{c}{{*}{NW1BD1Gb-1p0Y9w-1}{\nwixd{NW1BD1Gb-1p0Y9w-1}\nwixd{NW1BD1Gb-1p0Y9w-2}\nwixd{NW1BD1Gb-1p0Y9w-3}\nwixd{NW1BD1Gb-1p0Y9w-4}\nwixd{NW1BD1Gb-1p0Y9w-5}\nwixd{NW1BD1Gb-1p0Y9w-6}\nwixd{NW1BD1Gb-1p0Y9w-7}\nwixd{NW1BD1Gb-1p0Y9w-8}\nwixd{NW1BD1Gb-1p0Y9w-9}}}%
+\nwixlogsorted{c}{{\lsp{exp} as a string}{NW1BD1Gb-22tgFG-1}{\nwixd{NW1BD1Gb-22tgFG-1}\nwixu{NW1BD1Gb-1p0Y9w-2}}}%
+\nwixlogsorted{c}{{\lsp{s} is too long}{NW1BD1Gb-2fuoXy-1}{\nwixd{NW1BD1Gb-2fuoXy-1}\nwixu{NW1BD1Gb-1YmlrA-1}}}%
+\nwixlogsorted{c}{{an underscore}{NW1BD1Gb-mDrgi-1}{\nwixd{NW1BD1Gb-mDrgi-1}\nwixu{NW1BD1Gb-1p0Y9w-2}}}%
+\nwixlogsorted{c}{{create a string representation of \lsp{exp}}{NW1BD1Gb-2jGWLX-1}{\nwixd{NW1BD1Gb-2jGWLX-1}\nwixu{NW1BD1Gb-1p0Y9w-3}}}%
+\nwixlogsorted{c}{{is not alphanumeric}{NW1BD1Gb-3IG3EY-1}{\nwixd{NW1BD1Gb-3IG3EY-1}\nwixu{NW1BD1Gb-1p0Y9w-2}}}%
+\nwixlogsorted{c}{{otherwise return the empty string}{NW1BD1Gb-2vw4T5-1}{\nwixd{NW1BD1Gb-2vw4T5-1}\nwixu{NW1BD1Gb-1p0Y9w-3}}}%
 \nwixlogsorted{c}{{test/graphviz.lisp}{NW1BD1Gb-BTTjt-1}{\nwixd{NW1BD1Gb-BTTjt-1}}}%
+\nwixlogsorted{c}{{truncate \lsp{s}}{NW1BD1Gb-2a7GNu-1}{\nwixd{NW1BD1Gb-2a7GNu-1}\nwixu{NW1BD1Gb-1YmlrA-1}}}%
+\nwixlogsorted{c}{{Truncate \lsp{s} if it's too long.}{NW1BD1Gb-1YmlrA-1}{\nwixu{NW1BD1Gb-1p0Y9w-3}\nwixd{NW1BD1Gb-1YmlrA-1}}}%
 \nwixlogsorted{i}{{\nwixident{*max-label-length*}}{*max-label-length*}}%
 \nwixlogsorted{i}{{\nwixident{dot->png}}{dot->png}}%
 \nwixlogsorted{i}{{\nwixident{dot-label}}{dot-label}}%
@@ -188,7 +288,11 @@
 \nwixlogsorted{i}{{\nwixident{graph->png}}{graph->png}}%
 \nwixlogsorted{i}{{\nwixident{lol.graphviz}}{lol.graphviz}}%
 \nwixlogsorted{i}{{\nwixident{nodes->dot}}{nodes->dot}}%
-\nwbegindocs{19}\nwdocspar
+\nwixlogsorted{i}{{\nwixident{uedges->dot}}{uedges->dot}}%
+\nwixlogsorted{i}{{\nwixident{ugraph->dot}}{ugraph->dot}}%
+\nwixlogsorted{i}{{\nwixident{ugraph->png}}{ugraph->png}}%
+\nwbegindocs{37}\nwdocspar
+
 
 % \section{Index}
 % \nowebindex
@@ -197,6 +301,7 @@
 % \newpage
 % \section{Chunks}
 % \nowebchunks
+
 
 \newpage
 \printglossaries
