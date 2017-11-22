@@ -64,5 +64,3 @@
   (dot->png fname
             (lambda ()
               (graph->dot nodes edges))))
-
-
