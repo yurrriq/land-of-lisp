@@ -10,7 +10,7 @@
 \hypersetup{
   pdffitwindow=true,
   pdfstartview={FitH},
-  pdftitle={Pudding Eater},
+  pdftitle={Visualizing Graph Data},
   pdfauthor={Eric Bailey <eric@ericb.me>},
   pdfsubject={Land of Lisp: Chapter 7},
   pdfkeywords={Lisp, Graphviz, literate programming, noweb},
@@ -20,7 +20,7 @@
 }
 
 \title{%
-  Pudding Eater
+  Visualizing Graph Data
   \thanks{\cite{barski2010land-ch7}}
 }
 
@@ -50,10 +50,10 @@
 \end{marginfigure}
 
 
-% \tableofcontents
-% \newpage
+\tableofcontents
 
 
+\newpage
 \section{Converting Node Identifiers}
 
 \begin{marginfigure}
