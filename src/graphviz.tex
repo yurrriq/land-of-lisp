@@ -47,7 +47,7 @@
 
 
 \nwindexdefn{\nwixident{lol.graphviz}}{lol.graphviz}{NW1BD1Gb-1p0Y9w-1}\eatline
-\nwalsodefined{\\{NW1BD1Gb-1p0Y9w-2}\\{NW1BD1Gb-1p0Y9w-3}\\{NW1BD1Gb-1p0Y9w-4}\\{NW1BD1Gb-1p0Y9w-5}\\{NW1BD1Gb-1p0Y9w-6}\\{NW1BD1Gb-1p0Y9w-7}\\{NW1BD1Gb-1p0Y9w-8}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.graphviz}}{lol.graphviz}}}\nwidentuses{\\{{\nwixident{dot-name}}{dot-name}}}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-1}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
+\nwalsodefined{\\{NW1BD1Gb-1p0Y9w-2}\\{NW1BD1Gb-1p0Y9w-3}\\{NW1BD1Gb-1p0Y9w-4}\\{NW1BD1Gb-1p0Y9w-5}\\{NW1BD1Gb-1p0Y9w-6}\\{NW1BD1Gb-1p0Y9w-7}\\{NW1BD1Gb-1p0Y9w-8}\\{NW1BD1Gb-1p0Y9w-9}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.graphviz}}{lol.graphviz}}}\nwidentuses{\\{{\nwixident{dot-name}}{dot-name}}}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-1}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
 
 
 % \tableofcontents
@@ -197,16 +197,60 @@ If {\Tt{}\LA{}\lsp{s} is too long~{\nwtagstyle{}\subpageref{NW1BD1Gb-2fuoXy-1}}\
 
 \section{Creating a Picture of Our Graph}
 
-\nwenddocs{}\nwbegincode{32}\sublabel{NW1BD1Gb-1p0Y9w-8}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-8}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-7}{\relax}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{32}\sublabel{NW1BD1Gb-1p0Y9w-8}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-8}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-7}{NW1BD1Gb-1p0Y9w-9}\nwenddeflinemarkup
 (defun \nwlinkedidentc{graph->png}{NW1BD1Gb-1p0Y9w-8} (fname nodes edges)\nwindexdefn{\nwixident{graph->png}}{graph->png}{NW1BD1Gb-1p0Y9w-8}
   (\nwlinkedidentc{dot->png}{NW1BD1Gb-1p0Y9w-7} fname
             (lambda ()
               (\nwlinkedidentc{graph->dot}{NW1BD1Gb-1p0Y9w-6} nodes edges))))
+
+
 \nwidentdefs{\\{{\nwixident{graph->png}}{graph->png}}}\nwidentuses{\\{{\nwixident{dot->png}}{dot->png}}\\{{\nwixident{graph->dot}}{graph->dot}}}\nwindexuse{\nwixident{dot->png}}{dot->png}{NW1BD1Gb-1p0Y9w-8}\nwindexuse{\nwixident{graph->dot}}{graph->dot}{NW1BD1Gb-1p0Y9w-8}\nwendcode{}\nwbegindocs{33}\nwdocspar
+
+
+\section{Creating Undirected Graphs}
+
+\nwenddocs{}\nwbegincode{34}\sublabel{NW1BD1Gb-1p0Y9w-9}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-9}}}\moddef{*~{\nwtagstyle{}\subpageref{NW1BD1Gb-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW1BD1Gb-1p0Y9w-8}{\relax}\nwenddeflinemarkup
+(defun \nwlinkedidentc{uedges->dot}{NW1BD1Gb-1p0Y9w-9} (edges)\nwindexdefn{\nwixident{uedges->dot}}{uedges->dot}{NW1BD1Gb-1p0Y9w-9}
+  (maplist (lambda (lst)
+             (mapc (lambda (edge)
+                     (unless (assoc (car edge) (cdr lst))
+                       (fresh-line)
+                       (princ (\nwlinkedidentc{dot-name}{NW1BD1Gb-1p0Y9w-2} (caar lst)))
+                       (princ "--")
+                       (princ (\nwlinkedidentc{dot-name}{NW1BD1Gb-1p0Y9w-2} (car edge)))
+                       (princ "[label=\\"")
+                       (princ (\nwlinkedidentc{dot-label}{NW1BD1Gb-1p0Y9w-3} (cdr edge)))
+                       (princ "\\"];")))
+                   (cdar lst)))
+           edges))
+
+
+(defun \nwlinkedidentc{ugraph->dot}{NW1BD1Gb-1p0Y9w-9} (nodes edges)\nwindexdefn{\nwixident{ugraph->dot}}{ugraph->dot}{NW1BD1Gb-1p0Y9w-9}
+  (princ "graph\{")
+  (\nwlinkedidentc{nodes->dot}{NW1BD1Gb-1p0Y9w-4} nodes)
+  (\nwlinkedidentc{edges->dot}{NW1BD1Gb-1p0Y9w-5} edges)
+  (princ "\}"))
+
+
+(defun \nwlinkedidentc{ugraph->png}{NW1BD1Gb-1p0Y9w-9} (fname nodes edges)\nwindexdefn{\nwixident{ugraph->png}}{ugraph->png}{NW1BD1Gb-1p0Y9w-9}
+  (\nwlinkedidentc{dot->png}{NW1BD1Gb-1p0Y9w-7} fname
+            (lambda ()
+              (\nwlinkedidentc{ugraph->dot}{NW1BD1Gb-1p0Y9w-9} nodes edges))))
+\nwidentdefs{\\{{\nwixident{uedges->dot}}{uedges->dot}}\\{{\nwixident{ugraph->dot}}{ugraph->dot}}\\{{\nwixident{ugraph->png}}{ugraph->png}}}\nwidentuses{\\{{\nwixident{dot->png}}{dot->png}}\\{{\nwixident{dot-label}}{dot-label}}\\{{\nwixident{dot-name}}{dot-name}}\\{{\nwixident{edges->dot}}{edges->dot}}\\{{\nwixident{nodes->dot}}{nodes->dot}}}\nwindexuse{\nwixident{dot->png}}{dot->png}{NW1BD1Gb-1p0Y9w-9}\nwindexuse{\nwixident{dot-label}}{dot-label}{NW1BD1Gb-1p0Y9w-9}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-1p0Y9w-9}\nwindexuse{\nwixident{edges->dot}}{edges->dot}{NW1BD1Gb-1p0Y9w-9}\nwindexuse{\nwixident{nodes->dot}}{nodes->dot}{NW1BD1Gb-1p0Y9w-9}\nwendcode{}\nwbegindocs{35}\nwdocspar
+
+
+\newpage
+\section{Full Listing}
+
+\inputminted[linenos,firstline=1,lastline=44,fontsize=\small]{lisp}{graphviz.lisp}
+
+\newpage
+\inputminted[linenos,firstline=47,fontsize=\small]{lisp}{graphviz.lisp}
+
 
 \section{Tests}
 
-\nwenddocs{}\nwbegincode{34}\sublabel{NW1BD1Gb-BTTjt-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-BTTjt-1}}}\moddef{test/graphviz.lisp~{\nwtagstyle{}\subpageref{NW1BD1Gb-BTTjt-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{36}\sublabel{NW1BD1Gb-BTTjt-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW1BD1Gb-BTTjt-1}}}\moddef{test/graphviz.lisp~{\nwtagstyle{}\subpageref{NW1BD1Gb-BTTjt-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 (in-package :\nwlinkedidentc{lol.graphviz}{NW1BD1Gb-1p0Y9w-1})
 
 
@@ -225,7 +269,7 @@ If {\Tt{}\LA{}\lsp{s} is too long~{\nwtagstyle{}\subpageref{NW1BD1Gb-2fuoXy-1}}\
 (finalize)
 \nwnotused{test/graphviz.lisp}\nwidentuses{\\{{\nwixident{dot-name}}{dot-name}}\\{{\nwixident{lol.graphviz}}{lol.graphviz}}}\nwindexuse{\nwixident{dot-name}}{dot-name}{NW1BD1Gb-BTTjt-1}\nwindexuse{\nwixident{lol.graphviz}}{lol.graphviz}{NW1BD1Gb-BTTjt-1}\nwendcode{}
 
-\nwixlogsorted{c}{{*}{NW1BD1Gb-1p0Y9w-1}{\nwixd{NW1BD1Gb-1p0Y9w-1}\nwixd{NW1BD1Gb-1p0Y9w-2}\nwixd{NW1BD1Gb-1p0Y9w-3}\nwixd{NW1BD1Gb-1p0Y9w-4}\nwixd{NW1BD1Gb-1p0Y9w-5}\nwixd{NW1BD1Gb-1p0Y9w-6}\nwixd{NW1BD1Gb-1p0Y9w-7}\nwixd{NW1BD1Gb-1p0Y9w-8}}}%
+\nwixlogsorted{c}{{*}{NW1BD1Gb-1p0Y9w-1}{\nwixd{NW1BD1Gb-1p0Y9w-1}\nwixd{NW1BD1Gb-1p0Y9w-2}\nwixd{NW1BD1Gb-1p0Y9w-3}\nwixd{NW1BD1Gb-1p0Y9w-4}\nwixd{NW1BD1Gb-1p0Y9w-5}\nwixd{NW1BD1Gb-1p0Y9w-6}\nwixd{NW1BD1Gb-1p0Y9w-7}\nwixd{NW1BD1Gb-1p0Y9w-8}\nwixd{NW1BD1Gb-1p0Y9w-9}}}%
 \nwixlogsorted{c}{{\lsp{exp} as a string}{NW1BD1Gb-22tgFG-1}{\nwixd{NW1BD1Gb-22tgFG-1}\nwixu{NW1BD1Gb-1p0Y9w-2}}}%
 \nwixlogsorted{c}{{\lsp{s} is too long}{NW1BD1Gb-2fuoXy-1}{\nwixd{NW1BD1Gb-2fuoXy-1}\nwixu{NW1BD1Gb-1YmlrA-1}}}%
 \nwixlogsorted{c}{{an underscore}{NW1BD1Gb-mDrgi-1}{\nwixd{NW1BD1Gb-mDrgi-1}\nwixu{NW1BD1Gb-1p0Y9w-2}}}%
@@ -244,7 +288,10 @@ If {\Tt{}\LA{}\lsp{s} is too long~{\nwtagstyle{}\subpageref{NW1BD1Gb-2fuoXy-1}}\
 \nwixlogsorted{i}{{\nwixident{graph->png}}{graph->png}}%
 \nwixlogsorted{i}{{\nwixident{lol.graphviz}}{lol.graphviz}}%
 \nwixlogsorted{i}{{\nwixident{nodes->dot}}{nodes->dot}}%
-\nwbegindocs{35}\nwdocspar
+\nwixlogsorted{i}{{\nwixident{uedges->dot}}{uedges->dot}}%
+\nwixlogsorted{i}{{\nwixident{ugraph->dot}}{ugraph->dot}}%
+\nwixlogsorted{i}{{\nwixident{ugraph->png}}{ugraph->png}}%
+\nwbegindocs{37}\nwdocspar
 
 
 % \section{Index}
