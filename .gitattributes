@@ -1,5 +1,6 @@
 src/lol.bib linguist-documentation
 src/glossary.tex linguist-documentation
+src/preamble.tex linguist-documentation
 src/guess.tex linguist-generated
 src/pudding.tex linguist-generated
 src/wizard5.tex linguist-generated
