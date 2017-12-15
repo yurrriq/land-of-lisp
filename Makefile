@@ -35,6 +35,7 @@ test/%.lisp: src/%.nw
 
 # TODO
 test/wizard6.lisp: ; true
+test/wumpus.lisp: ; true
 
 
 docs: ${DOCS_SRCS}

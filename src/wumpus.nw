@@ -1,0 +1,321 @@
+% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
+\documentclass{tufte-handout}
+
+\input{preamble.tex}
+
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+
+\hypersetup{
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={Grand Theft Wumpus}
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 8},
+  pdfkeywords={Lisp, game, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\title{%
+  Grand Theft Wumpus
+  \thanks{\cite{barski2010land-ch8}}
+}
+
+\date{%
+  December 14, 2017
+  \thanks{Last updated \today}
+}
+
+\begin{document}
+\maketitle
+@
+
+% \begin{abstract}
+% \end{abstract}
+
+\begin{marginfigure}
+\srclink{src/wumpus.lisp}:
+<<*>>=
+(in-package :cl-user)
+(defpackage lol.wumpus
+  (:use :cl :prove))
+(in-package :lol.wumpus)
+
+
+@ %def lol.wumpus
+\end{marginfigure}
+
+
+\tableofcontents
+
+
+\newpage
+\section{Defining the Edges of Congestion City}
+
+\todoo{Load the code from the previous chapter}
+<<*>>=
+;; TODO: (load "graph-util")
+
+
+@
+
+<<*>>=
+(defparameter *congestion-city-nodes* nil)
+(defparameter *congestion-city-edges* nil)
+(defparameter *visited-nodes* nil)
+(defparameter *node-num* 30 )
+(defparameter *edge-num* 45)
+(defparameter *worm-num* 3)
+(defparameter *cop-odds* 15)
+
+
+@
+
+
+\section{Generating Random Edges}
+
+Generate a random number between $1$ and [[*node-num*]].
+<<*>>=
+(defun random-node ()
+  (1+ (random *node-num*)))
+
+
+@
+
+\todoo{Describe edge-pair}
+<<*>>=
+(defun edge-pair (a b)
+  (unless (eql a b)
+    (list (cons a b) (cons b a))))
+
+
+@
+
+\todoo{Describe make-edge-list}
+<<*>>=
+(defun make-edge-list ()
+  (apply #'append (loop repeat *edge-num*
+                        collect (edge-pair (random-node) (random-node)))))
+
+
+@
+
+
+\section{Preventing Islands}
+
+\todoo{Describe direct-edges}
+<<*>>=
+(defun direct-edges (node edge-list)
+  (remove-if-not (lambda (x)
+                   (eql (car x) node))
+                 edge-list))
+
+
+@
+
+\todoo{Describe get-connected}
+<<*>>=
+(defun get-connected (node edge-list)
+  (let ((visited nil))
+    (labels ((traverse (node)
+               (unless (member node visited)
+                 (push node visited)
+                 (mapc (lambda (edge)
+                         (traverse (cdr edge)))
+                       (direct-edges node edge-list)))))
+      (traverse node))
+    visited))
+
+
+@
+
+\todoo{Describe find-islands}
+<<*>>=
+(defun find-islands (nodes edge-list)
+  (let ((islands nil))
+    (labels ((find-island (nodes)
+               (let* ((connected (get-connected (car nodes) edge-list))
+                      (unconnected (set-difference nodes connected)))
+                 (push connected islands)
+                 (when unconnected
+                   (find-island unconnected)))))
+      (find-island nodes))
+    islands))
+
+
+@
+
+\todoo{Describe connect-with-bridges}
+<<*>>=
+(defun connect-with-bridges (islands)
+  (when (cdr islands)
+    (append (edge-pair (caar islands) (caadr islands))
+            (connect-with-bridges (cdr islands)))))
+
+
+@
+
+\todoo{Describe connect-all-islands}
+<<*>>=
+(defun connect-all-islands (nodes edge-list)
+  (append (connect-with-bridges (find-islands nodes edge-list)) edge-list))
+
+
+@
+
+
+\section{Building the Final Edges for Congestion City}
+
+\todoo{Describe make-city-edges}
+<<*>>=
+(defun make-city-edges ()
+  (let* ((nodes (loop for i from 1 to *node-num*
+                      collect i))
+         (edge-list (connect-all-islands nodes (make-edge-list)))
+         (cops (remove-if-not (lambda (x)
+                                (zerop (random *cop-odds*)))
+                              edge-list)))
+    (add-cops (edges-to-alist edge-list) cops)))
+
+
+@
+
+\todoo{Describe edges-to-alist}
+<<*>>=
+(defun edges-to-alist (edge-list)
+  (mapcar (lambda (node1)
+            (cons node1
+                  (mapcar (lambda (edge)
+                            (list (cdr edge)))
+                          (remove-duplicates (direct-edges node1 edge-list)
+                                             :test #'equal))))
+          (remove-duplicates (mapcar #'car edge-list))))
+
+
+@
+
+\todoo{Describe add-cops}
+<<*>>=
+(defun add-cops (edge-alist edges-with-cops)
+  (mapcar (lambda (x)
+            (let ((node1 (car x))
+                  (node1-edges (cdr x)))
+              (cons node1
+                    (mapcar (lambda (edge)
+                              (let ((node2 (car edge)))
+                                (if (intersection (edge-pair node1 node2)
+                                                  edges-with-cops
+                                                  :test #'equal)
+                                    (list node2 'cops)
+                                    edge)))
+                            node1-edges))))
+          edge-alist))
+
+
+@
+
+
+\section{Building the Nodes for Congestion City}
+
+\todoo{Describe neighbors}
+<<*>>=
+(defun neighbors (node edge-alist)
+  (mapcar #'car (cdr (assoc node edge-alist))))
+
+
+@
+
+\todoo{Describe within-one}
+<<*>>=
+(defun within-one (a b edge-alist)
+  (member b (neighbors a edge-alist)))
+
+
+@
+
+\todoo{Describe within-two}
+<<*>>=
+(defun within-two (a b edge-alist)
+  (or (within-one a b edge-alist)
+      (some (lambda (x)
+              (within-one x b edge-alist))
+            (neighbors a edge-alist))))
+
+
+@
+
+\todoo{Describe make-city-nodes}
+<<*>>=
+(defun make-city-nodes (edge-alist)
+  (let ((wumpus (random-node))
+        (glow-worms (loop for i below *worm-num*
+                          collect (random-node))))
+    (loop for n from 1 to *node-num*
+          collect (append (list n)
+                          (cond ((eql n wumpus) '(wumpus))
+                                ((within-two n wumpus edge-alist) '(blood!)))
+                          (cond ((member n glow-worms)
+                                 '(glow-worm))
+                                ((some (lambda (worm)
+                                         (within-one n worm edge-alist))
+                                       glow-worms)
+                                   '(lights!)))
+                          (when (some #'cdr (cdr (assoc n edge-alist)))
+                            '(sirens!))))))
+
+
+@
+
+
+\newpage
+\section{Full Listing}
+
+\inputminted[linenos,firstline=1,lastline=44,fontsize=\small]{lisp}{graphviz.lisp}
+
+\newpage
+\inputminted[linenos,firstline=47,fontsize=\small]{lisp}{graphviz.lisp}
+
+
+\section{Tests}
+
+<<test/graphviz.lisp>>=
+(in-package :lol.graphviz)
+
+
+(plan 1)
+
+
+(subtest "Converting Node Identifiers"
+  (is (dot-name 'living-room)
+      "LIVING_ROOM")
+  (is (dot-name 'foo!)
+      "FOO_")
+  (is (dot-name '24)
+      "24"))
+
+
+(finalize)
+@
+
+
+% \section{Index}
+% \nowebindex
+
+
+% \newpage
+% \section{Chunks}
+% \nowebchunks
+
+
+\newpage
+\printglossaries
+
+
+\setlength{\linewidth}{1.4\textwidth}
+\bibliography{lol}
+\bibliographystyle{plainnat}
+
+\end{document}
