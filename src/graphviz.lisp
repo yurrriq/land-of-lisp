@@ -84,7 +84,7 @@
 (defun ugraph->dot (nodes edges)
   (princ "graph{")
   (nodes->dot nodes)
-  (edges->dot edges)
+  (uedges->dot edges)
   (princ "}"))
 
 

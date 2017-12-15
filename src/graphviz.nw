@@ -228,7 +228,7 @@ If [[<<\lsp{s} is too long>>]], i.e. more than [[*max-label-length*]] long,
 (defun ugraph->dot (nodes edges)
   (princ "graph{")
   (nodes->dot nodes)
-  (edges->dot edges)
+  (uedges->dot edges)
   (princ "}"))
 
 
