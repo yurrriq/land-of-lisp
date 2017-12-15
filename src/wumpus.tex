@@ -273,35 +273,27 @@ Generate a random number between $1$ and {\Tt{}\nwlinkedidentq{*node-num*}{NW3qZ
 \newpage
 \section{Full Listing}
 
-\inputminted[linenos,firstline=1,lastline=44,fontsize=\small]{lisp}{graphviz.lisp}
+\inputminted[linenos,firstline=1,lastline=48,fontsize=\small]{lisp}{wumpus.lisp}
 
 \newpage
-\inputminted[linenos,firstline=47,fontsize=\small]{lisp}{graphviz.lisp}
+\inputminted[linenos,firstline=51,lastline=90,fontsize=\small]{lisp}{wumpus.lisp}
+
+\newpage
+\inputminted[linenos,firstline=93,fontsize=\small]{lisp}{wumpus.lisp}
+
 
 
 \section{Tests}
 
-\nwenddocs{}\nwbegincode{38}\sublabel{NW3qZwII-BTTjt-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-BTTjt-1}}}\moddef{test/graphviz.lisp~{\nwtagstyle{}\subpageref{NW3qZwII-BTTjt-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
-(in-package :lol.graphviz)
+\todor{Implement tests}
+\nwenddocs{}\nwbegincode{38}\sublabel{NW3qZwII-4bWgzN-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-4bWgzN-1}}}\moddef{test/wumpus.lisp~{\nwtagstyle{}\subpageref{NW3qZwII-4bWgzN-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+(in-package :\nwlinkedidentc{lol.wumpus}{NW3qZwII-1p0Y9w-1})
 
 
-(plan 1)
-
-
-(subtest "Converting Node Identifiers"
-  (is (dot-name 'living-room)
-      "LIVING_ROOM")
-  (is (dot-name 'foo!)
-      "FOO_")
-  (is (dot-name '24)
-      "24"))
-
-
-(finalize)
-\nwnotused{test/graphviz.lisp}\nwendcode{}
+\nwnotused{test/wumpus.lisp}\nwidentuses{\\{{\nwixident{lol.wumpus}}{lol.wumpus}}}\nwindexuse{\nwixident{lol.wumpus}}{lol.wumpus}{NW3qZwII-4bWgzN-1}\nwendcode{}
 
 \nwixlogsorted{c}{{*}{NW3qZwII-1p0Y9w-1}{\nwixd{NW3qZwII-1p0Y9w-1}\nwixd{NW3qZwII-1p0Y9w-2}\nwixd{NW3qZwII-1p0Y9w-3}\nwixd{NW3qZwII-1p0Y9w-4}\nwixd{NW3qZwII-1p0Y9w-5}\nwixd{NW3qZwII-1p0Y9w-6}\nwixd{NW3qZwII-1p0Y9w-7}\nwixd{NW3qZwII-1p0Y9w-8}\nwixd{NW3qZwII-1p0Y9w-9}\nwixd{NW3qZwII-1p0Y9w-A}\nwixd{NW3qZwII-1p0Y9w-B}\nwixd{NW3qZwII-1p0Y9w-C}\nwixd{NW3qZwII-1p0Y9w-D}\nwixd{NW3qZwII-1p0Y9w-E}\nwixd{NW3qZwII-1p0Y9w-F}\nwixd{NW3qZwII-1p0Y9w-G}\nwixd{NW3qZwII-1p0Y9w-H}\nwixd{NW3qZwII-1p0Y9w-I}}}%
-\nwixlogsorted{c}{{test/graphviz.lisp}{NW3qZwII-BTTjt-1}{\nwixd{NW3qZwII-BTTjt-1}}}%
+\nwixlogsorted{c}{{test/wumpus.lisp}{NW3qZwII-4bWgzN-1}{\nwixd{NW3qZwII-4bWgzN-1}}}%
 \nwixlogsorted{i}{{\nwixident{*congestion-city-edges*}}{*congestion-city-edges*}}%
 \nwixlogsorted{i}{{\nwixident{*congestion-city-nodes*}}{*congestion-city-nodes*}}%
 \nwixlogsorted{i}{{\nwixident{*cop-odds*}}{*cop-odds*}}%
@@ -337,6 +329,8 @@ Generate a random number between $1$ and {\Tt{}\nwlinkedidentq{*node-num*}{NW3qZ
 % \nowebchunks
 
 
+
+
 \newpage
 \printglossaries
 
@@ -344,6 +338,11 @@ Generate a random number between $1$ and {\Tt{}\nwlinkedidentq{*node-num*}{NW3qZ
 \setlength{\linewidth}{1.4\textwidth}
 \bibliography{lol}
 \bibliographystyle{plainnat}
+
+
+\newpage
+\listoftodos[To-Do]
+
 
 \end{document}
 \nwenddocs{}

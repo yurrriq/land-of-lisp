@@ -273,31 +273,23 @@ Generate a random number between $1$ and [[*node-num*]].
 \newpage
 \section{Full Listing}
 
-\inputminted[linenos,firstline=1,lastline=44,fontsize=\small]{lisp}{graphviz.lisp}
+\inputminted[linenos,firstline=1,lastline=48,fontsize=\small]{lisp}{wumpus.lisp}
 
 \newpage
-\inputminted[linenos,firstline=47,fontsize=\small]{lisp}{graphviz.lisp}
+\inputminted[linenos,firstline=51,lastline=90,fontsize=\small]{lisp}{wumpus.lisp}
+
+\newpage
+\inputminted[linenos,firstline=93,fontsize=\small]{lisp}{wumpus.lisp}
+
 
 
 \section{Tests}
 
-<<test/graphviz.lisp>>=
-(in-package :lol.graphviz)
+\todor{Implement tests}
+<<test/wumpus.lisp>>=
+(in-package :lol.wumpus)
 
 
-(plan 1)
-
-
-(subtest "Converting Node Identifiers"
-  (is (dot-name 'living-room)
-      "LIVING_ROOM")
-  (is (dot-name 'foo!)
-      "FOO_")
-  (is (dot-name '24)
-      "24"))
-
-
-(finalize)
 @
 
 
@@ -310,6 +302,8 @@ Generate a random number between $1$ and [[*node-num*]].
 % \nowebchunks
 
 
+
+
 \newpage
 \printglossaries
 
@@ -317,5 +311,10 @@ Generate a random number between $1$ and [[*node-num*]].
 \setlength{\linewidth}{1.4\textwidth}
 \bibliography{lol}
 \bibliographystyle{plainnat}
+
+
+\newpage
+\listoftodos[To-Do]
+
 
 \end{document}
