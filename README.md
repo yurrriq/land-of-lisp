@@ -6,13 +6,14 @@
 *Working through examples from [Land of Lisp][book]*
 
 
-| *Chapter* | *Title*                          | *Links*                                                                                                  |
-|-----------|----------------------------------|----------------------------------------------------------------------------------------------------------|
-|         2 | The Guess-My-Number Game         | [Source][guess.nw] / [Code][guess.lisp] / [Coverage][guess.lisp coverage] / [PDF][guess.pdf]             |
-|         4 | Pudding Eater                    | [Source][pudding.nw] / [Code][pudding.lisp] / [Coverage][pudding.lisp coverage] / [PDF][pudding.pdf]     |
-|         5 | The Wizard's Adventure Game      | [Source][wizard5.nw] / [Code][wizard5.lisp] / [Coverage][wizard5.lisp coverage] / [PDF][wizard5.pdf]     |
-|         6 | The Wizard's Adventure Game REPL | [Source][wizard6.nw] / [Code][wizard6.lisp] / [Coverage][wizard6.lisp coverage] / [PDF][wizard6.pdf]     |
-|         7 | Visualizing Graphs               | [Source][graphviz.nw] / [Code][graphviz.lisp] / [Coverage][graphviz.lisp coverage] / [PDF][graphviz.pdf] |
+| WIP        | *Chapter* | *Title*                          | *Links*                                                                                                  |
+|------------|-----------|----------------------------------|----------------------------------------------------------------------------------------------------------|
+|            |         2 | The Guess-My-Number Game         | [Source][guess.nw] / [Code][guess.lisp] / [Coverage][guess.lisp coverage] / [PDF][guess.pdf]             |
+|            |         4 | Pudding Eater                    | [Source][pudding.nw] / [Code][pudding.lisp] / [Coverage][pudding.lisp coverage] / [PDF][pudding.pdf]     |
+|            |         5 | The Wizard's Adventure Game      | [Source][wizard5.nw] / [Code][wizard5.lisp] / [Coverage][wizard5.lisp coverage] / [PDF][wizard5.pdf]     |
+|            |         6 | The Wizard's Adventure Game REPL | [Source][wizard6.nw] / [Code][wizard6.lisp] / [Coverage][wizard6.lisp coverage] / [PDF][wizard6.pdf]     |
+| :bangbang: |         7 | Visualizing Graphs               | [Source][graphviz.nw] / [Code][graphviz.lisp] / [Coverage][graphviz.lisp coverage] / [PDF][graphviz.pdf] |
+| :bangbang: |         8 | Grand Theft Wumpus               | [Source][wumpus.nw] / [Code][wumpus.lisp] / [Coverage][wumpus.lisp coverage] / [PDF][wumpus.pdf]         |
 
 
 [![Warning: Built Using Lisp](http://www.lisperati.com/lisplogo_warning2_256.png)](http://www.lisperati.com/logo.html)
@@ -22,7 +23,7 @@
 
 [Travis badge]: https://travis-ci.org/yurrriq/land-of-lisp.svg?branch=master
 [Travis link]: https://travis-ci.org/yurrriq/land-of-lisp
-[Coverage badge]: https://img.shields.io/badge/coverage-35%25-green.svg?style=flat
+[Coverage badge]: https://img.shields.io/badge/coverage-22%25-red.svg?style=flat
 [Coverage link]: https://yurrriq.github.io/land-of-lisp/coverage/
 [book]: http://landoflisp.com
 [guess.nw]: https://github.com/yurrriq/land-of-lisp/blob/master/src/guess.nw
@@ -45,3 +46,7 @@
 [graphviz.lisp]: https://github.com/yurrriq/land-of-lisp/blob/master/src/graphviz.lisp
 [graphviz.lisp coverage]: http://yurrriq.codes/land-of-lisp/coverage/9d665057221886d6156c067bccf642e6.html
 [graphviz.pdf]: https://yurrriq.github.io/land-of-lisp/graphviz.pdf
+[wumpus.nw]: https://github.com/yurrriq/land-of-lisp/blob/master/src/wumpus.nw
+[wumpus.lisp]: https://github.com/yurrriq/land-of-lisp/blob/master/src/wumpus.lisp
+[wumpus.lisp coverage]: http://yurrriq.codes/land-of-lisp/coverage/859003d8750077ac0cf1fe1fea3a4ec5.html
+[wumpus.pdf]: https://yurrriq.github.io/land-of-lisp/wumpus.pdf
