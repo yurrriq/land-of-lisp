@@ -11,7 +11,8 @@
                 :components
                 ((:test-file "guess")
                  (:test-file "pudding")
-                 (:test-file "wizard5"))))
+                 (:test-file "wizard5")
+                 (:test-file "graphviz"))))
 
   :defsystem-depends-on ("prove-asdf")
   :perform (test-op :after (op c)

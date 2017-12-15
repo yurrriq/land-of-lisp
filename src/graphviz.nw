@@ -1,0 +1,290 @@
+% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-
+\documentclass{tufte-handout}
+
+\input{preamble.tex}
+
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+
+\hypersetup{
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={Visualizing Graph Data},
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 7},
+  pdfkeywords={Lisp, Graphviz, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\title{%
+  Visualizing Graph Data
+  \thanks{\cite{barski2010land-ch7}}
+}
+
+\date{%
+  November 20, 2017
+  \thanks{Last updated \today}
+}
+
+\begin{document}
+\maketitle
+@
+
+% \begin{abstract}
+% \end{abstract}
+
+\begin{marginfigure}
+\srclink{src/graphviz.lisp}:
+<<*>>=
+(in-package :cl-user)
+(defpackage lol.graphviz
+  (:use :cl :prove)
+  (:export dot-name))
+(in-package :lol.graphviz)
+
+
+@ %def lol.graphviz
+\end{marginfigure}
+
+
+\tableofcontents
+
+
+\newpage
+\section{Converting Node Identifiers}
+
+\begin{marginfigure}
+<<\lsp{exp} as a string>>=
+(prin1-to-string exp)
+@
+\end{marginfigure}
+
+First, create a string representation of \lsp{exp}, with escape characters
+written where appropriate, via \gls{prin1-to-string}.
+
+\begin{marginfigure}
+<<is not alphanumeric>>=
+(complement #'alphanumericp)
+@
+
+<<an underscore>>=
+#\_
+@
+\end{marginfigure}
+
+
+Then replace each character that [[<<is not alphanumeric>>]]
+with [[<<an underscore>>]].
+
+<<*>>=
+(defun dot-name (exp)
+  (substitute-if <<an underscore>> <<is not alphanumeric>> <<\lsp{exp} as a string>>))
+
+
+@
+
+
+\section{Adding Labels to Graph Nodes}
+
+\begin{marginfigure}
+<<create a string representation of \lsp{exp}>>=
+(write-to-string exp :pretty nil)
+@
+
+<<otherwise return the empty string>>=
+""
+@
+\end{marginfigure}
+
+<<*>>=
+(defparameter *max-label-length* 30)
+
+(defun dot-label (exp)
+  (if exp
+      (let ((s <<create a string representation of \lsp{exp}>>))
+        <<Truncate \lsp{s} if it's too long.>>)
+      <<otherwise return the empty string>>))
+
+
+@
+
+\begin{marginfigure}
+<<\lsp{s} is too long>>=
+(> (length s) *max-label-length*)
+@
+
+<<truncate \lsp{s}>>=
+(subseq s 0 (- *max-label-length* 3))
+@
+\end{marginfigure}
+
+If [[<<\lsp{s} is too long>>]], i.e. more than [[*max-label-length*]] long,
+\newline \noindent [[<<truncate \lsp{s}>>]] and append \lsp{"..."}.
+
+<<Truncate \lsp{s} if it's too long.>>=
+(if <<\lsp{s} is too long>>
+    (concatenate 'string <<truncate \lsp{s}>> "...")
+    s)
+@
+
+
+\section{Generating the DOT Information for the Nodes}
+
+<<*>>=
+(defun nodes->dot (nodes)
+  (mapc (lambda (node)
+          (fresh-line)
+          (princ (dot-name (car node)))
+          (princ "[label=\"")
+          (princ (dot-label node))
+          (princ "\"];"))
+        nodes))
+
+
+@
+
+
+\section{Converting Edges into DOT Format}
+
+<<*>>=
+(defun edges->dot (edges)
+  (mapc (lambda (node)
+          (mapc (lambda (edge)
+                  (fresh-line)
+                  (princ (dot-name (car node)))
+                  (princ "->")
+                  (princ (dot-name (car edge)))
+                  (princ "[label=\"")
+                  (princ (dot-label (cdr edge)))
+                  (princ "\"];"))
+                (cdr node)))
+        edges))
+
+
+@
+
+
+\section{Generating All the DOT Data}
+
+<<*>>=
+(defun graph->dot (nodes edges)
+  (princ "digraph{")
+  (nodes->dot nodes)
+  (edges->dot edges)
+  (princ "}"))
+
+
+@
+
+
+\section{Turning the DOT File into a Picture}
+
+<<*>>=
+(defun dot->png (fname thunk)
+  (with-open-file (*standard-output*
+                   fname
+                   :direction :output
+                   :if-exists :supersede)
+    (funcall thunk))
+  (uiop:run-program (concatenate 'string "dot -Tpng -O " fname)))
+
+
+@
+
+
+\section{Creating a Picture of Our Graph}
+
+<<*>>=
+(defun graph->png (fname nodes edges)
+  (dot->png fname
+            (lambda ()
+              (graph->dot nodes edges))))
+
+
+@
+
+
+\section{Creating Undirected Graphs}
+
+<<*>>=
+(defun uedges->dot (edges)
+  (maplist (lambda (lst)
+             (mapc (lambda (edge)
+                     (unless (assoc (car edge) (cdr lst))
+                       (fresh-line)
+                       (princ (dot-name (caar lst)))
+                       (princ "--")
+                       (princ (dot-name (car edge)))
+                       (princ "[label=\"")
+                       (princ (dot-label (cdr edge)))
+                       (princ "\"];")))
+                   (cdar lst)))
+           edges))
+
+
+(defun ugraph->dot (nodes edges)
+  (princ "graph{")
+  (nodes->dot nodes)
+  (uedges->dot edges)
+  (princ "}"))
+
+
+(defun ugraph->png (fname nodes edges)
+  (dot->png fname
+            (lambda ()
+              (ugraph->dot nodes edges))))
+@
+
+
+\newpage
+\section{Full Listing}
+
+\inputminted[linenos,firstline=1,lastline=44,fontsize=\small]{lisp}{graphviz.lisp}
+
+\newpage
+\inputminted[linenos,firstline=47,fontsize=\small]{lisp}{graphviz.lisp}
+
+
+\section{Tests}
+
+<<test/graphviz.lisp>>=
+(in-package :lol.graphviz)
+
+
+(plan 1)
+
+
+(subtest "Converting Node Identifiers"
+  (is (dot-name 'living-room)
+      "LIVING_ROOM")
+  (is (dot-name 'foo!)
+      "FOO_")
+  (is (dot-name '24)
+      "24"))
+
+
+(finalize)
+@
+
+
+% \section{Index}
+% \nowebindex
+
+
+% \newpage
+% \section{Chunks}
+% \nowebchunks
+
+
+\newpage
+\printglossaries
+
+
+\setlength{\linewidth}{1.4\textwidth}
+\bibliography{lol}
+\bibliographystyle{plainnat}
+
+\end{document}

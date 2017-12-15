@@ -1,0 +1,349 @@
+% -*- mode: noweb; ess-noweb-default-code-mode: lisp-mode; -*-% ===> this file was generated automatically by noweave --- better not edit it
+\documentclass{tufte-handout}
+
+\input{preamble.tex}
+
+\usepackage[xindy,nopostdot]{glossaries}
+\makeglossaries
+\input{glossary}
+
+\hypersetup{
+  pdffitwindow=true,
+  pdfstartview={FitH},
+  pdftitle={Grand Theft Wumpus}
+  pdfauthor={Eric Bailey <eric@ericb.me>},
+  pdfsubject={Land of Lisp: Chapter 8},
+  pdfkeywords={Lisp, game, literate programming, noweb},
+  colorlinks=true,
+  linkcolor=ErlangRed,
+  urlcolor=ErlangRed
+}
+
+\title{%
+  Grand Theft Wumpus
+  \thanks{\cite{barski2010land-ch8}}
+}
+
+\date{%
+  December 14, 2017
+  \thanks{Last updated \today}
+}
+
+\begin{document}
+\maketitle
+\nwfilename{src/wumpus.nw}\nwbegindocs{1}\nwdocspar
+
+% \begin{abstract}
+% \end{abstract}
+
+\begin{marginfigure}
+\srclink{src/wumpus.lisp}:
+\nwenddocs{}\nwbegincode{2}\sublabel{NW3qZwII-1p0Y9w-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\endmoddef\nwstartdeflinemarkup\nwprevnextdefs{\relax}{NW3qZwII-1p0Y9w-2}\nwenddeflinemarkup
+(in-package :cl-user)
+(defpackage \nwlinkedidentc{lol.wumpus}{NW3qZwII-1p0Y9w-1}
+  (:use :cl :prove))
+(in-package :\nwlinkedidentc{lol.wumpus}{NW3qZwII-1p0Y9w-1})
+
+
+\nwindexdefn{\nwixident{lol.wumpus}}{lol.wumpus}{NW3qZwII-1p0Y9w-1}\eatline
+\nwalsodefined{\\{NW3qZwII-1p0Y9w-2}\\{NW3qZwII-1p0Y9w-3}\\{NW3qZwII-1p0Y9w-4}\\{NW3qZwII-1p0Y9w-5}\\{NW3qZwII-1p0Y9w-6}\\{NW3qZwII-1p0Y9w-7}\\{NW3qZwII-1p0Y9w-8}\\{NW3qZwII-1p0Y9w-9}\\{NW3qZwII-1p0Y9w-A}\\{NW3qZwII-1p0Y9w-B}\\{NW3qZwII-1p0Y9w-C}\\{NW3qZwII-1p0Y9w-D}\\{NW3qZwII-1p0Y9w-E}\\{NW3qZwII-1p0Y9w-F}\\{NW3qZwII-1p0Y9w-G}\\{NW3qZwII-1p0Y9w-H}\\{NW3qZwII-1p0Y9w-I}}\nwnotused{*}\nwidentdefs{\\{{\nwixident{lol.wumpus}}{lol.wumpus}}}\nwendcode{}\nwbegindocs{3}\end{marginfigure}
+
+
+\tableofcontents
+
+
+\newpage
+\section{Defining the Edges of Congestion City}
+
+\todoo{Load the code from the previous chapter}
+\nwenddocs{}\nwbegincode{4}\sublabel{NW3qZwII-1p0Y9w-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-2}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-1}{NW3qZwII-1p0Y9w-3}\nwenddeflinemarkup
+;; TODO: (load "graph-util")
+
+
+\nwendcode{}\nwbegindocs{5}\nwdocspar
+
+\nwenddocs{}\nwbegincode{6}\sublabel{NW3qZwII-1p0Y9w-3}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-3}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-2}{NW3qZwII-1p0Y9w-4}\nwenddeflinemarkup
+(defparameter \nwlinkedidentc{*congestion-city-nodes*}{NW3qZwII-1p0Y9w-3} nil)\nwindexdefn{\nwixident{*congestion-city-nodes*}}{*congestion-city-nodes*}{NW3qZwII-1p0Y9w-3}
+(defparameter \nwlinkedidentc{*congestion-city-edges*}{NW3qZwII-1p0Y9w-3} nil)\nwindexdefn{\nwixident{*congestion-city-edges*}}{*congestion-city-edges*}{NW3qZwII-1p0Y9w-3}
+(defparameter \nwlinkedidentc{*visited-nodes*}{NW3qZwII-1p0Y9w-3} nil)\nwindexdefn{\nwixident{*visited-nodes*}}{*visited-nodes*}{NW3qZwII-1p0Y9w-3}
+(defparameter \nwlinkedidentc{*node-num*}{NW3qZwII-1p0Y9w-3} 30 )\nwindexdefn{\nwixident{*node-num*}}{*node-num*}{NW3qZwII-1p0Y9w-3}
+(defparameter \nwlinkedidentc{*edge-num*}{NW3qZwII-1p0Y9w-3} 45)\nwindexdefn{\nwixident{*edge-num*}}{*edge-num*}{NW3qZwII-1p0Y9w-3}
+(defparameter \nwlinkedidentc{*worm-num*}{NW3qZwII-1p0Y9w-3} 3)\nwindexdefn{\nwixident{*worm-num*}}{*worm-num*}{NW3qZwII-1p0Y9w-3}
+(defparameter \nwlinkedidentc{*cop-odds*}{NW3qZwII-1p0Y9w-3} 15)\nwindexdefn{\nwixident{*cop-odds*}}{*cop-odds*}{NW3qZwII-1p0Y9w-3}
+
+
+\nwidentdefs{\\{{\nwixident{*congestion-city-edges*}}{*congestion-city-edges*}}\\{{\nwixident{*congestion-city-nodes*}}{*congestion-city-nodes*}}\\{{\nwixident{*cop-odds*}}{*cop-odds*}}\\{{\nwixident{*edge-num*}}{*edge-num*}}\\{{\nwixident{*node-num*}}{*node-num*}}\\{{\nwixident{*visited-nodes*}}{*visited-nodes*}}\\{{\nwixident{*worm-num*}}{*worm-num*}}}\nwendcode{}\nwbegindocs{7}\nwdocspar
+
+
+\section{Generating Random Edges}
+
+Generate a random number between $1$ and {\Tt{}\nwlinkedidentq{*node-num*}{NW3qZwII-1p0Y9w-3}\nwendquote}.
+\nwenddocs{}\nwbegincode{8}\sublabel{NW3qZwII-1p0Y9w-4}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-4}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-3}{NW3qZwII-1p0Y9w-5}\nwenddeflinemarkup
+(defun \nwlinkedidentc{random-node}{NW3qZwII-1p0Y9w-4} ()\nwindexdefn{\nwixident{random-node}}{random-node}{NW3qZwII-1p0Y9w-4}
+  (1+ (random \nwlinkedidentc{*node-num*}{NW3qZwII-1p0Y9w-3})))
+
+
+\nwidentdefs{\\{{\nwixident{random-node}}{random-node}}}\nwidentuses{\\{{\nwixident{*node-num*}}{*node-num*}}}\nwindexuse{\nwixident{*node-num*}}{*node-num*}{NW3qZwII-1p0Y9w-4}\nwendcode{}\nwbegindocs{9}\nwdocspar
+
+\todoo{Describe edge-pair}
+\nwenddocs{}\nwbegincode{10}\sublabel{NW3qZwII-1p0Y9w-5}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-5}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-4}{NW3qZwII-1p0Y9w-6}\nwenddeflinemarkup
+(defun \nwlinkedidentc{edge-pair}{NW3qZwII-1p0Y9w-5} (a b)\nwindexdefn{\nwixident{edge-pair}}{edge-pair}{NW3qZwII-1p0Y9w-5}
+  (unless (eql a b)
+    (list (cons a b) (cons b a))))
+
+
+\nwidentdefs{\\{{\nwixident{edge-pair}}{edge-pair}}}\nwendcode{}\nwbegindocs{11}\nwdocspar
+
+\todoo{Describe make-edge-list}
+\nwenddocs{}\nwbegincode{12}\sublabel{NW3qZwII-1p0Y9w-6}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-6}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-5}{NW3qZwII-1p0Y9w-7}\nwenddeflinemarkup
+(defun \nwlinkedidentc{make-edge-list}{NW3qZwII-1p0Y9w-6} ()\nwindexdefn{\nwixident{make-edge-list}}{make-edge-list}{NW3qZwII-1p0Y9w-6}
+  (apply #'append (loop repeat \nwlinkedidentc{*edge-num*}{NW3qZwII-1p0Y9w-3}
+                        collect (\nwlinkedidentc{edge-pair}{NW3qZwII-1p0Y9w-5} (\nwlinkedidentc{random-node}{NW3qZwII-1p0Y9w-4}) (\nwlinkedidentc{random-node}{NW3qZwII-1p0Y9w-4})))))
+
+
+\nwidentdefs{\\{{\nwixident{make-edge-list}}{make-edge-list}}}\nwidentuses{\\{{\nwixident{*edge-num*}}{*edge-num*}}\\{{\nwixident{edge-pair}}{edge-pair}}\\{{\nwixident{random-node}}{random-node}}}\nwindexuse{\nwixident{*edge-num*}}{*edge-num*}{NW3qZwII-1p0Y9w-6}\nwindexuse{\nwixident{edge-pair}}{edge-pair}{NW3qZwII-1p0Y9w-6}\nwindexuse{\nwixident{random-node}}{random-node}{NW3qZwII-1p0Y9w-6}\nwendcode{}\nwbegindocs{13}\nwdocspar
+
+
+\section{Preventing Islands}
+
+\todoo{Describe direct-edges}
+\nwenddocs{}\nwbegincode{14}\sublabel{NW3qZwII-1p0Y9w-7}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-7}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-6}{NW3qZwII-1p0Y9w-8}\nwenddeflinemarkup
+(defun \nwlinkedidentc{direct-edges}{NW3qZwII-1p0Y9w-7} (node edge-list)\nwindexdefn{\nwixident{direct-edges}}{direct-edges}{NW3qZwII-1p0Y9w-7}
+  (remove-if-not (lambda (x)
+                   (eql (car x) node))
+                 edge-list))
+
+
+\nwidentdefs{\\{{\nwixident{direct-edges}}{direct-edges}}}\nwendcode{}\nwbegindocs{15}\nwdocspar
+
+\todoo{Describe get-connected}
+\nwenddocs{}\nwbegincode{16}\sublabel{NW3qZwII-1p0Y9w-8}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-8}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-7}{NW3qZwII-1p0Y9w-9}\nwenddeflinemarkup
+(defun \nwlinkedidentc{get-connected}{NW3qZwII-1p0Y9w-8} (node edge-list)\nwindexdefn{\nwixident{get-connected}}{get-connected}{NW3qZwII-1p0Y9w-8}
+  (let ((visited nil))
+    (labels ((traverse (node)
+               (unless (member node visited)
+                 (push node visited)
+                 (mapc (lambda (edge)
+                         (traverse (cdr edge)))
+                       (\nwlinkedidentc{direct-edges}{NW3qZwII-1p0Y9w-7} node edge-list)))))
+      (traverse node))
+    visited))
+
+
+\nwidentdefs{\\{{\nwixident{get-connected}}{get-connected}}}\nwidentuses{\\{{\nwixident{direct-edges}}{direct-edges}}}\nwindexuse{\nwixident{direct-edges}}{direct-edges}{NW3qZwII-1p0Y9w-8}\nwendcode{}\nwbegindocs{17}\nwdocspar
+
+\todoo{Describe find-islands}
+\nwenddocs{}\nwbegincode{18}\sublabel{NW3qZwII-1p0Y9w-9}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-9}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-8}{NW3qZwII-1p0Y9w-A}\nwenddeflinemarkup
+(defun \nwlinkedidentc{find-islands}{NW3qZwII-1p0Y9w-9} (nodes edge-list)\nwindexdefn{\nwixident{find-islands}}{find-islands}{NW3qZwII-1p0Y9w-9}
+  (let ((islands nil))
+    (labels ((find-island (nodes)
+               (let* ((connected (\nwlinkedidentc{get-connected}{NW3qZwII-1p0Y9w-8} (car nodes) edge-list))
+                      (unconnected (set-difference nodes connected)))
+                 (push connected islands)
+                 (when unconnected
+                   (find-island unconnected)))))
+      (find-island nodes))
+    islands))
+
+
+\nwidentdefs{\\{{\nwixident{find-islands}}{find-islands}}}\nwidentuses{\\{{\nwixident{get-connected}}{get-connected}}}\nwindexuse{\nwixident{get-connected}}{get-connected}{NW3qZwII-1p0Y9w-9}\nwendcode{}\nwbegindocs{19}\nwdocspar
+
+\todoo{Describe connect-with-bridges}
+\nwenddocs{}\nwbegincode{20}\sublabel{NW3qZwII-1p0Y9w-A}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-A}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-9}{NW3qZwII-1p0Y9w-B}\nwenddeflinemarkup
+(defun \nwlinkedidentc{connect-with-bridges}{NW3qZwII-1p0Y9w-A} (islands)\nwindexdefn{\nwixident{connect-with-bridges}}{connect-with-bridges}{NW3qZwII-1p0Y9w-A}
+  (when (cdr islands)
+    (append (\nwlinkedidentc{edge-pair}{NW3qZwII-1p0Y9w-5} (caar islands) (caadr islands))
+            (\nwlinkedidentc{connect-with-bridges}{NW3qZwII-1p0Y9w-A} (cdr islands)))))
+
+
+\nwidentdefs{\\{{\nwixident{connect-with-bridges}}{connect-with-bridges}}}\nwidentuses{\\{{\nwixident{edge-pair}}{edge-pair}}}\nwindexuse{\nwixident{edge-pair}}{edge-pair}{NW3qZwII-1p0Y9w-A}\nwendcode{}\nwbegindocs{21}\nwdocspar
+
+\todoo{Describe connect-all-islands}
+\nwenddocs{}\nwbegincode{22}\sublabel{NW3qZwII-1p0Y9w-B}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-B}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-A}{NW3qZwII-1p0Y9w-C}\nwenddeflinemarkup
+(defun \nwlinkedidentc{connect-all-islands}{NW3qZwII-1p0Y9w-B} (nodes edge-list)\nwindexdefn{\nwixident{connect-all-islands}}{connect-all-islands}{NW3qZwII-1p0Y9w-B}
+  (append (\nwlinkedidentc{connect-with-bridges}{NW3qZwII-1p0Y9w-A} (\nwlinkedidentc{find-islands}{NW3qZwII-1p0Y9w-9} nodes edge-list)) edge-list))
+
+
+\nwidentdefs{\\{{\nwixident{connect-all-islands}}{connect-all-islands}}}\nwidentuses{\\{{\nwixident{connect-with-bridges}}{connect-with-bridges}}\\{{\nwixident{find-islands}}{find-islands}}}\nwindexuse{\nwixident{connect-with-bridges}}{connect-with-bridges}{NW3qZwII-1p0Y9w-B}\nwindexuse{\nwixident{find-islands}}{find-islands}{NW3qZwII-1p0Y9w-B}\nwendcode{}\nwbegindocs{23}\nwdocspar
+
+
+\section{Building the Final Edges for Congestion City}
+
+\todoo{Describe make-city-edges}
+\nwenddocs{}\nwbegincode{24}\sublabel{NW3qZwII-1p0Y9w-C}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-C}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-B}{NW3qZwII-1p0Y9w-D}\nwenddeflinemarkup
+(defun \nwlinkedidentc{make-city-edges}{NW3qZwII-1p0Y9w-C} ()\nwindexdefn{\nwixident{make-city-edges}}{make-city-edges}{NW3qZwII-1p0Y9w-C}
+  (let* ((nodes (loop for i from 1 to \nwlinkedidentc{*node-num*}{NW3qZwII-1p0Y9w-3}
+                      collect i))
+         (edge-list (\nwlinkedidentc{connect-all-islands}{NW3qZwII-1p0Y9w-B} nodes (\nwlinkedidentc{make-edge-list}{NW3qZwII-1p0Y9w-6})))
+         (cops (remove-if-not (lambda (x)
+                                (zerop (random \nwlinkedidentc{*cop-odds*}{NW3qZwII-1p0Y9w-3})))
+                              edge-list)))
+    (\nwlinkedidentc{add-cops}{NW3qZwII-1p0Y9w-E} (\nwlinkedidentc{edges-to-alist}{NW3qZwII-1p0Y9w-D} edge-list) cops)))
+
+
+\nwidentdefs{\\{{\nwixident{make-city-edges}}{make-city-edges}}}\nwidentuses{\\{{\nwixident{*cop-odds*}}{*cop-odds*}}\\{{\nwixident{*node-num*}}{*node-num*}}\\{{\nwixident{add-cops}}{add-cops}}\\{{\nwixident{connect-all-islands}}{connect-all-islands}}\\{{\nwixident{edges-to-alist}}{edges-to-alist}}\\{{\nwixident{make-edge-list}}{make-edge-list}}}\nwindexuse{\nwixident{*cop-odds*}}{*cop-odds*}{NW3qZwII-1p0Y9w-C}\nwindexuse{\nwixident{*node-num*}}{*node-num*}{NW3qZwII-1p0Y9w-C}\nwindexuse{\nwixident{add-cops}}{add-cops}{NW3qZwII-1p0Y9w-C}\nwindexuse{\nwixident{connect-all-islands}}{connect-all-islands}{NW3qZwII-1p0Y9w-C}\nwindexuse{\nwixident{edges-to-alist}}{edges-to-alist}{NW3qZwII-1p0Y9w-C}\nwindexuse{\nwixident{make-edge-list}}{make-edge-list}{NW3qZwII-1p0Y9w-C}\nwendcode{}\nwbegindocs{25}\nwdocspar
+
+\todoo{Describe edges-to-alist}
+\nwenddocs{}\nwbegincode{26}\sublabel{NW3qZwII-1p0Y9w-D}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-D}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-C}{NW3qZwII-1p0Y9w-E}\nwenddeflinemarkup
+(defun \nwlinkedidentc{edges-to-alist}{NW3qZwII-1p0Y9w-D} (edge-list)\nwindexdefn{\nwixident{edges-to-alist}}{edges-to-alist}{NW3qZwII-1p0Y9w-D}
+  (mapcar (lambda (node1)
+            (cons node1
+                  (mapcar (lambda (edge)
+                            (list (cdr edge)))
+                          (remove-duplicates (\nwlinkedidentc{direct-edges}{NW3qZwII-1p0Y9w-7} node1 edge-list)
+                                             :test #'equal))))
+          (remove-duplicates (mapcar #'car edge-list))))
+
+
+\nwidentdefs{\\{{\nwixident{edges-to-alist}}{edges-to-alist}}}\nwidentuses{\\{{\nwixident{direct-edges}}{direct-edges}}}\nwindexuse{\nwixident{direct-edges}}{direct-edges}{NW3qZwII-1p0Y9w-D}\nwendcode{}\nwbegindocs{27}\nwdocspar
+
+\todoo{Describe add-cops}
+\nwenddocs{}\nwbegincode{28}\sublabel{NW3qZwII-1p0Y9w-E}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-E}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-D}{NW3qZwII-1p0Y9w-F}\nwenddeflinemarkup
+(defun \nwlinkedidentc{add-cops}{NW3qZwII-1p0Y9w-E} (edge-alist edges-with-cops)\nwindexdefn{\nwixident{add-cops}}{add-cops}{NW3qZwII-1p0Y9w-E}
+  (mapcar (lambda (x)
+            (let ((node1 (car x))
+                  (node1-edges (cdr x)))
+              (cons node1
+                    (mapcar (lambda (edge)
+                              (let ((node2 (car edge)))
+                                (if (intersection (\nwlinkedidentc{edge-pair}{NW3qZwII-1p0Y9w-5} node1 node2)
+                                                  edges-with-cops
+                                                  :test #'equal)
+                                    (list node2 'cops)
+                                    edge)))
+                            node1-edges))))
+          edge-alist))
+
+
+\nwidentdefs{\\{{\nwixident{add-cops}}{add-cops}}}\nwidentuses{\\{{\nwixident{edge-pair}}{edge-pair}}}\nwindexuse{\nwixident{edge-pair}}{edge-pair}{NW3qZwII-1p0Y9w-E}\nwendcode{}\nwbegindocs{29}\nwdocspar
+
+
+\section{Building the Nodes for Congestion City}
+
+\todoo{Describe neighbors}
+\nwenddocs{}\nwbegincode{30}\sublabel{NW3qZwII-1p0Y9w-F}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-F}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-E}{NW3qZwII-1p0Y9w-G}\nwenddeflinemarkup
+(defun \nwlinkedidentc{neighbors}{NW3qZwII-1p0Y9w-F} (node edge-alist)\nwindexdefn{\nwixident{neighbors}}{neighbors}{NW3qZwII-1p0Y9w-F}
+  (mapcar #'car (cdr (assoc node edge-alist))))
+
+
+\nwidentdefs{\\{{\nwixident{neighbors}}{neighbors}}}\nwendcode{}\nwbegindocs{31}\nwdocspar
+
+\todoo{Describe within-one}
+\nwenddocs{}\nwbegincode{32}\sublabel{NW3qZwII-1p0Y9w-G}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-G}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-F}{NW3qZwII-1p0Y9w-H}\nwenddeflinemarkup
+(defun \nwlinkedidentc{within-one}{NW3qZwII-1p0Y9w-G} (a b edge-alist)\nwindexdefn{\nwixident{within-one}}{within-one}{NW3qZwII-1p0Y9w-G}
+  (member b (\nwlinkedidentc{neighbors}{NW3qZwII-1p0Y9w-F} a edge-alist)))
+
+
+\nwidentdefs{\\{{\nwixident{within-one}}{within-one}}}\nwidentuses{\\{{\nwixident{neighbors}}{neighbors}}}\nwindexuse{\nwixident{neighbors}}{neighbors}{NW3qZwII-1p0Y9w-G}\nwendcode{}\nwbegindocs{33}\nwdocspar
+
+\todoo{Describe within-two}
+\nwenddocs{}\nwbegincode{34}\sublabel{NW3qZwII-1p0Y9w-H}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-H}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-G}{NW3qZwII-1p0Y9w-I}\nwenddeflinemarkup
+(defun \nwlinkedidentc{within-two}{NW3qZwII-1p0Y9w-H} (a b edge-alist)\nwindexdefn{\nwixident{within-two}}{within-two}{NW3qZwII-1p0Y9w-H}
+  (or (\nwlinkedidentc{within-one}{NW3qZwII-1p0Y9w-G} a b edge-alist)
+      (some (lambda (x)
+              (\nwlinkedidentc{within-one}{NW3qZwII-1p0Y9w-G} x b edge-alist))
+            (\nwlinkedidentc{neighbors}{NW3qZwII-1p0Y9w-F} a edge-alist))))
+
+
+\nwidentdefs{\\{{\nwixident{within-two}}{within-two}}}\nwidentuses{\\{{\nwixident{neighbors}}{neighbors}}\\{{\nwixident{within-one}}{within-one}}}\nwindexuse{\nwixident{neighbors}}{neighbors}{NW3qZwII-1p0Y9w-H}\nwindexuse{\nwixident{within-one}}{within-one}{NW3qZwII-1p0Y9w-H}\nwendcode{}\nwbegindocs{35}\nwdocspar
+
+\todoo{Describe make-city-nodes}
+\nwenddocs{}\nwbegincode{36}\sublabel{NW3qZwII-1p0Y9w-I}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-I}}}\moddef{*~{\nwtagstyle{}\subpageref{NW3qZwII-1p0Y9w-1}}}\plusendmoddef\nwstartdeflinemarkup\nwprevnextdefs{NW3qZwII-1p0Y9w-H}{\relax}\nwenddeflinemarkup
+(defun \nwlinkedidentc{make-city-nodes}{NW3qZwII-1p0Y9w-I} (edge-alist)\nwindexdefn{\nwixident{make-city-nodes}}{make-city-nodes}{NW3qZwII-1p0Y9w-I}
+  (let ((wumpus (\nwlinkedidentc{random-node}{NW3qZwII-1p0Y9w-4}))
+        (glow-worms (loop for i below \nwlinkedidentc{*worm-num*}{NW3qZwII-1p0Y9w-3}
+                          collect (\nwlinkedidentc{random-node}{NW3qZwII-1p0Y9w-4}))))
+    (loop for n from 1 to \nwlinkedidentc{*node-num*}{NW3qZwII-1p0Y9w-3}
+          collect (append (list n)
+                          (cond ((eql n wumpus) '(wumpus))
+                                ((\nwlinkedidentc{within-two}{NW3qZwII-1p0Y9w-H} n wumpus edge-alist) '(blood!)))
+                          (cond ((member n glow-worms)
+                                 '(glow-worm))
+                                ((some (lambda (worm)
+                                         (\nwlinkedidentc{within-one}{NW3qZwII-1p0Y9w-G} n worm edge-alist))
+                                       glow-worms)
+                                   '(lights!)))
+                          (when (some #'cdr (cdr (assoc n edge-alist)))
+                            '(sirens!))))))
+
+
+\nwidentdefs{\\{{\nwixident{make-city-nodes}}{make-city-nodes}}}\nwidentuses{\\{{\nwixident{*node-num*}}{*node-num*}}\\{{\nwixident{*worm-num*}}{*worm-num*}}\\{{\nwixident{random-node}}{random-node}}\\{{\nwixident{within-one}}{within-one}}\\{{\nwixident{within-two}}{within-two}}}\nwindexuse{\nwixident{*node-num*}}{*node-num*}{NW3qZwII-1p0Y9w-I}\nwindexuse{\nwixident{*worm-num*}}{*worm-num*}{NW3qZwII-1p0Y9w-I}\nwindexuse{\nwixident{random-node}}{random-node}{NW3qZwII-1p0Y9w-I}\nwindexuse{\nwixident{within-one}}{within-one}{NW3qZwII-1p0Y9w-I}\nwindexuse{\nwixident{within-two}}{within-two}{NW3qZwII-1p0Y9w-I}\nwendcode{}\nwbegindocs{37}\nwdocspar
+
+
+\newpage
+\section{Full Listing}
+
+\inputminted[linenos,firstline=1,lastline=44,fontsize=\small]{lisp}{graphviz.lisp}
+
+\newpage
+\inputminted[linenos,firstline=47,fontsize=\small]{lisp}{graphviz.lisp}
+
+
+\section{Tests}
+
+\nwenddocs{}\nwbegincode{38}\sublabel{NW3qZwII-BTTjt-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW3qZwII-BTTjt-1}}}\moddef{test/graphviz.lisp~{\nwtagstyle{}\subpageref{NW3qZwII-BTTjt-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+(in-package :lol.graphviz)
+
+
+(plan 1)
+
+
+(subtest "Converting Node Identifiers"
+  (is (dot-name 'living-room)
+      "LIVING_ROOM")
+  (is (dot-name 'foo!)
+      "FOO_")
+  (is (dot-name '24)
+      "24"))
+
+
+(finalize)
+\nwnotused{test/graphviz.lisp}\nwendcode{}
+
+\nwixlogsorted{c}{{*}{NW3qZwII-1p0Y9w-1}{\nwixd{NW3qZwII-1p0Y9w-1}\nwixd{NW3qZwII-1p0Y9w-2}\nwixd{NW3qZwII-1p0Y9w-3}\nwixd{NW3qZwII-1p0Y9w-4}\nwixd{NW3qZwII-1p0Y9w-5}\nwixd{NW3qZwII-1p0Y9w-6}\nwixd{NW3qZwII-1p0Y9w-7}\nwixd{NW3qZwII-1p0Y9w-8}\nwixd{NW3qZwII-1p0Y9w-9}\nwixd{NW3qZwII-1p0Y9w-A}\nwixd{NW3qZwII-1p0Y9w-B}\nwixd{NW3qZwII-1p0Y9w-C}\nwixd{NW3qZwII-1p0Y9w-D}\nwixd{NW3qZwII-1p0Y9w-E}\nwixd{NW3qZwII-1p0Y9w-F}\nwixd{NW3qZwII-1p0Y9w-G}\nwixd{NW3qZwII-1p0Y9w-H}\nwixd{NW3qZwII-1p0Y9w-I}}}%
+\nwixlogsorted{c}{{test/graphviz.lisp}{NW3qZwII-BTTjt-1}{\nwixd{NW3qZwII-BTTjt-1}}}%
+\nwixlogsorted{i}{{\nwixident{*congestion-city-edges*}}{*congestion-city-edges*}}%
+\nwixlogsorted{i}{{\nwixident{*congestion-city-nodes*}}{*congestion-city-nodes*}}%
+\nwixlogsorted{i}{{\nwixident{*cop-odds*}}{*cop-odds*}}%
+\nwixlogsorted{i}{{\nwixident{*edge-num*}}{*edge-num*}}%
+\nwixlogsorted{i}{{\nwixident{*node-num*}}{*node-num*}}%
+\nwixlogsorted{i}{{\nwixident{*visited-nodes*}}{*visited-nodes*}}%
+\nwixlogsorted{i}{{\nwixident{*worm-num*}}{*worm-num*}}%
+\nwixlogsorted{i}{{\nwixident{add-cops}}{add-cops}}%
+\nwixlogsorted{i}{{\nwixident{connect-all-islands}}{connect-all-islands}}%
+\nwixlogsorted{i}{{\nwixident{connect-with-bridges}}{connect-with-bridges}}%
+\nwixlogsorted{i}{{\nwixident{direct-edges}}{direct-edges}}%
+\nwixlogsorted{i}{{\nwixident{edge-pair}}{edge-pair}}%
+\nwixlogsorted{i}{{\nwixident{edges-to-alist}}{edges-to-alist}}%
+\nwixlogsorted{i}{{\nwixident{find-islands}}{find-islands}}%
+\nwixlogsorted{i}{{\nwixident{get-connected}}{get-connected}}%
+\nwixlogsorted{i}{{\nwixident{lol.wumpus}}{lol.wumpus}}%
+\nwixlogsorted{i}{{\nwixident{make-city-edges}}{make-city-edges}}%
+\nwixlogsorted{i}{{\nwixident{make-city-nodes}}{make-city-nodes}}%
+\nwixlogsorted{i}{{\nwixident{make-edge-list}}{make-edge-list}}%
+\nwixlogsorted{i}{{\nwixident{neighbors}}{neighbors}}%
+\nwixlogsorted{i}{{\nwixident{random-node}}{random-node}}%
+\nwixlogsorted{i}{{\nwixident{within-one}}{within-one}}%
+\nwixlogsorted{i}{{\nwixident{within-two}}{within-two}}%
+\nwbegindocs{39}\nwdocspar
+
+
+% \section{Index}
+% \nowebindex
+
+
+% \newpage
+% \section{Chunks}
+% \nowebchunks
+
+
+\newpage
+\printglossaries
+
+
+\setlength{\linewidth}{1.4\textwidth}
+\bibliography{lol}
+\bibliographystyle{plainnat}
+
+\end{document}
+\nwenddocs{}
